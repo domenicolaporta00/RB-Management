@@ -10,7 +10,7 @@ class VistaCredenziali(QMainWindow):
     def __init__(self):
         super(VistaCredenziali, self).__init__()
 
-        self.icona = QIcon("C:\\Users\\DELL\\Desktop\\Progetto Ingegneria del Software\\Logo_definitivo.jpg")
+        self.icona = QIcon("images\\Logo_definitivo.jpg")
 
         self.setGeometry(300, 50, 750, 500)
         self.setWindowTitle("RGest")
@@ -37,7 +37,7 @@ class VistaCredenziali(QMainWindow):
 
     def schermata(self):
         font = QFont("Times Roman", 11)
-        pixmax = QPixmap("C:\\Users\\DELL\\Desktop\\Progetto Ingegneria del Software\\Logo_definitivo.jpg")
+        pixmax = QPixmap("images\\Logo_definitivo.jpg")
 
         self.logo.setPixmap(pixmax)
         self.logo.move(240, 300)

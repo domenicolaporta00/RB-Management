@@ -1,10 +1,10 @@
 class ControllerCredenziali():
 
     def __init__(self):
-        with open("C:\\Users\\DELL\\Desktop\\prova.txt") as f:
+        with open("dati di accesso\\prova.txt") as f:
             self.nome = f.read()
 
-        with open("C:\\Users\\DELL\\Desktop\\prova2.txt") as F:
+        with open("dati di accesso\\prova2.txt") as F:
             self.password = F.read()
 
     def controllaCredenziali(self, nome, password):
@@ -12,12 +12,12 @@ class ControllerCredenziali():
             return True
 
     def aggiornaCredenziali(self, nome, password):
-        with open("C:\\Users\\DELL\\Desktop\\prova.txt", "w") as fl:
+        with open("dati di accesso\\prova.txt", "w") as fl:
             fl.write(nome)
         self.nome = nome
         print(self.nome)
 
-        with open("C:\\Users\\DELL\\Desktop\\prova2.txt", "w") as Fl:
+        with open("dati di accesso\\prova2.txt", "w") as Fl:
             Fl.write(password)
         self.password = password
         print(self.password)

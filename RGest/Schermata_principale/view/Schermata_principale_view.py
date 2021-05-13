@@ -1,19 +1,25 @@
+import os
 import webbrowser
 
 from PyQt5.QtGui import QIcon, QPixmap, QFont
 from PyQt5.QtWidgets import QMainWindow, QLabel, QPushButton, QMenu
 
+from Lista_prenotazioni.view.lista_prenotazioni_view import lista_prenotazioni_view
+
+
 class Schermata_principale_view(QMainWindow):
     def __init__(self):
         super(Schermata_principale_view, self).__init__()
 
-        self.icona = QIcon("C:\\Users\\DELL\\Desktop\\Progetto Ingegneria del Software\\Logo_definitivo.jpg")
+        self.lpv = lista_prenotazioni_view()
+
+        self.icona = QIcon("images\\Logo_definitivo.jpg")
 
         self.setGeometry(300, 50, 750, 500)
         self.setWindowTitle("RGest")
         self.setFixedSize(750, 650)
         self.setWindowIcon(self.icona)
-        self.setStyleSheet("background-color: rgb(200, 200, 200)")
+        self.setStyleSheet("background-color: rgb(230, 230, 230)")
 
         self.serviziButton = QPushButton(self)
         self.magazzinoButton = QPushButton(self)
@@ -32,13 +38,12 @@ class Schermata_principale_view(QMainWindow):
         self.infoCovid = QLabel(self)
         self.delivery = QLabel(self)
 
-
         self.schermata()
 
     def schermata(self):
         font = QFont("Times Roman", 11, QFont.Bold)
         menu = QMenu()
-        menu.addAction("Prenotazioni                 ")
+        menu.addAction("Prenotazioni                 ", self.prenotazioni)
         menu.addAction("Comanda")
         menu.addAction("Conto")
 
@@ -62,7 +67,7 @@ class Schermata_principale_view(QMainWindow):
         menuCovid.addAction("Elenco buone norme da seguire", self.norme)
         menuCovid.addAction("Andamento Covid", self.andamento)
 
-        str = "C:\\Users\\DELL\\Desktop\\Progetto Ingegneria del Software\\"
+        str = "images\\"
 
         servizioPixmap = QPixmap(str+"servizio.png")
         magazzinoPixmap = QPixmap(str+"magazzino.png")
@@ -141,8 +146,8 @@ class Schermata_principale_view(QMainWindow):
 
         self.config_foto(self.delivery, deliveryPixmap, 600, 400, 110, 100)
 
-    def config_foto(self, layout, pixmax, x, y, a, b):
-        layout.setPixmap(pixmax)
+    def config_foto(self, layout, pixmap, x, y, a, b):
+        layout.setPixmap(pixmap)
         layout.move(x, y)
         layout.setFixedSize(a, b)
 
@@ -173,3 +178,6 @@ class Schermata_principale_view(QMainWindow):
     def andamento(self):
         url = "https://www.google.com/search?q=coronavirus&sxsrf=ALeKk00h4z0EaEa1GwW2hezYhnhXnzm0oA%3A1619795169950&ei=4RyMYMK0OYOWkwX5s5eQDQ&oq=coron&gs_lcp=Cgdnd3Mtd2l6EAMYADIHCCMQyQMQJzIFCAAQkgMyBQgAEJIDMgQIIxAnMgQIIxAnMgQIABBDMgQIABBDMggIABCxAxCDATIICAAQsQMQgwEyBAgAEEM6AggAOgoIABCxAxCDARBDUMIfWLkkYMIraABwAHgAgAGbAYgBzgWSAQMxLjWYAQCgAQGqAQdnd3Mtd2l6wAEB&sclient=gws-wiz#wptab=s:H4sIAAAAAAAAAONgVuLVT9c3NMwySk6OL8zJecTozS3w8sc9YSmnSWtOXmO04eIKzsgvd80rySypFNLjYoOyVLgEpVB1ajBI8XOhCvHsYuL2SE3MKckILkksKV7EKl0MpDOLSzKTM1IViktzFJLzi_LzEssyi0qLAQ16CwOLAAAA"
         webbrowser.open(url)
+
+    def prenotazioni(self):
+        self.lpv.show()

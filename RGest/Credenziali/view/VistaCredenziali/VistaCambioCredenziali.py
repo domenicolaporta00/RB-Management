@@ -9,7 +9,7 @@ class VistaCambioCredenziali(QMainWindow):
     def __init__(self):
         super(VistaCambioCredenziali, self).__init__()
 
-        self.icona = QIcon("C:\\Users\\DELL\\Desktop\\Progetto Ingegneria del Software\\Logo_definitivo.jpg")
+        self.icona = QIcon("images\\Logo_definitivo.jpg")
 
         self.setGeometry(300, 50, 750, 500)
         self.setWindowTitle("RGest")
