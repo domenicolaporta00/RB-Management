@@ -7,7 +7,7 @@ from Schermata_principale.view.Schermata_principale_view import Schermata_princi
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    vC = VistaCredenziali()
-    #vC = Schermata_principale_view()
+    #vC = VistaCredenziali()
+    vC = Schermata_principale_view()
     vC.show()
     sys.exit(app.exec())

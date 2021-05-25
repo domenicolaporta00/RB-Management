@@ -1,17 +1,17 @@
-from PyQt5.QtGui import QIcon, QFont, QStandardItem, QStandardItemModel
-from PyQt5.QtWidgets import QMainWindow, QPushButton, QLabel, QListView, QMessageBox
+from PyQt5.QtGui import QIcon, QStandardItemModel, QStandardItem, QFont
+from PyQt5.QtWidgets import QMainWindow, QListView, QPushButton, QMessageBox, QLabel
 
-from Lista_prenotazioni.controller.lista_prenotazioni_controller import lista_prenotazioni_controller
-from Lista_prenotazioni.view.inserisci_prenotazione_view import inserisci_prenotazione_view
-from Prenotazioni.view.prenotazioni_view import prenotazioni_view
+from Dipendente.view.dipendente_view import dipendente_view
+from Lista_dipendenti.controller.lista_dipendenti_controller import lista_dipendenti_controller
+from Lista_dipendenti.view.inserisci_dipendente_view import inserisci_dipendente_view
 
 
-class lista_prenotazioni_view(QMainWindow):
+class lista_dipendenti_view(QMainWindow):
 
     def __init__(self):
-        super(lista_prenotazioni_view, self).__init__()
+        super(lista_dipendenti_view, self).__init__()
 
-        self.lpc = lista_prenotazioni_controller()
+        self.ldc = lista_dipendenti_controller()
 
         self.icona = QIcon("images\\Logo_definitivo.jpg")
 
@@ -26,10 +26,8 @@ class lista_prenotazioni_view(QMainWindow):
         self.aggiungi = QPushButton(self)
         self.visualizza = QPushButton(self)
         self.elimina = QPushButton(self)
-        self.salva = QPushButton(self)
 
         self.lista_label = QLabel(self)
-        self.posti_prenotati = QLabel(self)
 
         self.schermata()
 
@@ -42,7 +40,7 @@ class lista_prenotazioni_view(QMainWindow):
         self.lista.move(125, 100)
         self.lista.setFixedSize(500, 400)
 
-        self.lista_label.setText("Elenco delle prenotazioni")
+        self.lista_label.setText("Elenco dei dipendenti")
         self.lista_label.setFont(QFont("Times Roman", 20, QFont.Bold))
         self.lista_label.setStyleSheet("color: red")
         self.lista_label.move(200, 40)
@@ -51,9 +49,19 @@ class lista_prenotazioni_view(QMainWindow):
         self.config_button(self.aggiungi, "Aggiungi", font, 150, 30, 100, 550)
         self.aggiungi.clicked.connect(self.apri_inserimento)
         self.config_button(self.visualizza, "Modifica", font, 150, 30, 500, 550)
-        self.visualizza.clicked.connect(self.mostra_prenotazione)
+        self.visualizza.clicked.connect(self.mostra_dipendente)
         self.config_button(self.elimina, "Elimina tutto", font, 150, 30, 300, 550)
         self.elimina.clicked.connect(self.cancel)
+
+    def genera_lista(self):
+        self.list_view_model = QStandardItemModel(self.lista)
+        for dipendente in self.ldc.get_lista_dipendenti():
+            item = QStandardItem()
+            item.setText(dipendente.postazione+", "+dipendente.ruolo +", "+dipendente.cognome+" "+dipendente.nome)
+            item.setEditable(False)
+            item.setFont(QFont("Times Roman", 11, QFont.Bold))
+            self.list_view_model.appendRow(item)
+        self.lista.setModel(self.list_view_model)
 
     def config_button(self, button, text, font, a, b, x, y):
         button.setText(text)
@@ -65,38 +73,25 @@ class lista_prenotazioni_view(QMainWindow):
     def apri_inserimento(self):
         self.newelement()
 
-    def genera_lista(self):
-        self.list_view_model = QStandardItemModel(self.lista)
-        for prenotazione in self.lpc.get_lista_prenotazioni():
-            item = QStandardItem()
-            item.setText(prenotazione.cognome + " Tavolo: " + prenotazione.tavolo)
-            item.setEditable(False)
-            item.setFont(QFont("Times Roman", 11, QFont.Bold))
-            self.list_view_model.appendRow(item)
-        self.lista.setModel(self.list_view_model)
-
-    def mostra_prenotazione(self):
+    def mostra_dipendente(self):
         if not self.lista.selectedIndexes():
-            QMessageBox.warning(None, "RGest", "Selezionare una prenotazione!")
+            QMessageBox.warning(None, "RGest", "Selezionare un dipendente!")
         else:
             selected = self.lista.selectedIndexes()[0].row()
-            prenotazione_selezionata = self.lpc.get_prenotazione(selected)
-            self.pv = prenotazioni_view(prenotazione_selezionata, self.genera_lista)
-            self.pv.show()
+            dipendente_selezionato = self.ldc.get_dipendente(selected)
+            self.dv = dipendente_view(dipendente_selezionato, self.ldc.remove_dipendente, self.genera_lista)
+            self.dv.show()
 
     def cancel(self):
-        self.lpc.cancel()
-        self.lpc.save_data()
+        self.ldc.cancel()
+        self.ldc.save_data()
         self.genera_lista()
-        QMessageBox.information(None, "RGest", "Tutte le prenotazioni sono state cancellate!")
+        QMessageBox.information(None, "RGest", "Tutte i dipendenti sono stati cancellati!")
 
     def newelement(self):
-        self.closeEvent(self.lpc.save_data())
-        self.ipv = inserisci_prenotazione_view(self.lpc, self.genera_lista)
-        self.ipv.show()
+        self.closeEvent(self.ldc.save_data())
+        self.idv = inserisci_dipendente_view(self.ldc, self.genera_lista)
+        self.idv.show()
 
     def closeEvent(self, event):
-        self.lpc.save_data()
-
-
-
+        self.ldc.save_data()

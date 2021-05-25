@@ -4,6 +4,7 @@ import webbrowser
 from PyQt5.QtGui import QIcon, QPixmap, QFont
 from PyQt5.QtWidgets import QMainWindow, QLabel, QPushButton, QMenu
 
+from Lista_dipendenti.view.lista_dipendenti_view import lista_dipendenti_view
 from Lista_prenotazioni.view.lista_prenotazioni_view import lista_prenotazioni_view
 
 
@@ -12,6 +13,7 @@ class Schermata_principale_view(QMainWindow):
         super(Schermata_principale_view, self).__init__()
 
         self.lpv = lista_prenotazioni_view()
+        self.ldv = lista_dipendenti_view()
 
         self.icona = QIcon("images\\Logo_definitivo.jpg")
 
@@ -52,7 +54,7 @@ class Schermata_principale_view(QMainWindow):
         menu2.addAction("Magazzino gluten-free")
 
         menu3 = QMenu()
-        menu3.addAction("Gestione personale      ")
+        menu3.addAction("Gestione personale      ", self.dipendenti)
         menu3.addAction("Costi")
         menu3.addAction("Guadagni")
 
@@ -181,3 +183,6 @@ class Schermata_principale_view(QMainWindow):
 
     def prenotazioni(self):
         self.lpv.show()
+
+    def dipendenti(self):
+        self.ldv.show()

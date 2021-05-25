@@ -51,24 +51,28 @@ class prenotazioni_view(QMainWindow):
         self.config_label(self.telefono, "Telefono", 180, 380, 190, 30, font)
         self.config_label(self.tavolo, "Numero tavolo", 180, 440, 190, 30, font)
 
-        #aggiustare le misure
         self.Config_lineEdit(375, 140, self.pc.get_cognome(), False, self.cognomeT, QRegExpValidator(QRegExp("[a-z-A-Z- ]+")))
         self.Config_lineEdit(375, 200, self.pc.get_posti(), False, self.postiT, QRegExpValidator(QRegExp("[0-9]+")))
-        print(self.pc.get_orario())
-        print(type(self.pc.get_orario()))
         self.config_timeEdit(375, 260, QTime.fromString(self.pc.get_orario(), format("hh:mm")), self.orarioT)
-        print(123)
         self.Config_lineEdit(375, 320, self.pc.get_info(), False, self.infoT, None)
         self.Config_lineEdit(375, 380, self.pc.get_telefono(), False, self.telefonoT, QRegExpValidator(QRegExp("[0-9]+")))
         self.Config_lineEdit(375, 440, self.pc.get_tavolo(), True, self.tavoloT, None)
 
         if self.pc.get_cognome()=="Tavolo vuoto!":
             self.elimina.setText("Conferma")
+            self.elimina.move(300, 520)
         else:
             self.elimina.setText("Elimina")
+            self.elimina.move(200, 520)
+            self.conferma = QPushButton(self)
+            self.conferma.setText("Conferma")
+            self.conferma.setStyleSheet("background-color: red; border-radius: 10px; color: rgb(255, 255, 255)")
+            self.conferma.setFont(QFont("Times Roman", 11, QFont.Bold))
+            self.conferma.move(400, 520)
+            self.conferma.setFixedSize(150, 30)
+            self.conferma.clicked.connect(self.confirm)
         self.elimina.setStyleSheet("background-color: red; border-radius: 10px; color: rgb(255, 255, 255)")
         self.elimina.setFont(QFont("Times Roman", 11, QFont.Bold))
-        self.elimina.move(300, 520)
         self.elimina.setFixedSize(150, 30)
         self.elimina.clicked.connect(self.reset)
 
@@ -80,7 +84,6 @@ class prenotazioni_view(QMainWindow):
         label.setFixedSize(a, b)
 
     def Config_lineEdit(self, a, b, text, flag, lineEdit, validatore):
-        #lineEdit = QLineEdit(self)
         lineEdit.setPlaceholderText("Inserire i dati...")
         lineEdit.setValidator(validatore)
         lineEdit.setText(text)
@@ -102,18 +105,7 @@ class prenotazioni_view(QMainWindow):
 
     def reset(self):
         if self.pc.get_cognome()=="Tavolo vuoto!":
-            if (self.isBlank(self.cognomeT.text()) or self.isBlank(self.postiT.text()) or self.isBlank(self.tavoloT.text()) or self.isBlank(self.telefonoT.text())):
-                QMessageBox.warning(None, "RGest", "Compilare tutti i campi!")
-            else:
-                self.pc.set_cognome(self.cognomeT.text())
-                self.pc.set_posti(self.postiT.text())
-                self.pc.set_orario(self.orarioT.time().toString(format("hh:mm")))
-                self.pc.set_info(self.infoT.text())
-                self.pc.set_telefono(self.telefonoT.text())
-                self.pc.set_tavolo(self.tavoloT.text())
-                self.elimina_callback()
-                QMessageBox.information(None, "RGest", "Prenotazione modificata correttamente.")
-                self.close()
+            self.confirm()
         else:
             self.pc.set_cognome("Tavolo vuoto!")
             self.pc.set_posti("")
@@ -122,6 +114,21 @@ class prenotazioni_view(QMainWindow):
             self.pc.set_telefono("")
             self.elimina_callback()
             QMessageBox.information(None, "RGest", "Prenotazione cancellata correttamente.")
+            self.close()
+
+    def confirm(self):
+        if (self.isBlank(self.cognomeT.text()) or self.isBlank(self.postiT.text()) or self.isBlank(
+                self.tavoloT.text()) or self.isBlank(self.telefonoT.text())):
+            QMessageBox.warning(None, "RGest", "Compilare tutti i campi!")
+        else:
+            self.pc.set_cognome(self.cognomeT.text())
+            self.pc.set_posti(self.postiT.text())
+            self.pc.set_orario(self.orarioT.time().toString(format("hh:mm")))
+            self.pc.set_info(self.infoT.text())
+            self.pc.set_telefono(self.telefonoT.text())
+            self.pc.set_tavolo(self.tavoloT.text())
+            self.elimina_callback()
+            QMessageBox.information(None, "RGest", "Prenotazione modificata correttamente.")
             self.close()
 
     def isBlank(self, a):
