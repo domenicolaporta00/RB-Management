@@ -1,11 +1,15 @@
-import os
 import webbrowser
 
 from PyQt5.QtGui import QIcon, QPixmap, QFont
 from PyQt5.QtWidgets import QMainWindow, QLabel, QPushButton, QMenu
 
+from Costi.view.costi_view import costi_view
+from Costi_covid.view.costi_covid_view import costi_covid_view
+from Lista_costi_covid.controller.lista_costi_covid_controller import lista_costi_covid_controller
 from Lista_dipendenti.view.lista_dipendenti_view import lista_dipendenti_view
 from Lista_prenotazioni.view.lista_prenotazioni_view import lista_prenotazioni_view
+from Lista_tasse.controller.lista_tasse_controller import lista_tasse_controller
+from Tasse.view.tasse_view import tasse_view
 
 
 class Schermata_principale_view(QMainWindow):
@@ -14,6 +18,10 @@ class Schermata_principale_view(QMainWindow):
 
         self.lpv = lista_prenotazioni_view()
         self.ldv = lista_dipendenti_view()
+        self.lccc = lista_costi_covid_controller()
+        self.ltc = lista_tasse_controller()
+        #self.ccv = costi_covid_view(self.lccc)
+        #self.cv = costi_view()
 
         self.icona = QIcon("images\\Logo_definitivo.jpg")
 
@@ -55,7 +63,8 @@ class Schermata_principale_view(QMainWindow):
 
         menu3 = QMenu()
         menu3.addAction("Gestione personale      ", self.dipendenti)
-        menu3.addAction("Costi")
+        menu3.addAction("Tasse", self.tasse)
+        menu3.addAction("Costi", self.costi)
         menu3.addAction("Guadagni")
 
         menuS = QMenu()
@@ -68,6 +77,7 @@ class Schermata_principale_view(QMainWindow):
         menuCovid.addAction("Controlla i colori delle regioni", self.colori)
         menuCovid.addAction("Elenco buone norme da seguire", self.norme)
         menuCovid.addAction("Andamento Covid", self.andamento)
+        menuCovid.addAction("Ordine prodotti", self.costi_covid)
 
         str = "images\\"
 
@@ -186,3 +196,17 @@ class Schermata_principale_view(QMainWindow):
 
     def dipendenti(self):
         self.ldv.show()
+
+    def costi_covid(self):
+        self.ccv = costi_covid_view(self.lccc)
+        self.ccv.show()
+
+    def tasse(self):
+        self.tv = tasse_view(self.ltc)
+        self.tv.show()
+
+    def costi(self):
+        self.cv = costi_view()
+        self.cv.show()
+
+

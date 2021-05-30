@@ -120,10 +120,8 @@ class dipendente_view(QMainWindow):
             self.dc.set_stipendio(self.stipendioT.text())
             self.dc.set_telefono(self.telefonoT.text())
             self.dc.set_id(self.cognomeT.text()[:1]+""+self.nomeT.text()[:1]+self.telefonoT.text())
-            print(5)
             self.elimina_callback()
-            print(6)
-            QMessageBox.information(None, "RGest", "Prenotazione modificata correttamente.")
+            QMessageBox.information(None, "RGest", "Dipendente modificato correttamente.")
             self.close()
 
     def isBlank(self, a):

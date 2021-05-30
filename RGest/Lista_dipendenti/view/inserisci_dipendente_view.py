@@ -39,7 +39,6 @@ class inserisci_dipendente_view(QMainWindow):
         self.schermata()
 
     def schermata(self):
-
         font = QFont("Times Roman", 15, QFont.Bold)
 
         self.config_label(self.completa,
