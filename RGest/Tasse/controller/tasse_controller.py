@@ -17,3 +17,6 @@ class tasse_controller():
 
     def get_affitto(self):
         return self.t.affitto
+
+    def get_data(self):
+        return self.t.data

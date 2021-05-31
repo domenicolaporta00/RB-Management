@@ -1,7 +1,7 @@
 import webbrowser
 
 from PyQt5.QtGui import QIcon, QPixmap, QFont
-from PyQt5.QtWidgets import QMainWindow, QLabel, QPushButton, QMenu
+from PyQt5.QtWidgets import QMainWindow, QLabel, QPushButton, QMenu, QAction
 
 from Costi.view.costi_view import costi_view
 from Costi_covid.view.costi_covid_view import costi_covid_view
@@ -30,6 +30,18 @@ class Schermata_principale_view(QMainWindow):
         self.setFixedSize(750, 650)
         self.setWindowIcon(self.icona)
         self.setStyleSheet("background-color: rgb(230, 230, 230)")
+
+        self.menu_bar = self.menuBar()
+        self.menu_bar.setStyleSheet("background-color: rgb(240, 240, 240)")
+        self.menu_file = self.menu_bar.addMenu("File")
+        exit_icon = QIcon("images\\exit.png")
+        exit_action = QAction(exit_icon, 'Exit', parent=self)
+        exit_action.setShortcut('Ctrl+Q')
+        exit_action.setStatusTip('Exit application')
+        exit_action.triggered.connect(self.close)
+        self.menu_file.addAction(exit_action)
+        self.menu_info = self.menu_bar.addMenu("Info")
+        self.menu_info.addAction("About")
 
         self.serviziButton = QPushButton(self)
         self.magazzinoButton = QPushButton(self)
