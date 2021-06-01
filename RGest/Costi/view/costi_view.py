@@ -15,7 +15,6 @@ class costi_view(QMainWindow):
         self.ldc = lista_dipendenti_controller()
         self.lccc = lista_costi_covid_controller()
         self.ltc = lista_tasse_controller()
-        # aggiungere la lista delle tasse
 
         self.icona = QIcon("images\\Logo_definitivo.jpg")
 

@@ -108,7 +108,7 @@ class prenotazioni_view(QMainWindow):
             self.confirm()
         else:
             self.pc.set_cognome("Tavolo vuoto!")
-            self.pc.set_posti("")
+            self.pc.set_posti("0")
             self.pc.set_orario("12:00")
             self.pc.set_info("")
             self.pc.set_telefono("")

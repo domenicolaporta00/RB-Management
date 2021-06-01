@@ -5,6 +5,7 @@ from PyQt5.QtWidgets import QMainWindow, QLabel, QPushButton, QMenu, QAction
 
 from Costi.view.costi_view import costi_view
 from Costi_covid.view.costi_covid_view import costi_covid_view
+from Guadagni.view.guadagni_view import guadagni_view
 from Lista_costi_covid.controller.lista_costi_covid_controller import lista_costi_covid_controller
 from Lista_dipendenti.view.lista_dipendenti_view import lista_dipendenti_view
 from Lista_prenotazioni.view.lista_prenotazioni_view import lista_prenotazioni_view
@@ -77,7 +78,7 @@ class Schermata_principale_view(QMainWindow):
         menu3.addAction("Gestione personale      ", self.dipendenti)
         menu3.addAction("Tasse", self.tasse)
         menu3.addAction("Costi", self.costi)
-        menu3.addAction("Guadagni")
+        menu3.addAction("Guadagni", self.guadagni)
 
         menuS = QMenu()
         menuS.addAction("Ciccolini Joshua            ", self.cj)
@@ -220,5 +221,10 @@ class Schermata_principale_view(QMainWindow):
     def costi(self):
         self.cv = costi_view()
         self.cv.show()
+
+    def guadagni(self):
+        self.gv = guadagni_view()
+        self.gv.show()
+
 
 

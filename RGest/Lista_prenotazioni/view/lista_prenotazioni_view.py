@@ -1,6 +1,8 @@
 from PyQt5.QtGui import QIcon, QFont, QStandardItem, QStandardItemModel
 from PyQt5.QtWidgets import QMainWindow, QPushButton, QLabel, QListView, QMessageBox
 
+from Coperti.model.coperti_model import coperti_model
+from Lista_coperti.controller.lista_coperti_controller import lista_coperti_controller
 from Lista_prenotazioni.controller.lista_prenotazioni_controller import lista_prenotazioni_controller
 from Lista_prenotazioni.view.inserisci_prenotazione_view import inserisci_prenotazione_view
 from Prenotazioni.view.prenotazioni_view import prenotazioni_view
@@ -12,6 +14,7 @@ class lista_prenotazioni_view(QMainWindow):
         super(lista_prenotazioni_view, self).__init__()
 
         self.lpc = lista_prenotazioni_controller()
+        self.lcc = lista_coperti_controller()
 
         self.icona = QIcon("images\\Logo_definitivo.jpg")
 
@@ -48,12 +51,14 @@ class lista_prenotazioni_view(QMainWindow):
         self.lista_label.move(200, 40)
         self.lista_label.setFixedSize(350, 40)
 
-        self.config_button(self.aggiungi, "Aggiungi", font, 150, 30, 100, 550)
+        self.config_button(self.aggiungi, "Aggiungi", font, 150, 30, 45, 550)
         self.aggiungi.clicked.connect(self.apri_inserimento)
-        self.config_button(self.visualizza, "Modifica", font, 150, 30, 500, 550)
+        self.config_button(self.visualizza, "Modifica", font, 150, 30, 555, 550)
         self.visualizza.clicked.connect(self.mostra_prenotazione)
-        self.config_button(self.elimina, "Elimina tutto", font, 150, 30, 300, 550)
+        self.config_button(self.elimina, "Elimina tutto", font, 150, 30, 215, 550)
         self.elimina.clicked.connect(self.cancel)
+        self.config_button(self.salva, "Termina giornata", font, 150, 30, 385, 550)
+        self.salva.clicked.connect(self.termina)
 
     def config_button(self, button, text, font, a, b, x, y):
         button.setText(text)
@@ -95,8 +100,21 @@ class lista_prenotazioni_view(QMainWindow):
         self.ipv = inserisci_prenotazione_view(self.lpc, self.genera_lista)
         self.ipv.show()
 
+    def termina(self):
+        n = 0
+        for prenotazioni in self.lpc.get_lista_prenotazioni():
+            n += int(prenotazioni.posti)
+        self.lcc.aggiungi_coperto(coperti_model(n))
+        self.lpc.cancel()
+        #self.lpc.save_data()
+        self.genera_lista()
+        QMessageBox.information(None, "RGest", "Giornata terminata! Il numero dei coperti e i contatti dei clienti "
+                                               "sono stati salvati correttamente!")
+        self.close()
+
     def closeEvent(self, event):
         self.lpc.save_data()
+        self.lcc.save_data()
 
 
 
