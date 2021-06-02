@@ -15,12 +15,10 @@ class ControllerCredenziali():
         with open("dati di accesso\\prova.txt", "w") as fl:
             fl.write(nome)
         self.nome = nome
-        print(self.nome)
 
         with open("dati di accesso\\prova2.txt", "w") as Fl:
             Fl.write(password)
         self.password = password
-        print(self.password)
 
     def controlloPassword(self, str):
         if str == self.password:

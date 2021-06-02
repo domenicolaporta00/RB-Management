@@ -34,15 +34,9 @@ class Schermata_principale_view(QMainWindow):
 
         self.menu_bar = self.menuBar()
         self.menu_bar.setStyleSheet("background-color: rgb(240, 240, 240)")
-        self.menu_file = self.menu_bar.addMenu("File")
-        exit_icon = QIcon("images\\exit.png")
-        exit_action = QAction(exit_icon, 'Exit', parent=self)
-        exit_action.setShortcut('Ctrl+Q')
-        exit_action.setStatusTip('Exit application')
-        exit_action.triggered.connect(self.close)
-        self.menu_file.addAction(exit_action)
-        self.menu_info = self.menu_bar.addMenu("Info")
-        self.menu_info.addAction("About")
+        self.config_menubar("File", QIcon("images\\exit.png"), "Exit", 'Ctrl+Q').triggered.connect(self.close)
+        self.config_menubar("Info", QIcon("images\\pint.jpg"), "Tutorial", 'Ctrl+W').triggered.connect(self.tutorial)
+        self.config_menubar("Contatti", QIcon("images\\telefono.png"), "Contatta dipendenti", 'Ctrl+E').triggered.connect(self.contatti)
 
         self.serviziButton = QPushButton(self)
         self.magazzinoButton = QPushButton(self)
@@ -203,6 +197,22 @@ class Schermata_principale_view(QMainWindow):
     def andamento(self):
         url = "https://www.google.com/search?q=coronavirus&sxsrf=ALeKk00h4z0EaEa1GwW2hezYhnhXnzm0oA%3A1619795169950&ei=4RyMYMK0OYOWkwX5s5eQDQ&oq=coron&gs_lcp=Cgdnd3Mtd2l6EAMYADIHCCMQyQMQJzIFCAAQkgMyBQgAEJIDMgQIIxAnMgQIIxAnMgQIABBDMgQIABBDMggIABCxAxCDATIICAAQsQMQgwEyBAgAEEM6AggAOgoIABCxAxCDARBDUMIfWLkkYMIraABwAHgAgAGbAYgBzgWSAQMxLjWYAQCgAQGqAQdnd3Mtd2l6wAEB&sclient=gws-wiz#wptab=s:H4sIAAAAAAAAAONgVuLVT9c3NMwySk6OL8zJecTozS3w8sc9YSmnSWtOXmO04eIKzsgvd80rySypFNLjYoOyVLgEpVB1ajBI8XOhCvHsYuL2SE3MKckILkksKV7EKl0MpDOLSzKTM1IViktzFJLzi_LzEssyi0qLAQ16CwOLAAAA"
         webbrowser.open(url)
+
+    def config_menubar(self, str, img, str2, tasti):
+        self.menu_def = self.menu_bar.addMenu(str)
+        icon = QIcon(img)
+        action = QAction(icon, str2, parent=self)
+        action.setShortcut(tasti)
+        #action.setStatusTip('Exit application')
+        #action.triggered.connect(funzione)
+        self.menu_def.addAction(action)
+        return action
+
+    def tutorial(self):
+        print("Tutorial da fare")
+
+    def contatti(self):
+        print("Contatti da fare")
 
     def prenotazioni(self):
         self.lpv.show()

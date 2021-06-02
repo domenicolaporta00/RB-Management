@@ -39,7 +39,7 @@ class VistaCambioCredenziali(QMainWindow):
     def schermata(self):
         font = QFont("Times Roman", 11)
         f = QFont("Times Roman", 20)
-        pixmax = QPixmap("C:\\Users\\DELL\\Desktop\\Progetto Ingegneria del Software\\Logo_definitivo.jpg")
+        pixmax = QPixmap("images\\Logo_splash.png")
 
         self.logo.setPixmap(pixmax)
         self.logo.move(230, 330)
@@ -97,9 +97,10 @@ class VistaCambioCredenziali(QMainWindow):
         self.cPText.setFixedSize(150, 30)
         self.cPText.setFont(font)
 
-        self.confermaButton.setText("Conferma")
+        '''self.confermaButton.setText("Conferma")
         self.confermaButton.move(325, 290)
-        self.confermaButton.setFont(font)
+        self.confermaButton.setFont(font)'''
+        self.config_button(self.confermaButton, "Conferma", QFont("Times Roman", 11, QFont.Bold), 150, 30, 300, 290)
         self.confermaButton.clicked.connect(self.aggiornamentoCredenziali)
 
     def aggiornamentoCredenziali(self):
@@ -121,3 +122,10 @@ class VistaCambioCredenziali(QMainWindow):
 
         elif not self.controller_credenziali.controlloPassword(self.nPText.text()):
             QMessageBox.critical(None, "RGest", "Vecchia password errata! Credenziali non modificate!")
+
+    def config_button(self, button, text, font, a, b, x, y):
+        button.setText(text)
+        button.setFont(font)
+        button.move(x, y)
+        button.setFixedSize(a, b)
+        button.setStyleSheet("background-color: red; border-radius: 10px; color: rgb(255, 255, 255)")

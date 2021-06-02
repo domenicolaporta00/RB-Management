@@ -10,7 +10,7 @@ class VistaCredenziali(QMainWindow):
     def __init__(self):
         super(VistaCredenziali, self).__init__()
 
-        self.icona = QIcon("images\\Logo_definitivo.jpg")
+        self.icona = QIcon("images\\Logo_splash.png")
 
         self.setGeometry(300, 50, 750, 500)
         self.setWindowTitle("RGest")
@@ -37,12 +37,11 @@ class VistaCredenziali(QMainWindow):
 
     def schermata(self):
         font = QFont("Times Roman", 11)
-        pixmax = QPixmap("images\\Logo_definitivo.jpg")
+        pixmax = QPixmap("images\\Logo_splash.png")
 
         self.logo.setPixmap(pixmax)
         self.logo.move(240, 300)
         self.logo.setFixedSize(300, 300)
-
 
         self.benvenuto.setFont(QFont("Times Roman", 40, QFont.Bold))
         self.benvenuto.move(240, 0)
@@ -72,15 +71,17 @@ class VistaCredenziali(QMainWindow):
         self.insertPassword.setFixedSize(150, 30)
         self.insertPassword.setFont(font)
 
-        self.accedi.move(250, 250)
+        '''self.accedi.move(250, 250)
         self.accedi.setText("Accedi")
-        self.accedi.setFont(font)
+        self.accedi.setFont(font)'''
+        self.config_button(self.accedi, "Accedi", QFont("Times Roman", 11, QFont.Bold), 100, 30, 250, 250)
         self.accedi.clicked.connect(self.controllo)
 
-        self.cc.move(375, 250)
+        '''self.cc.move(375, 250)
         self.cc.setText("Cambia credenziali")
         self.cc.setFont(font)
-        self.cc.setFixedSize(150, 30)
+        self.cc.setFixedSize(150, 30)'''
+        self.config_button(self.cc, "Cambia credenziali", QFont("Times Roman", 11, QFont.Bold), 150, 30, 375, 250)
         self.cc.clicked.connect(self.cambioCredenziali)
 
     def controllo(self):
@@ -98,3 +99,10 @@ class VistaCredenziali(QMainWindow):
     def cambioCredenziali(self):
         self.vcc.show()
         self.close()
+
+    def config_button(self, button, text, font, a, b, x, y):
+        button.setText(text)
+        button.setFont(font)
+        button.move(x, y)
+        button.setFixedSize(a, b)
+        button.setStyleSheet("background-color: red; border-radius: 10px; color: rgb(255, 255, 255)")
