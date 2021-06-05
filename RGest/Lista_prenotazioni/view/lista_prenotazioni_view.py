@@ -1,7 +1,9 @@
 from PyQt5.QtGui import QIcon, QFont, QStandardItem, QStandardItemModel
 from PyQt5.QtWidgets import QMainWindow, QPushButton, QLabel, QListView, QMessageBox
 
+from Cliente.model.cliente_model import cliente_model
 from Coperti.model.coperti_model import coperti_model
+from Lista_clienti.controller.lista_clienti_controller import lista_clienti_controller
 from Lista_coperti.controller.lista_coperti_controller import lista_coperti_controller
 from Lista_prenotazioni.controller.lista_prenotazioni_controller import lista_prenotazioni_controller
 from Lista_prenotazioni.view.inserisci_prenotazione_view import inserisci_prenotazione_view
@@ -15,6 +17,7 @@ class lista_prenotazioni_view(QMainWindow):
 
         self.lpc = lista_prenotazioni_controller()
         self.lcc = lista_coperti_controller()
+        self.lclientic = lista_clienti_controller()
 
         self.icona = QIcon("images\\Logo_definitivo.jpg")
 
@@ -105,16 +108,30 @@ class lista_prenotazioni_view(QMainWindow):
         for prenotazioni in self.lpc.get_lista_prenotazioni():
             n += int(prenotazioni.posti)
         self.lcc.aggiungi_coperto(coperti_model(n))
+        for prenotazioni in self.lpc.get_lista_prenotazioni():
+            if prenotazioni.cognome == "Tavolo vuoto!":
+                print("vuoto")
+            else:
+                if self.controllo(cliente_model(prenotazioni.cognome, prenotazioni.telefono)):
+                    print("c'è già")
+                else:
+                    self.lclientic.aggiungi_cliente(cliente_model(prenotazioni.cognome, prenotazioni.telefono))
         self.lpc.cancel()
-        #self.lpc.save_data()
         self.genera_lista()
         QMessageBox.information(None, "RGest", "Giornata terminata! Il numero dei coperti e i contatti dei clienti "
                                                "sono stati salvati correttamente!")
         self.close()
 
+    def controllo(self, c):
+        for cliente in self.lclientic.get_lista_clienti():
+            if c.nome == cliente.nome and c.telefono == cliente.telefono:
+                return True
+        return False
+
     def closeEvent(self, event):
         self.lpc.save_data()
         self.lcc.save_data()
+        self.lclientic.save_data()
 
 
 

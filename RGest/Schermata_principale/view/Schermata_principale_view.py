@@ -6,6 +6,7 @@ from PyQt5.QtWidgets import QMainWindow, QLabel, QPushButton, QMenu, QAction
 from Costi.view.costi_view import costi_view
 from Costi_covid.view.costi_covid_view import costi_covid_view
 from Guadagni.view.guadagni_view import guadagni_view
+from Lista_clienti.view.lista_clienti_view import lista_clienti_view
 from Lista_costi_covid.controller.lista_costi_covid_controller import lista_costi_covid_controller
 from Lista_dipendenti.view.lista_dipendenti_view import lista_dipendenti_view
 from Lista_prenotazioni.view.lista_prenotazioni_view import lista_prenotazioni_view
@@ -79,6 +80,10 @@ class Schermata_principale_view(QMainWindow):
         menuS.addAction("Colleluori Davide", self.cd)
         menuS.addAction("La Porta Domenico", self.dlp)
 
+        menuDati = QMenu()
+        menuDati.addAction("Lista clienti", self.dati_clienti)
+        menuDati.addAction("Statistiche piatti venduti", self.piatti_venduti)
+
         menuCovid = QMenu()
         menuCovid.addAction("Visita il sito del Governo", self.governo)
         menuCovid.addAction("Controlla i colori delle regioni", self.colori)
@@ -127,6 +132,7 @@ class Schermata_principale_view(QMainWindow):
         self.datiButton.setText("Dati")
         self.datiButton.setFont(font)
         self.datiButton.setFixedSize(175, 50)
+        self.datiButton.setMenu(menuDati)
         self.datiButton.setStyleSheet("background-color: red; border-radius: 10px; color: rgb(255, 255, 255)")
 
         self.infoCovidButton.move(400, 300)
@@ -235,6 +241,14 @@ class Schermata_principale_view(QMainWindow):
     def guadagni(self):
         self.gv = guadagni_view()
         self.gv.show()
+
+    def dati_clienti(self):
+        print("dati clienti")
+        self.lclientiv = lista_clienti_view()
+        self.lclientiv.show()
+
+    def piatti_venduti(self):
+        print("piatti venduti")
 
 
 

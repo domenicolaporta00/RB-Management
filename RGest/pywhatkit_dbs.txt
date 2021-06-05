@@ -1,0 +1,151 @@
+--------------------
+Date: 3:6:2021
+Time: 16:21
+Phone number: +393511533126
+Message: Messaggio inviato automaticamente da Python. Non rispondere!
+--------------------
+Date: 3:6:2021
+Time: 16:21
+Phone number: +393511533126
+Message: Messaggio inviato automaticamente da Python. Non rispondere!
+--------------------
+Date: 3:6:2021
+Time: 16:25
+Phone number: +393511533126
+Message: Messaggio inviato automaticamente da Python. Non rispondere!
+--------------------
+Date: 3:6:2021
+Time: 16:27
+Phone number: +393511533126
+Message: Messaggio inviato automaticamente da Python. Non rispondere!
+--------------------
+Date: 3:6:2021
+Time: 16:32
+Phone number: +393511533126
+Message: Questa è una prova.
+--------------------
+Date: 3:6:2021
+Time: 16:32
+Phone number: +393394806909
+Message: Questa è una prova.
+--------------------
+Date: 3:6:2021
+Time: 16:32
+Phone number: +393511533126
+Message: Questa è una prova.
+--------------------
+Date: 3:6:2021
+Time: 16:46
+Phone number: +393511533126
+Message: Questa è una prova.
+--------------------
+Date: 3:6:2021
+Time: 16:47
+Phone number: +393394806909
+Message: Questa è una prova.
+--------------------
+Date: 3:6:2021
+Time: 16:50
+Phone number: +393511533126
+Message: Questa è una prova.
+--------------------
+Date: 3:6:2021
+Time: 16:51
+Phone number: +393394806909
+Message: Questa è una prova.
+--------------------
+Date: 3:6:2021
+Time: 16:55
+Phone number: +393511533126
+Message: Questa è una prova.
+--------------------
+Date: 3:6:2021
+Time: 16:56
+Phone number: +393394806909
+Message: Questa è una prova.
+--------------------
+Date: 3:6:2021
+Time: 17:1
+Phone number: +393511533126
+Message: E comunque si scrive hacker
+--------------------
+Date: 3:6:2021
+Time: 17:2
+Phone number: +393394806909
+Message: E comunque si scrive hacker
+--------------------
+Date: 3:6:2021
+Time: 17:3
+Phone number: +393511533126
+Message: E comunque si scrive hacker
+--------------------
+Date: 3:6:2021
+Time: 17:4
+Phone number: +393394806909
+Message: E comunque si scrive hacker
+--------------------
+Date: 3:6:2021
+Time: 17:6
+Phone number: +393511533126
+Message: E comunque si scrive hacker
+--------------------
+Date: 3:6:2021
+Time: 17:7
+Phone number: +393394806909
+Message: E comunque si scrive hacker
+--------------------
+Date: 3:6:2021
+Time: 17:65
+Phone number: +393511533126
+Message: E comunque si scrive hacker
+--------------------
+Date: 3:6:2021
+Time: 17:36
+Phone number: +393511533126
+Message: ('Ciao', True)
+--------------------
+Date: 3:6:2021
+Time: 17:38
+Phone number: +393511533126
+Message: ciao
+--------------------
+Date: 3:6:2021
+Time: 18:5
+Phone number: +393511533126
+Message: ciao
+--------------------
+Date: 3:6:2021
+Time: 18:6
+Phone number: +393511533126
+Message: ciao 
+--------------------
+Date: 3:6:2021
+Time: 18:7
+Phone number: +393511533126
+Message: Questo messaggio è stato inviato dal software che sto sviluppando. Se lo visualizzi vuol dire che funziona.
+--------------------
+Date: 3:6:2021
+Time: 18:8
+Phone number: +393394806909
+Message: Questo messaggio è stato inviato dal software che sto sviluppando. Se lo visualizzi vuol dire che funziona.
+--------------------
+Date: 5:6:2021
+Time: 18:20
+Phone number: +393804706615
+Message: Car* Longo Giovanni, buongiorno. Se leggi questo messaggio vuol dire che il mio software funziona. Messaggio inviato automaticamente dal gestionale che sto sviluppando.
+--------------------
+Date: 5:6:2021
+Time: 18:21
+Phone number: +393450146553
+Message: Car* Notaro Francesco, buongiorno. Se leggi questo messaggio vuol dire che il mio software funziona. Messaggio inviato automaticamente dal gestionale che sto sviluppando.
+--------------------
+Date: 5:6:2021
+Time: 18:22
+Phone number: +393202454591
+Message: Car* Cillari Pietro, buongiorno. Se leggi questo messaggio vuol dire che il mio software funziona. Messaggio inviato automaticamente dal gestionale che sto sviluppando.
+--------------------
+Date: 5:6:2021
+Time: 18:23
+Phone number: +393892563201
+Message: Car* Lombardi Alessio, buongiorno. Se leggi questo messaggio vuol dire che il mio software funziona. Messaggio inviato automaticamente dal gestionale che sto sviluppando.
+--------------------

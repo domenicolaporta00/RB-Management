@@ -30,7 +30,6 @@ class progress_bar_view(QMainWindow):
 
     def schermata(self):
         pixmax = QPixmap("images\\Logo_definitivo.jpg")
-
         self.logo.setPixmap(pixmax)
         self.logo.move(225, 100)
         self.logo.setFixedSize(300, 300)

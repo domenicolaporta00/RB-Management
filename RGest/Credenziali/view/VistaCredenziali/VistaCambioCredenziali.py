@@ -1,5 +1,5 @@
 from PyQt5.QtGui import QFont, QPixmap, QIcon
-from PyQt5.QtWidgets import QMainWindow, QLabel, QLineEdit, QPushButton, QMessageBox, QFrame
+from PyQt5.QtWidgets import QMainWindow, QLabel, QLineEdit, QPushButton, QMessageBox
 
 from Credenziali.controller.ControllerCredenziali import ControllerCredenziali
 from Schermata_principale.view.Schermata_principale_view import Schermata_principale_view
@@ -37,46 +37,23 @@ class VistaCambioCredenziali(QMainWindow):
         self.schermata()
 
     def schermata(self):
-        font = QFont("Times Roman", 11)
-        f = QFont("Times Roman", 20)
+        font = QFont("Times Roman", 11, QFont.Bold)
+        f = QFont("Times Roman", 20, QFont.Bold)
         pixmax = QPixmap("images\\Logo_splash.png")
 
         self.logo.setPixmap(pixmax)
         self.logo.move(230, 330)
         self.logo.setFixedSize(300, 300)
 
-        self.inserisci.setText("Inserisci le nuove credenziali")
-        self.inserisci.setFont(f)
-        self.inserisci.move(210, -60)
-        self.inserisci.setFixedSize(350, 200)
+        self.config_label(self.inserisci, "Inserisci le nuove credenziali", 175, -60, 400, 200, f)
 
-        self.vecchia_password.setText("Vecchia password")
-        self.vecchia_password.setFont(font)
-        self.vecchia_password.move(220, 90)
-        self.vecchia_password.setFixedSize(150, 30)
-        self.vecchia_password.setFrameShape(QFrame.Panel)
-        self.vecchia_password.setFrameShadow(QFrame.Sunken)
+        self.config_label(self.vecchia_password, "Vecchia password", 220, 90, 150, 30, font)
 
-        self.nuovo_nome_utente.setText("Nuovo nome utente")
-        self.nuovo_nome_utente.setFont(font)
-        self.nuovo_nome_utente.move(220, 140)
-        self.nuovo_nome_utente.setFixedSize(150, 30)
-        self.nuovo_nome_utente.setFrameShape(QFrame.Panel)
-        self.nuovo_nome_utente.setFrameShadow(QFrame.Sunken)
+        self.config_label(self.nuovo_nome_utente, "Nuovo nome utente", 220, 140, 150, 30, font)
 
-        self.nuova_password.setText("Nuova password")
-        self.nuova_password.setFont(font)
-        self.nuova_password.move(220, 190)
-        self.nuova_password.setFixedSize(150, 30)
-        self.nuova_password.setFrameShape(QFrame.Panel)
-        self.nuova_password.setFrameShadow(QFrame.Sunken)
+        self.config_label(self.nuova_password, "Nuova password", 220, 190, 150, 30, font)
 
-        self.conferma_password.setText("Conferma password")
-        self.conferma_password.setFont(font)
-        self.conferma_password.move(220, 240)
-        self.conferma_password.setFixedSize(150, 30)
-        self.conferma_password.setFrameShape(QFrame.Panel)
-        self.conferma_password.setFrameShadow(QFrame.Sunken)
+        self.config_label(self.conferma_password, "Conferma password", 220, 240, 150, 30, font)
 
         self.vPText.setEchoMode(QLineEdit.Password)
         self.vPText.setFixedSize(150, 30)
@@ -85,7 +62,7 @@ class VistaCambioCredenziali(QMainWindow):
 
         self.nNUText.move(385, 140)
         self.nNUText.setFixedSize(150, 30)
-        self.nNUText.setFont(font)
+        self.nNUText.setFont(QFont("Times Roman", 11))
 
         self.nPText.move(385, 190)
         self.nPText.setFixedSize(150, 30)
@@ -97,9 +74,6 @@ class VistaCambioCredenziali(QMainWindow):
         self.cPText.setFixedSize(150, 30)
         self.cPText.setFont(font)
 
-        '''self.confermaButton.setText("Conferma")
-        self.confermaButton.move(325, 290)
-        self.confermaButton.setFont(font)'''
         self.config_button(self.confermaButton, "Conferma", QFont("Times Roman", 11, QFont.Bold), 150, 30, 300, 290)
         self.confermaButton.clicked.connect(self.aggiornamentoCredenziali)
 
@@ -129,3 +103,10 @@ class VistaCambioCredenziali(QMainWindow):
         button.move(x, y)
         button.setFixedSize(a, b)
         button.setStyleSheet("background-color: red; border-radius: 10px; color: rgb(255, 255, 255)")
+
+    def config_label(self, label, text, x, y, a, b, font):
+        label.setText(text)
+        label.setFont(font)
+        label.move(x, y)
+        label.setStyleSheet("color: red")
+        label.setFixedSize(a, b)

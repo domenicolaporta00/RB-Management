@@ -37,30 +37,18 @@ class VistaCredenziali(QMainWindow):
 
     def schermata(self):
         font = QFont("Times Roman", 11)
+        f = QFont("Times Roman", 11, QFont.Bold)
         pixmax = QPixmap("images\\Logo_splash.png")
 
         self.logo.setPixmap(pixmax)
         self.logo.move(240, 300)
         self.logo.setFixedSize(300, 300)
 
-        self.benvenuto.setFont(QFont("Times Roman", 40, QFont.Bold))
-        self.benvenuto.move(240, 0)
-        self.benvenuto.setFixedSize(300, 200)
-        self.benvenuto.setText("Benvenuto!")
+        self.config_label(self.benvenuto, "Benvenuto!", 240, 0, 300, 200, QFont("Times Roman", 40, QFont.Bold))
 
-        self.testoNome.setText("Nome Utente")
-        self.testoNome.move(250, 150)
-        self.testoNome.setFont(font)
-        self.testoNome.setFrameShape(QFrame.Panel)
-        self.testoNome.setFrameShadow(QFrame.Sunken)
-        self.testoNome.setLineWidth(2)
+        self.config_label(self.testoNome, "Nome Utente", 250, 150, 100, 30, f)
 
-        self.testoPassword.setText("Password")
-        self.testoPassword.move(250, 200)
-        self.testoPassword.setFont(font)
-        self.testoPassword.setFrameShape(QFrame.Panel)
-        self.testoPassword.setFrameShadow(QFrame.Sunken)
-        self.testoPassword.setLineWidth(2)
+        self.config_label(self.testoPassword, "Password", 250, 200, 100, 30, f)
 
         self.insertNome.move(375, 150)
         self.insertNome.setFixedSize(150, 30)
@@ -106,3 +94,10 @@ class VistaCredenziali(QMainWindow):
         button.move(x, y)
         button.setFixedSize(a, b)
         button.setStyleSheet("background-color: red; border-radius: 10px; color: rgb(255, 255, 255)")
+
+    def config_label(self, label, text, x, y, a, b, font):
+        label.setText(text)
+        label.setFont(font)
+        label.move(x, y)
+        label.setStyleSheet("color: red")
+        label.setFixedSize(a, b)
