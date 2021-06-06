@@ -1,13 +1,16 @@
 import webbrowser
 
+import pywhatkit
+from PyQt5.QtCore import QTime
 from PyQt5.QtGui import QIcon, QPixmap, QFont
-from PyQt5.QtWidgets import QMainWindow, QLabel, QPushButton, QMenu, QAction
+from PyQt5.QtWidgets import QMainWindow, QLabel, QPushButton, QMenu, QAction, QMessageBox, QInputDialog
 
 from Costi.view.costi_view import costi_view
 from Costi_covid.view.costi_covid_view import costi_covid_view
 from Guadagni.view.guadagni_view import guadagni_view
 from Lista_clienti.view.lista_clienti_view import lista_clienti_view
 from Lista_costi_covid.controller.lista_costi_covid_controller import lista_costi_covid_controller
+from Lista_dipendenti.controller.lista_dipendenti_controller import lista_dipendenti_controller
 from Lista_dipendenti.view.lista_dipendenti_view import lista_dipendenti_view
 from Lista_prenotazioni.view.lista_prenotazioni_view import lista_prenotazioni_view
 from Lista_tasse.controller.lista_tasse_controller import lista_tasse_controller
@@ -22,8 +25,9 @@ class Schermata_principale_view(QMainWindow):
         self.ldv = lista_dipendenti_view()
         self.lccc = lista_costi_covid_controller()
         self.ltc = lista_tasse_controller()
-        #self.ccv = costi_covid_view(self.lccc)
-        #self.cv = costi_view()
+        # self.ldc = lista_dipendenti_controller()
+        # self.ccv = costi_covid_view(self.lccc)
+        # self.cv = costi_view()
 
         self.icona = QIcon("images\\Logo_definitivo.jpg")
 
@@ -37,7 +41,8 @@ class Schermata_principale_view(QMainWindow):
         self.menu_bar.setStyleSheet("background-color: rgb(240, 240, 240)")
         self.config_menubar("File", QIcon("images\\exit.png"), "Exit", 'Ctrl+Q').triggered.connect(self.close)
         self.config_menubar("Info", QIcon("images\\pint.jpg"), "Tutorial", 'Ctrl+W').triggered.connect(self.tutorial)
-        self.config_menubar("Contatti", QIcon("images\\telefono.png"), "Contatta dipendenti", 'Ctrl+E').triggered.connect(self.contatti)
+        self.config_menubar("Contatti", QIcon("images\\telefono.png"), "Contatta dipendenti",
+                            "Ctrl+E").triggered.connect(self.contatti)
 
         self.serviziButton = QPushButton(self)
         self.magazzinoButton = QPushButton(self)
@@ -93,13 +98,13 @@ class Schermata_principale_view(QMainWindow):
 
         str = "images\\"
 
-        servizioPixmap = QPixmap(str+"servizio.png")
-        magazzinoPixmap = QPixmap(str+"magazzino.png")
-        backofficePixmap = QPixmap(str+"backoffice.png")
-        datiPixmap = QPixmap(str+"dati.png")
-        infocovidPixmap = QPixmap(str+"covid.png")
-        deliveryPixmap = QPixmap(str+"delivery.png")
-        LogoPixmax = QPixmap(str+"Logo_tagliato.png")
+        servizioPixmap = QPixmap(str + "servizio.png")
+        magazzinoPixmap = QPixmap(str + "magazzino.png")
+        backofficePixmap = QPixmap(str + "backoffice.png")
+        datiPixmap = QPixmap(str + "dati.png")
+        infocovidPixmap = QPixmap(str + "covid.png")
+        deliveryPixmap = QPixmap(str + "delivery.png")
+        LogoPixmax = QPixmap(str + "Logo_tagliato.png")
 
         self.selezionare.setText("                 Benvenuto in RGest. \nPrego, selezionare un'opzione dal menù:")
         self.selezionare.setFont(QFont("Times Roman", 20, QFont.Bold))
@@ -209,8 +214,8 @@ class Schermata_principale_view(QMainWindow):
         icon = QIcon(img)
         action = QAction(icon, str2, parent=self)
         action.setShortcut(tasti)
-        #action.setStatusTip('Exit application')
-        #action.triggered.connect(funzione)
+        # action.setStatusTip('Exit application')
+        # action.triggered.connect(funzione)
         self.menu_def.addAction(action)
         return action
 
@@ -218,7 +223,40 @@ class Schermata_principale_view(QMainWindow):
         print("Tutorial da fare")
 
     def contatti(self):
-        print("Contatti da fare")
+        self.ldc = lista_dipendenti_controller()
+        if not self.ldc.get_lista_dipendenti():
+            QMessageBox.warning(None, "RGest", "Lista clienti vuota. Impossibile inviare messaggi.")
+        else:
+            text, select = QInputDialog.getText(None, "RGest",
+                                                "Scrivi il messaggio. (Attenzione! La procedura può impiegare\ntanto "
+                                                "tempo "
+                                                "e non può essere fatta "
+                                                "in background.\nSi consiglia di eseguire fuori dall'orario "
+                                                "lavorativo!\n"
+                                                "Premere ok per continuare!)")
+            if not select:
+                pass
+            else:
+                if not text:
+                    QMessageBox.warning(None, "RGest", "Digitare qualcosa!")
+                else:
+                    QMessageBox.warning(None, "RGest",
+                                        "Il sistema aprirà whatsapp web per ogni dipendente memorizzato e ci "
+                                        "saranno venti secondi a disposizione per inquadrare il QR code; "
+                                        "al termine dei venti secondi il messaggio verrà inviato "
+                                        "correttamente e si passerà al successivo. Non interagire con "
+                                        "l'applicazione durante l'invio dei messaggi!")
+                    for dipendente in self.ldc.get_lista_dipendenti():
+                        ora = QTime.currentTime().hour()
+                        minuto = QTime.currentTime().minute() + 1
+                        if minuto == 60:
+                            minuto = 0
+                            ora += 1
+                        else:
+                            mex = "Car* " + dipendente.nome + ", " + text
+                            #print("Invio " + mex + " a " + dipendente.nome + " numero " + dipendente.telefono)
+                            pywhatkit.sendwhatmsg("+39" + dipendente.telefono, mex, ora, minuto)
+                    QMessageBox.information(None, "RGest", "Invio messaggi terminato.")
 
     def prenotazioni(self):
         self.lpv.show()
@@ -249,6 +287,3 @@ class Schermata_principale_view(QMainWindow):
 
     def piatti_venduti(self):
         print("piatti venduti")
-
-
-

@@ -86,7 +86,7 @@ class lista_clienti_view(QMainWindow):
                                                 "tempo "
                                                 "e non può essere fatta "
                                                 "in background.\nSi consiglia di eseguire fuori dall'orario "
-                                                "lavorativo!\n "
+                                                "lavorativo!\n"
                                                 "Premere ok per continuare!)")
             if not select:
                 pass
