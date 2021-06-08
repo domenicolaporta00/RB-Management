@@ -8,11 +8,12 @@ from Prenotazioni.model.prenotazioni_model import prenotazioni_model
 
 class inserisci_prenotazione_view(QMainWindow):
 
-    def __init__(self, controller, callback):
+    def __init__(self, controller, callback, cb_cena):
         super(inserisci_prenotazione_view, self).__init__()
 
         self.controller = controller
         self.callback = callback
+        self.cb_cena = cb_cena
         self.jsonobject = {}
 
         self.lpc = lista_prenotazioni_controller()
@@ -40,7 +41,8 @@ class inserisci_prenotazione_view(QMainWindow):
     def schermata(self):
         font = QFont("Times Roman", 15, QFont.Bold)
 
-        self.config_label(self.completa, "            Completa i seguenti campi \n(contrassegnato con * non obbligatorio)",
+        self.config_label(self.completa,
+                          "            Completa i seguenti campi \n(contrassegnato con * non obbligatorio)",
                           100, 30, 750, 75, QFont("Times Roman", 20, QFont.Bold))
 
         self.config_label(self.cognome, "Cognome e nome", 180, 140, 200, 30, font)
@@ -55,8 +57,8 @@ class inserisci_prenotazione_view(QMainWindow):
         self.config_timeEdit("Orario", 375, 260)
         self.Config_lineEdit("Info extra", 375, 320, "", False, None)
         self.Config_lineEdit("Telefono", 375, 380, "", False, QRegExpValidator(QRegExp("[0-9]+")))
-        self.Config_lineEdit("Numero tavolo", 375, 440, str(len(self.lpc.get_lista_prenotazioni())+1), True, None)
-
+        self.Config_lineEdit("Numero tavolo", 375, 440, "", True, None)
+        # str(len(self.lpc.get_lista_prenotazioni()) + 1)
         self.ok.setText("Conferma")
         self.ok.setStyleSheet("background-color: red; border-radius: 10px; color: rgb(255, 255, 255)")
         self.ok.setFont(QFont("Times Roman", 11, QFont.Bold))
@@ -85,7 +87,7 @@ class inserisci_prenotazione_view(QMainWindow):
 
     def config_timeEdit(self, tipo, a, b):
         timeEdit = QTimeEdit(self)
-        timeEdit.setMaximumTime(QTime(21, 00))
+        timeEdit.setMaximumTime(QTime(22, 00))
         timeEdit.setMinimumTime(QTime(12, 00))
         timeEdit.move(a, b)
         timeEdit.setFont(QFont("Times Roman", 15))
@@ -99,13 +101,23 @@ class inserisci_prenotazione_view(QMainWindow):
         orario = self.jsonobject["Orario"].time()
         info = self.jsonobject["Info extra"].text()
         telefono = self.jsonobject["Telefono"].text()
-        num_tavoli = self.jsonobject["Numero tavolo"].text()
-        if(self.isBlank(cognome) or self.isBlank(posti) or self.isBlank(telefono) or self.isBlank(num_tavoli)):
+        #num_tavoli = self.jsonobject["Numero tavolo"].text()
+        if self.isBlank(cognome) or self.isBlank(posti) or self.isBlank(telefono):
             QMessageBox.warning(None, "RGest", "Compilare tutti i campi!")
+        elif QTime(19, 00) > orario > QTime(14, 00):
+            QMessageBox.warning(None, "RGest", "Impossibile prenotare all'orario inserito!\nOrari "
+                                               "possibili:\npranzo 12:00-14:00\ncena 19:00-22:00")
         else:
             ora = orario.toString(format("hh:mm"))
-            self.controller.aggiungi_prenotazione(prenotazioni_model(cognome, posti, ora, info, telefono, num_tavoli))
+            num_tavoli = 0
+            if QTime(14, 00) >= orario >= QTime(12, 00):
+                num_tavoli = len(self.lpc.get_lista_prenotazioni()) + 1
+            if QTime(22, 00) >= orario >= QTime(19, 00):
+                num_tavoli = len(self.lpc.get_lista_prenotazioni_cena()) + 1
+            self.controller.aggiungi_prenotazione(
+                prenotazioni_model(cognome, posti, ora, info, telefono, num_tavoli), orario)
             self.callback()
+            self.cb_cena()
             QMessageBox.information(None, "RGest", "Prenotazione inserita correttamente.")
             self.close()
 

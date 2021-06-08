@@ -6,10 +6,12 @@ from Prenotazioni.controller.prenotazioni_controller import prenotazioni_control
 
 
 class prenotazioni_view(QMainWindow):
-    def __init__(self, prenotazione, elimina_callback):
+    def __init__(self, prenotazione, elimina_callback, aggiorna, turno):
         super(prenotazioni_view, self).__init__()
         self.pc = prenotazioni_controller(prenotazione)
         self.elimina_callback = elimina_callback
+        self.aggiorna = aggiorna
+        self.turno = turno
 
         self.icona = QIcon("images\\Logo_definitivo.jpg")
 
@@ -56,7 +58,7 @@ class prenotazioni_view(QMainWindow):
         self.config_timeEdit(375, 260, QTime.fromString(self.pc.get_orario(), format("hh:mm")), self.orarioT)
         self.Config_lineEdit(375, 320, self.pc.get_info(), False, self.infoT, None)
         self.Config_lineEdit(375, 380, self.pc.get_telefono(), False, self.telefonoT, QRegExpValidator(QRegExp("[0-9]+")))
-        self.Config_lineEdit(375, 440, self.pc.get_tavolo(), True, self.tavoloT, None)
+        self.Config_lineEdit(375, 440, str(self.pc.get_tavolo()), True, self.tavoloT, None)
 
         if self.pc.get_cognome()=="Tavolo vuoto!":
             self.elimina.setText("Conferma")
@@ -96,8 +98,12 @@ class prenotazioni_view(QMainWindow):
     def config_timeEdit(self, a, b, time, timeEdit):
         #timeEdit = QTimeEdit(self)
         timeEdit.setTime(time)
-        timeEdit.setMaximumTime(QTime(21, 00))
-        timeEdit.setMinimumTime(QTime(12, 00))
+        if self.turno == "pranzo":
+            timeEdit.setMaximumTime(QTime(14, 00))
+            timeEdit.setMinimumTime(QTime(12, 00))
+        if self.turno == "cena":
+            timeEdit.setMaximumTime(QTime(22, 00))
+            timeEdit.setMinimumTime(QTime(19, 00))
         timeEdit.move(a, b)
         timeEdit.setFont(QFont("Times Roman", 15))
         timeEdit.setStyleSheet("background-color: rgb(255, 255, 255)")
@@ -113,6 +119,7 @@ class prenotazioni_view(QMainWindow):
             self.pc.set_info("")
             self.pc.set_telefono("")
             self.elimina_callback()
+            self.aggiorna()
             QMessageBox.information(None, "RGest", "Prenotazione cancellata correttamente.")
             self.close()
 
@@ -120,6 +127,9 @@ class prenotazioni_view(QMainWindow):
         if (self.isBlank(self.cognomeT.text()) or self.isBlank(self.postiT.text()) or self.isBlank(
                 self.tavoloT.text()) or self.isBlank(self.telefonoT.text())):
             QMessageBox.warning(None, "RGest", "Compilare tutti i campi!")
+        elif QTime(19, 00) > self.orarioT.time() > QTime(14, 00):
+            QMessageBox.warning(None, "RGest", "Impossibile prenotare all'orario inserito!\nOrari "
+                                               "possibili:\npranzo 12:00-14:00\ncena 19:00-22:00")
         else:
             self.pc.set_cognome(self.cognomeT.text())
             self.pc.set_posti(self.postiT.text())
@@ -128,6 +138,7 @@ class prenotazioni_view(QMainWindow):
             self.pc.set_telefono(self.telefonoT.text())
             self.pc.set_tavolo(self.tavoloT.text())
             self.elimina_callback()
+            self.aggiorna()
             QMessageBox.information(None, "RGest", "Prenotazione modificata correttamente.")
             self.close()
 
