@@ -9,6 +9,7 @@ from Costi.view.costi_view import costi_view
 from Costi_covid.view.costi_covid_view import costi_covid_view
 from Guadagni.view.guadagni_view import guadagni_view
 from Lista_clienti.view.lista_clienti_view import lista_clienti_view
+from Lista_comande.view.lista_comande_view import lista_comande_view
 from Lista_costi_covid.controller.lista_costi_covid_controller import lista_costi_covid_controller
 from Lista_dipendenti.controller.lista_dipendenti_controller import lista_dipendenti_controller
 from Lista_dipendenti.view.lista_dipendenti_view import lista_dipendenti_view
@@ -23,6 +24,7 @@ class Schermata_principale_view(QMainWindow):
 
         self.lpv = lista_prenotazioni_view()
         self.ldv = lista_dipendenti_view()
+        self.lcomandav = lista_comande_view()
         self.lccc = lista_costi_covid_controller()
         self.ltc = lista_tasse_controller()
         # self.ldc = lista_dipendenti_controller()
@@ -67,12 +69,12 @@ class Schermata_principale_view(QMainWindow):
         font = QFont("Times Roman", 11, QFont.Bold)
         menu = QMenu()
         menu.addAction("Prenotazioni                 ", self.prenotazioni)
-        menu.addAction("Comanda")
+        menu.addAction("Comanda", self.comanda)
         menu.addAction("Conto")
 
-        menu2 = QMenu()
+        '''menu2 = QMenu()
         menu2.addAction("Magazzino standard")
-        menu2.addAction("Magazzino gluten-free")
+        menu2.addAction("Magazzino gluten-free")'''
 
         menu3 = QMenu()
         menu3.addAction("Gestione personale      ", self.dipendenti)
@@ -123,7 +125,7 @@ class Schermata_principale_view(QMainWindow):
         self.magazzinoButton.setText("Gestione magazzino")
         self.magazzinoButton.setFont(font)
         self.magazzinoButton.setFixedSize(175, 50)
-        self.magazzinoButton.setMenu(menu2)
+        # self.magazzinoButton.setMenu(menu2)
         self.magazzinoButton.setStyleSheet("background-color: red; border-radius: 10px; color: rgb(255, 255, 255)")
 
         self.backofficeButton.move(175, 425)
@@ -164,7 +166,7 @@ class Schermata_principale_view(QMainWindow):
         self.sviluppatori.setStyleSheet("background-color: red; border-radius: 10px; color: rgb(255, 255, 255)")
         self.sviluppatori.setMenu(menuS)
 
-        self.config_foto(self.servizi, servizioPixmap, 50, 150, 110, 100)
+        self.config_foto(self.servizi, servizioPixmap, 50, 150, 110, 110)
 
         self.config_foto(self.magazzino, magazzinoPixmap, 50, 275, 110, 100)
 
@@ -254,7 +256,7 @@ class Schermata_principale_view(QMainWindow):
                             ora += 1
                         else:
                             mex = "Car* " + dipendente.nome + ", " + text
-                            #print("Invio " + mex + " a " + dipendente.nome + " numero " + dipendente.telefono)
+                            # print("Invio " + mex + " a " + dipendente.nome + " numero " + dipendente.telefono)
                             pywhatkit.sendwhatmsg("+39" + dipendente.telefono, mex, ora, minuto)
                     QMessageBox.information(None, "RGest", "Invio messaggi terminato.")
 
@@ -263,6 +265,10 @@ class Schermata_principale_view(QMainWindow):
 
     def dipendenti(self):
         self.ldv.show()
+
+    def comanda(self):
+        print("qua")
+        self.lcomandav.show()
 
     def costi_covid(self):
         self.ccv = costi_covid_view(self.lccc)

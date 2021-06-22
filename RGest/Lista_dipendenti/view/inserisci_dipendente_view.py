@@ -104,7 +104,7 @@ class inserisci_dipendente_view(QMainWindow):
         ruolo = self.jsonobject["Ruolo"].currentText()
         telefono = self.jsonobject["Telefono"].text()
         stipendio = self.jsonobject["Stipendio"].text()
-        if(self.isBlank(cognome) or self.isBlank(nome) or self.isBlank(eta) or self.isBlank(telefono) or self.isBlank(stipendio)):
+        if self.isBlank(cognome) or self.isBlank(nome) or self.isBlank(eta) or self.isBlank(telefono) or self.isBlank(stipendio):
             QMessageBox.warning(None, "RGest", "Compilare tutti i campi!")
         elif not self.controllo(postazione, ruolo):
             QMessageBox.critical(None, "RGest", "Postazione e ruolo non corrispondono!")

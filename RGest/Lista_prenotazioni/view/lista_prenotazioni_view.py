@@ -133,7 +133,6 @@ class lista_prenotazioni_view(QMainWindow):
             self.pv.show()
 
     def mostra_prenotazione_cena(self):
-        print("premuto")
         if not self.lista_cena.selectedIndexes():
             QMessageBox.warning(None, "RGest", "Selezionare una prenotazione!")
         else:

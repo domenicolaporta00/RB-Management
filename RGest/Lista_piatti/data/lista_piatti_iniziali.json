@@ -1,0 +1,117 @@
+[
+  {
+    "nome": "crudo di mare",
+    "tipo": "antipasto",
+    "prezzo": 20.0
+  },
+  {
+    "nome": "antipasto di terra",
+    "tipo": "antipasto",
+    "prezzo": 15.0
+  },
+  {
+    "nome": "orecchiette e cipe di rapa",
+    "tipo": "primo",
+    "prezzo": 8.0
+  },
+  {
+    "nome": "spaghetti allo scoglio",
+    "tipo": "primo",
+    "prezzo": 12.0
+  },
+  {
+    "nome": "penne al pomodoro",
+    "tipo": "primo",
+    "prezzo": 8.0
+  },
+  {
+    "nome": "ravioli al nero di seppia",
+    "tipo": "primo",
+    "prezzo": 12.0
+  },
+  {
+    "nome": "orata al cartoccio",
+    "tipo": "secondo",
+    "prezzo": 10.0
+  },
+  {
+    "nome": "filetto di vitello",
+    "tipo": "secondo",
+    "prezzo": 10.0
+  },
+  {
+    "nome": "arrosto",
+    "tipo": "secondo",
+    "prezzo": 8.0
+  },
+  {
+    "nome": "insalata",
+    "tipo": "contorno",
+    "prezzo": 3.0
+  },
+  {
+    "nome": "patate al forno",
+    "tipo": "contorno",
+    "prezzo": 3.0
+  },
+  {
+    "nome": "verdure grigliate",
+    "tipo": "contorno",
+    "prezzo": 4.0
+  },
+  {
+    "nome": "cheesecake alle fragole",
+    "tipo": "dolce",
+    "prezzo": 4.0
+  },
+  {
+    "nome": "tiramisu'",
+    "tipo": "dolce",
+    "prezzo": 3.0
+  },
+  {
+    "nome": "torta ai 5 cioccolati",
+    "tipo": "dolci",
+    "prezzo": 4.0
+  },
+  {
+    "nome": "frutta di stagione",
+    "tipo": "frutta",
+    "prezzo": 3.0
+  },
+  {
+    "nome": "coca cola",
+    "tipo": "bevanda",
+    "prezzo": 2.5
+  },
+  {
+    "nome": "the",
+    "tipo": "bevanda",
+    "prezzo": 2.5
+  },
+  {
+    "nome": "acqua",
+    "tipo": "bevanda",
+    "prezzo": 1.5
+  },
+  {
+    "nome": "vino",
+    "tipo": "bevanda",
+    "prezzo": 5.0
+  },
+  {
+    "nome": "birra",
+    "tipo": "bevanda",
+    "prezzo": 3.0
+  },
+  {
+    "nome": "amaro della casa",
+    "tipo": "digestivo",
+    "prezzo": 2.0
+  },
+  {
+    "nome": "caffe'",
+    "tipo": "digestivo",
+    "prezzo": 1.0
+  }
+]
