@@ -44,9 +44,9 @@ class lista_comande_view(QMainWindow):
         self.lista_label.move(225, 40)
         self.lista_label.setFixedSize(300, 40)
 
-        self.config_button(self.aggiungi, "Aggiungi", font, 150, 30, 100, 550)
+        self.config_button(self.aggiungi, "Aggiungi", font, 150, 30, 200, 550)
         self.aggiungi.clicked.connect(self.apri_inserimento)
-        self.config_button(self.visualizza, "Visualizza", font, 150, 30, 500, 550)
+        self.config_button(self.visualizza, "Visualizza", font, 150, 30, 400, 550)
         self.visualizza.clicked.connect(self.mostra)
 
     def genera_lista(self):
@@ -76,7 +76,8 @@ class lista_comande_view(QMainWindow):
         else:
             selected = self.lista.selectedIndexes()[0].row()
             ordine_selected = self.lcomandec.get_comanda(selected)
-            self.vc = inserisci_comanda_view(self.lcomandec, self.genera_lista, ordine_selected.piatti_list, False, ordine_selected)
+            self.vc = inserisci_comanda_view(self.lcomandec, self.genera_lista, ordine_selected.piatti_list, False,
+                                             ordine_selected)
             self.vc.show()
 
     def config_button(self, button, text, font, a, b, x, y):

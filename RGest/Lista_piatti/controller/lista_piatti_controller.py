@@ -18,3 +18,15 @@ class lista_piatti_controller():
 
     def save_data(self):
         self.lpiattim.save_data()
+
+    def get_lista_stats(self):
+        return self.lpiattim.get_lista_stats()
+
+    def get_stat(self, i):
+        return self.lpiattim.get_stat(i)
+
+    def aggiungi_stat(self, stat):
+        self.lpiattim.aggiungi_stat(stat)
+
+    def save_data_stats(self):
+        self.lpiattim.save_data_stats()

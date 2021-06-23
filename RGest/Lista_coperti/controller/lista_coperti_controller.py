@@ -21,3 +21,18 @@ class lista_coperti_controller():
 
     def save_data(self):
         self.lcm.save_data()
+
+    def aggiungi_conto(self, conto):
+        self.lcm.aggiungi_conto(conto)
+
+    def get_conto(self, index):
+        return self.lcm.get_conto(index)
+
+    def get_lista_conto(self):
+        return self.lcm.get_lista_conto()
+
+    def cancel_conto(self):
+        self.lcm.cancel_conto()
+
+    def save_data_conto(self):
+        self.lcm.save_data_conto()

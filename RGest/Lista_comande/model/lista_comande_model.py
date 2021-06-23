@@ -21,6 +21,9 @@ class lista_comande_model():
     def cancel(self):
         self.lista_comande = []
 
+    def elimina(self, i):
+        self.lista_comande.remove(i)
+
     def save_data(self):
         with open("Lista_comande\\data\\lista_comande_salvata.pickle", "wb") as handle:
             pickle.dump(self.lista_comande, handle, pickle.HIGHEST_PROTOCOL)

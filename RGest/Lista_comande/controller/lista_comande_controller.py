@@ -19,5 +19,8 @@ class lista_comande_controller():
     def cancel(self):
         self.lcomandem.cancel()
 
+    def elimina(self, comanda):
+        self.lcomandem.elimina(comanda)
+
     def save_data(self):
         self.lcomandem.save_data()
