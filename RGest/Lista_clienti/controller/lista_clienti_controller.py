@@ -9,7 +9,6 @@ class lista_clienti_controller():
 
     def aggiungi_cliente(self, cliente):
         self.lcm.aggiungi_cliente(cliente)
-        print("aggiunto")
 
     def get_cliente(self, i):
         return self.lcm.get_cliente(i)

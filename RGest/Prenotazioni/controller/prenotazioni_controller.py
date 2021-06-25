@@ -24,6 +24,9 @@ class prenotazioni_controller():
     def set_tavolo(self, tavolo):
         self.pm.tavolo = tavolo
 
+    '''def set_ordine(self, ordine):
+        self.pm.ordine = ordine'''
+
     def get_cognome(self):
         return self.pm.cognome
 
@@ -41,3 +44,6 @@ class prenotazioni_controller():
 
     def get_tavolo(self):
         return self.pm.tavolo
+
+    '''def get_ordine(self):
+        return self.pm.ordine'''

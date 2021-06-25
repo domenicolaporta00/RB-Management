@@ -57,7 +57,8 @@ class lista_dipendenti_view(QMainWindow):
         self.list_view_model = QStandardItemModel(self.lista)
         for dipendente in self.ldc.get_lista_dipendenti():
             item = QStandardItem()
-            item.setText(dipendente.postazione+", "+dipendente.ruolo +", "+dipendente.cognome+" "+dipendente.nome)
+            item.setText(
+                dipendente.postazione + ", " + dipendente.ruolo + ", " + dipendente.cognome + " " + dipendente.nome)
             item.setEditable(False)
             item.setFont(QFont("Times Roman", 11, QFont.Bold))
             self.list_view_model.appendRow(item)

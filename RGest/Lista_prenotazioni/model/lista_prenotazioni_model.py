@@ -13,11 +13,9 @@ class lista_prenotazioni_model():
         if os.path.isfile("Lista_prenotazioni\\data\\lista_prenotazioni_salvata.pickle"):
             with open("Lista_prenotazioni\\data\\lista_prenotazioni_salvata.pickle", "rb") as f:
                 self.lista_prenotazioni = pickle.load(f)
-                print(self.lista_prenotazioni)
         if os.path.isfile("Lista_prenotazioni\\data\\lista_prenotazioni_cena_salvata.pickle"):
             with open("Lista_prenotazioni\\data\\lista_prenotazioni_cena_salvata.pickle", "rb") as f:
                 self.lista_prenotazioni_cena = pickle.load(f)
-                print(self.lista_prenotazioni_cena)
 
     def aggiungi_prenotazione(self, prenotazione, orario):
         if QTime(14, 00) >= orario >= QTime(12, 00):

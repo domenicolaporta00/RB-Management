@@ -19,8 +19,8 @@ class lista_piatti_model():
                 lista_piatti_iniziali = json.load(f)
             for piatto in lista_piatti_iniziali:
                 self.aggiungi_piatto(piatti_model(piatto["nome"], piatto["tipo"], piatto["prezzo"]))
-        if os.path.isfile('Lista_stats\\data\\lista_stats_salvata.pickle'):
-            with open('Lista_stats\\data\\lista_stats_salvata.pickle', 'rb') as F:
+        if os.path.isfile('Lista_piatti\\data\\lista_stats_salvata.pickle'):
+            with open('Lista_piatti\\data\\lista_stats_salvata.pickle', 'rb') as F:
                 self.lista_stats = pickle.load(F)
 
     def aggiungi_piatto(self, piatto):
@@ -37,7 +37,7 @@ class lista_piatti_model():
             pickle.dump(self.lista_piatti, handle, pickle.HIGHEST_PROTOCOL)
 
     def aggiungi_stat(self, stat):
-        self.lista_piatti.append(stat)
+        self.lista_stats.append(stat)
 
     def get_stat(self, i):
         return self.lista_stats[i]
@@ -45,6 +45,9 @@ class lista_piatti_model():
     def get_lista_stats(self):
         return self.lista_stats
 
+    def cancel_stats(self):
+        self.lista_stats = []
+
     def save_data_stats(self):
-        with open('Lista_stats\\data\\lista_stats_salvata.pickle', 'wb') as handle:
-            pickle.dump(self.lista_piatti, handle, pickle.HIGHEST_PROTOCOL)
+        with open('Lista_piatti\\data\\lista_stats_salvata.pickle', 'wb') as handle:
+            pickle.dump(self.lista_stats, handle, pickle.HIGHEST_PROTOCOL)

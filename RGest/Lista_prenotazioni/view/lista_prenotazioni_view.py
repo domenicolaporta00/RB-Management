@@ -5,6 +5,7 @@ from PyQt5.QtWidgets import QMainWindow, QPushButton, QLabel, QListView, QMessag
 from Cliente.model.cliente_model import cliente_model
 from Coperti.model.coperti_model import coperti_model
 from Lista_clienti.controller.lista_clienti_controller import lista_clienti_controller
+from Lista_comande.controller.lista_comande_controller import lista_comande_controller
 from Lista_coperti.controller.lista_coperti_controller import lista_coperti_controller
 from Lista_prenotazioni.controller.lista_prenotazioni_controller import lista_prenotazioni_controller
 from Lista_prenotazioni.view.inserisci_prenotazione_view import inserisci_prenotazione_view
@@ -16,6 +17,7 @@ class lista_prenotazioni_view(QMainWindow):
     def __init__(self):
         super(lista_prenotazioni_view, self).__init__()
 
+        # self.lcomandec = lista_comande_controller()
         self.lpc = lista_prenotazioni_controller()
         self.lcc = lista_coperti_controller()
         self.lclientic = lista_clienti_controller()
@@ -161,10 +163,10 @@ class lista_prenotazioni_view(QMainWindow):
         #self.lcc.aggiungi_coperto(coperti_model(n))
         for prenotazioni in self.lpc.get_lista_prenotazioni():
             if prenotazioni.cognome == "Tavolo vuoto!":
-                print("vuoto")
+                pass
             else:
                 if self.controllo(cliente_model(prenotazioni.cognome, prenotazioni.telefono)):
-                    print("c'è già")
+                    pass
                 else:
                     self.lclientic.aggiungi_cliente(cliente_model(prenotazioni.cognome, prenotazioni.telefono))
         for prenotazioni in self.lpc.get_lista_prenotazioni_cena():
@@ -172,10 +174,10 @@ class lista_prenotazioni_view(QMainWindow):
         self.lcc.aggiungi_coperto(coperti_model(n))
         for prenotazioni in self.lpc.get_lista_prenotazioni_cena():
             if prenotazioni.cognome == "Tavolo vuoto!":
-                print("vuoto")
+                pass
             else:
                 if self.controllo(cliente_model(prenotazioni.cognome, prenotazioni.telefono)):
-                    print("c'è già")
+                    pass
                 else:
                     self.lclientic.aggiungi_cliente(cliente_model(prenotazioni.cognome, prenotazioni.telefono))
         self.lpc.cancel()

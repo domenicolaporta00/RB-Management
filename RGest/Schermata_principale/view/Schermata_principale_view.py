@@ -1,5 +1,7 @@
 import webbrowser
 
+import matplotlib.pyplot as p
+import numpy as np
 import pywhatkit
 from PyQt5.QtCore import QTime
 from PyQt5.QtGui import QIcon, QPixmap, QFont
@@ -13,6 +15,7 @@ from Lista_comande.view.lista_comande_view import lista_comande_view
 from Lista_costi_covid.controller.lista_costi_covid_controller import lista_costi_covid_controller
 from Lista_dipendenti.controller.lista_dipendenti_controller import lista_dipendenti_controller
 from Lista_dipendenti.view.lista_dipendenti_view import lista_dipendenti_view
+from Lista_piatti.controller.lista_piatti_controller import lista_piatti_controller
 from Lista_prenotazioni.view.lista_prenotazioni_view import lista_prenotazioni_view
 from Lista_tasse.controller.lista_tasse_controller import lista_tasse_controller
 from Tasse.view.tasse_view import tasse_view
@@ -22,9 +25,11 @@ class Schermata_principale_view(QMainWindow):
     def __init__(self):
         super(Schermata_principale_view, self).__init__()
 
+        self.lpiattic = lista_piatti_controller()
         self.lpv = lista_prenotazioni_view()
         self.ldv = lista_dipendenti_view()
         self.lcomandav = lista_comande_view()
+        # self.lpiattiv = lista_piatti_view()
         self.lccc = lista_costi_covid_controller()
         self.ltc = lista_tasse_controller()
         # self.ldc = lista_dipendenti_controller()
@@ -70,7 +75,6 @@ class Schermata_principale_view(QMainWindow):
         menu = QMenu()
         menu.addAction("Prenotazioni                 ", self.prenotazioni)
         menu.addAction("Comanda", self.comanda)
-        menu.addAction("Conto")
 
         '''menu2 = QMenu()
         menu2.addAction("Magazzino standard")
@@ -89,7 +93,7 @@ class Schermata_principale_view(QMainWindow):
 
         menuDati = QMenu()
         menuDati.addAction("Lista clienti", self.dati_clienti)
-        menuDati.addAction("Statistiche piatti venduti", self.piatti_venduti)
+        menuDati.addAction("Statistiche piatti venduti", self.grafico)
 
         menuCovid = QMenu()
         menuCovid.addAction("Visita il sito del Governo", self.governo)
@@ -267,7 +271,6 @@ class Schermata_principale_view(QMainWindow):
         self.ldv.show()
 
     def comanda(self):
-        print("qua")
         self.lcomandav.show()
 
     def costi_covid(self):
@@ -287,9 +290,27 @@ class Schermata_principale_view(QMainWindow):
         self.gv.show()
 
     def dati_clienti(self):
-        print("dati clienti")
         self.lclientiv = lista_clienti_view()
         self.lclientiv.show()
 
-    def piatti_venduti(self):
-        print("piatti venduti")
+    def grafico(self):
+        valori = []
+        nomi = []
+        if not self.lpiattic.get_lista_stats():
+            print("nulla")
+        else:
+            for piatto in self.lpiattic.get_lista_piatti():
+                valori.append(self.quanti((piatto.nome, piatto.prezzo)))
+                nomi.append(piatto.nome)
+            index = np.arange(len(nomi))
+            p.title("Statistiche piatti venduti")
+            p.bar(index, valori)
+            p.xticks(index, nomi, size=8, rotation=90)
+            p.show()
+
+    def quanti(self, portata):
+        a = 0
+        for p in self.lpiattic.get_lista_stats():
+            if p == portata:
+                a += 1
+        return a

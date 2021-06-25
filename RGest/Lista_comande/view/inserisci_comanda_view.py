@@ -98,6 +98,12 @@ class inserisci_comanda_view(QMainWindow):
         self.schermata()
 
     def schermata(self):
+        #self.lpiattic.cancel_stats()
+        #print("len =", len(self.lpiattic.get_lista_stats()))
+        for i in self.lpiattic.get_lista_stats():
+            if i == ("insalata", 3.0):
+                print("insalata")
+        print(self.lpiattic.get_lista_stats())
         font = QFont("Times Roman", 11)
         f = QFont("Times Roman", 11, QFont.Bold)
 
@@ -240,12 +246,12 @@ class inserisci_comanda_view(QMainWindow):
                 self.lista.setRowCount(a)
                 nome, prezzo = data
                 item = QTableWidgetItem(nome)
-                item2 = QTableWidgetItem(str(prezzo))
+                item2 = QTableWidgetItem("€"+str(prezzo))
                 self.lista.setItem(row, 0, item)
                 self.lista.setItem(row, 1, item2)
                 self.conto_finale += prezzo
             self.lista_totale.setItem(0, 0, QTableWidgetItem("Totale"))
-            self.lista_totale.setItem(0, 1, QTableWidgetItem(str(self.conto_finale)))
+            self.lista_totale.setItem(0, 1, QTableWidgetItem("€"+str(self.conto_finale)))
 
     def conferma(self):
         if self.tab_widget.currentIndex() != 9:
@@ -289,6 +295,7 @@ class inserisci_comanda_view(QMainWindow):
             QMessageBox.information(None, "RGest", "Conto pagato! Ricavi e statistiche sui piatti memorizzati "
                                                    "correttamente!")
             self.close()
+            print("len stats =", len(self.lpiattic.get_lista_stats()))
 
     def config_layout2(self, tw, tw2, widget):
         layout = QGridLayout(self)
@@ -368,3 +375,4 @@ class inserisci_comanda_view(QMainWindow):
 
     def closeEvent(self, event):
         self.lcopertic.save_data_conto()
+        self.lpiattic.save_data_stats()
