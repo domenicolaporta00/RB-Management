@@ -16,8 +16,14 @@ class lista_clienti_controller():
     def get_lista_clienti(self):
         return self.lcm.get_lista_clienti()
 
+    def get_lista_clienti_noDoppi(self):
+        return self.lcm.get_lista_clienti_noDoppi()
+
     def cancel(self):
         self.lcm.cancel()
+
+    def cancel_noDoppi(self):
+        self.lcm.cancel_noDoppi()
 
     def save_data(self):
         self.lcm.save_data()

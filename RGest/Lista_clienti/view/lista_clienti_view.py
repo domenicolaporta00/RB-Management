@@ -51,10 +51,16 @@ class lista_clienti_view(QMainWindow):
         self.messaggio.clicked.connect(self.invia_mex)
 
     def genera_lista(self):
-        #self.lclientic.cancel()
-        #self.lclientic.save_data()
+        '''self.lclientic.cancel()
+        self.lclientic.cancel_noDoppi()
+        self.lclientic.save_data()'''
+        '''for cliente in self.lclientic.get_lista_clienti():
+            if self.controllo(cliente):
+                pass
+            else:
+                self.clienti_noDoppi.append(cliente)'''
         self.list_view_model = QStandardItemModel(self.lista)
-        for cliente in self.lclientic.get_lista_clienti():
+        for cliente in self.lclientic.get_lista_clienti_noDoppi():
             item = QStandardItem()
             item.setText(cliente.nome + " " + cliente.telefono + " prima prenotazione " + cliente.data)
             item.setEditable(False)
@@ -76,6 +82,12 @@ class lista_clienti_view(QMainWindow):
         label.move(x, y)
         label.setStyleSheet("color: red")
         label.setFixedSize(a, b)
+
+    '''def controllo(self, c):
+        for cliente in self.clienti_noDoppi:
+            if c.nome == cliente.nome and c.telefono == cliente.telefono:
+                return True
+        return False'''
 
     def invia_mex(self):
         if not self.lclientic.get_lista_clienti():

@@ -1,25 +1,19 @@
-from PyQt5.QtGui import QIcon, QFont, QStandardItem, QStandardItemModel
-from PyQt5.QtWidgets import QMainWindow, QPushButton, QLabel, QListView, QMessageBox, QTabWidget, QWidget, QVBoxLayout, \
-    QHBoxLayout
+from PyQt5.QtGui import QIcon, QFont, QStandardItemModel, QStandardItem
+from PyQt5.QtWidgets import QMainWindow, QTabWidget, QWidget, QListView, QPushButton, QLabel, QVBoxLayout, QMessageBox
 
 from Cliente.model.cliente_model import cliente_model
-from Coperti.model.coperti_model import coperti_model
 from Lista_clienti.controller.lista_clienti_controller import lista_clienti_controller
-from Lista_comande.controller.lista_comande_controller import lista_comande_controller
-from Lista_coperti.controller.lista_coperti_controller import lista_coperti_controller
-from Lista_prenotazioni.controller.lista_prenotazioni_controller import lista_prenotazioni_controller
-from Lista_prenotazioni.view.inserisci_prenotazione_view import inserisci_prenotazione_view
-from Prenotazioni.view.prenotazioni_view import prenotazioni_view
+from Lista_delivery.controller.lista_delivery_controller import lista_delivery_controller
+from Lista_delivery.view.inserisci_delivery_view import inserisci_delivery_view
 
 
-class lista_prenotazioni_view(QMainWindow):
+class lista_delivery_view(QMainWindow):
 
     def __init__(self):
-        super(lista_prenotazioni_view, self).__init__()
+        super(lista_delivery_view, self).__init__()
 
-        # self.lcomandec = lista_comande_controller()
-        self.lpc = lista_prenotazioni_controller()
-        self.lcc = lista_coperti_controller()
+        self.ldc = lista_delivery_controller()
+        # controller che memorizza il numero di ordini delivery
         self.lclientic = lista_clienti_controller()
 
         self.icona = QIcon("images\\Logo_definitivo.jpg")
@@ -65,8 +59,6 @@ class lista_prenotazioni_view(QMainWindow):
         self.genera_lista_cena()
         self.lista_cena.setModel(self.list_view_model_cena)
         self.lista_cena.setStyleSheet("background-color: rgb(255, 255, 255)")
-        # self.lista.move(125, 100)
-        # self.lista.setFixedSize(500, 400)
 
         layout1 = QVBoxLayout(self)
         layout1.addWidget(self.lista)
@@ -78,16 +70,16 @@ class lista_prenotazioni_view(QMainWindow):
         layout2.addWidget(self.visualizza_cena)
         self.tab2.setLayout(layout2)
 
-        self.lista_label.setText("Elenco delle prenotazioni")
+        self.lista_label.setText("Elenco delivery")
         self.lista_label.setFont(QFont("Times Roman", 20, QFont.Bold))
         self.lista_label.setStyleSheet("color: red")
         self.lista_label.move(200, 40)
         self.lista_label.setFixedSize(350, 40)
 
         self.config_button(self.visualizza, "Modifica", font, 150, 30, 36, 550)
-        self.visualizza.clicked.connect(self.mostra_prenotazione)
+        self.visualizza.clicked.connect(self.mostra_delivery)
         self.config_button(self.visualizza_cena, "Modifica", font, 150, 30, 36, 550)
-        self.visualizza_cena.clicked.connect(self.mostra_prenotazione_cena)
+        self.visualizza_cena.clicked.connect(self.mostra_delivery_cena)
         self.config_button(self.aggiungi, "Aggiungi", font, 150, 30, 211, 482)
         self.aggiungi.clicked.connect(self.apri_inserimento)
         self.config_button(self.elimina, "Elimina tutto", font, 150, 30, 387, 482)
@@ -107,9 +99,9 @@ class lista_prenotazioni_view(QMainWindow):
 
     def genera_lista(self):
         self.list_view_model = QStandardItemModel(self.lista)
-        for prenotazione in self.lpc.get_lista_prenotazioni():
+        for delivery in self.ldc.get_lista_delivery():
             item = QStandardItem()
-            item.setText(prenotazione.cognome + " Tavolo: " + str(prenotazione.tavolo))
+            item.setText(delivery.cognome + ", " + delivery.indirizzo + ", ore " + delivery.orario)
             item.setEditable(False)
             item.setFont(QFont("Times Roman", 11, QFont.Bold))
             self.list_view_model.appendRow(item)
@@ -117,75 +109,69 @@ class lista_prenotazioni_view(QMainWindow):
 
     def genera_lista_cena(self):
         self.list_view_model_cena = QStandardItemModel(self.lista_cena)
-        for prenotazione in self.lpc.get_lista_prenotazioni_cena():
+        for delivery in self.ldc.get_lista_delivery_cena():
             item = QStandardItem()
-            item.setText(prenotazione.cognome + " Tavolo: " + str(prenotazione.tavolo))
+            item.setText(delivery.cognome + ", " + delivery.indirizzo + ", ore " + delivery.orario)
             item.setEditable(False)
             item.setFont(QFont("Times Roman", 11, QFont.Bold))
             self.list_view_model_cena.appendRow(item)
         self.lista_cena.setModel(self.list_view_model_cena)
 
-    def mostra_prenotazione(self):
+    def mostra_delivery(self):
         if not self.lista.selectedIndexes():
-            QMessageBox.warning(None, "RGest", "Selezionare una prenotazione!")
+            QMessageBox.warning(None, "RGest", "Selezionare un ordine!")
         else:
             selected = self.lista.selectedIndexes()[0].row()
-            prenotazione_selezionata = self.lpc.get_prenotazione(selected)
-            self.pv = prenotazioni_view(prenotazione_selezionata, self.genera_lista, self.genera_lista_cena, "pranzo")
-            self.pv.show()
+            delivery_selezionato = self.ldc.get_delivery(selected)
+            # self.pv = prenotazioni_view(prenotazione_selezionata, self.genera_lista, self.genera_lista_cena, "pranzo")
+            # self.pv.show()
 
-    def mostra_prenotazione_cena(self):
+    def mostra_delivery_cena(self):
         if not self.lista_cena.selectedIndexes():
-            QMessageBox.warning(None, "RGest", "Selezionare una prenotazione!")
+            QMessageBox.warning(None, "RGest", "Selezionare un ordine!")
         else:
             selected_ = self.lista_cena.selectedIndexes()[0].row()
-            prenotazione_selezionata_ = self.lpc.get_prenotazione_cena(selected_)
-            self.pv = prenotazioni_view(prenotazione_selezionata_, self.genera_lista, self.genera_lista_cena, "cena")
-            self.pv.show()
+            delivery_selezionato_ = self.ldc.get_delivery_cena(selected_)
+            # self.pv = prenotazioni_view(prenotazione_selezionata_, self.genera_lista, self.genera_lista_cena, "cena")
+            # self.pv.show()
 
     def cancel(self):
-        self.lpc.cancel()
-        self.lpc.cancel_cena()
-        self.lpc.save_data()
+        self.ldc.cancel()
+        self.ldc.cancel_cena()
+        self.ldc.save_data()
         self.genera_lista()
         self.genera_lista_cena()
-        QMessageBox.information(None, "RGest", "Tutte le prenotazioni sono state cancellate!")
+        QMessageBox.information(None, "RGest", "Tutti gli ordini delivery sono stati cancellati!")
 
     def newelement(self):
-        self.closeEvent(self.lpc.save_data())
-        self.ipv = inserisci_prenotazione_view(self.lpc, self.genera_lista, self.genera_lista_cena)
+        self.closeEvent(self.ldc.save_data())
+        self.ipv = inserisci_delivery_view(self.ldc, self.genera_lista, self.genera_lista_cena)
         self.ipv.show()
 
     def termina(self):
         n = 0
-        for prenotazioni in self.lpc.get_lista_prenotazioni():
-            n += int(prenotazioni.posti)
+        for delivery in self.ldc.get_lista_delivery():
+            n += 1
         #self.lcc.aggiungi_coperto(coperti_model(n))
-        for prenotazioni in self.lpc.get_lista_prenotazioni():
-            if prenotazioni.cognome == "Tavolo vuoto!":
+        for delivery in self.ldc.get_lista_delivery():
+            '''if self.controllo(cliente_model(delivery.cognome, delivery.telefono)):
                 pass
-            else:
-                '''if self.controllo(cliente_model(prenotazioni.cognome, prenotazioni.telefono)):
-                    pass
-                else:'''
-                self.lclientic.aggiungi_cliente(cliente_model(prenotazioni.cognome, prenotazioni.telefono))
-        for prenotazioni in self.lpc.get_lista_prenotazioni_cena():
-            n += int(prenotazioni.posti)
-        self.lcc.aggiungi_coperto(coperti_model(n))
-        for prenotazioni in self.lpc.get_lista_prenotazioni_cena():
-            if prenotazioni.cognome == "Tavolo vuoto!":
+            else:'''
+            self.lclientic.aggiungi_cliente(cliente_model(delivery.cognome, delivery.telefono))
+        for delivery in self.ldc.get_lista_delivery_cena():
+            n += 1
+        # aggiungi i delivery della giornata attraverso il controller
+        for delivery in self.ldc.get_lista_delivery_cena():
+            '''if self.controllo(cliente_model(delivery.cognome, delivery.telefono)):
                 pass
-            else:
-                '''if self.controllo(cliente_model(prenotazioni.cognome, prenotazioni.telefono)):
-                    pass
-                else:'''
-                self.lclientic.aggiungi_cliente(cliente_model(prenotazioni.cognome, prenotazioni.telefono))
-        self.lpc.cancel()
-        self.lpc.cancel_cena()
+            else:'''
+            self.lclientic.aggiungi_cliente(cliente_model(delivery.cognome, delivery.telefono))
+        self.ldc.cancel()
+        self.ldc.cancel_cena()
         self.genera_lista()
         self.genera_lista_cena()
-        QMessageBox.information(None, "RGest", "Giornata terminata! Il numero dei coperti e i contatti dei clienti "
-                                               "sono stati salvati correttamente!")
+        QMessageBox.information(None, "RGest", "Giornata terminata! Il numero degli ordini delivery e i contatti dei "
+                                               "clienti sono stati salvati correttamente!")
         self.close()
 
     def controllo(self, c):
@@ -195,6 +181,6 @@ class lista_prenotazioni_view(QMainWindow):
         return False
 
     def closeEvent(self, event):
-        self.lpc.save_data()
-        self.lcc.save_data()
+        self.ldc.save_data()
+        # salva il numero dei delivery
         self.lclientic.save_data()

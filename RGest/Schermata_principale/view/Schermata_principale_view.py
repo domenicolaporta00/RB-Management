@@ -10,9 +10,11 @@ from PyQt5.QtWidgets import QMainWindow, QLabel, QPushButton, QMenu, QAction, QM
 from Costi.view.costi_view import costi_view
 from Costi_covid.view.costi_covid_view import costi_covid_view
 from Guadagni.view.guadagni_view import guadagni_view
+from Lista_clienti.controller.lista_clienti_controller import lista_clienti_controller
 from Lista_clienti.view.lista_clienti_view import lista_clienti_view
 from Lista_comande.view.lista_comande_view import lista_comande_view
 from Lista_costi_covid.controller.lista_costi_covid_controller import lista_costi_covid_controller
+from Lista_delivery.view.lista_delivery_view import lista_delivery_view
 from Lista_dipendenti.controller.lista_dipendenti_controller import lista_dipendenti_controller
 from Lista_dipendenti.view.lista_dipendenti_view import lista_dipendenti_view
 from Lista_piatti.controller.lista_piatti_controller import lista_piatti_controller
@@ -94,6 +96,7 @@ class Schermata_principale_view(QMainWindow):
         menuDati = QMenu()
         menuDati.addAction("Lista clienti", self.dati_clienti)
         menuDati.addAction("Statistiche piatti venduti", self.grafico)
+        menuDati.addAction("Clienti più presenti", self.grafico_clienti)
 
         menuCovid = QMenu()
         menuCovid.addAction("Visita il sito del Governo", self.governo)
@@ -101,6 +104,10 @@ class Schermata_principale_view(QMainWindow):
         menuCovid.addAction("Elenco buone norme da seguire", self.norme)
         menuCovid.addAction("Andamento Covid", self.andamento)
         menuCovid.addAction("Ordine prodotti", self.costi_covid)
+
+        menuDelivery = QMenu()
+        menuDelivery.addAction("Chiamate                     ", self.chiamate)
+        menuDelivery.addAction("Comande", self.comandaDelivery)
 
         str = "images\\"
 
@@ -157,6 +164,7 @@ class Schermata_principale_view(QMainWindow):
         self.deliveryButton.setText("Gestione delivery")
         self.deliveryButton.setFont(font)
         self.deliveryButton.setFixedSize(175, 50)
+        self.deliveryButton.setMenu(menuDelivery)
         self.deliveryButton.setStyleSheet("background-color: red; border-radius: 10px; color: rgb(255, 255, 255)")
 
         self.logo.setPixmap(LogoPixmax)
@@ -293,6 +301,13 @@ class Schermata_principale_view(QMainWindow):
         self.lclientiv = lista_clienti_view()
         self.lclientiv.show()
 
+    def chiamate(self):
+        self.ldeliveryv = lista_delivery_view()
+        self.ldeliveryv.show()
+
+    def comandaDelivery(self):
+        pass
+
     def grafico(self):
         valori = []
         nomi = []
@@ -308,9 +323,32 @@ class Schermata_principale_view(QMainWindow):
             p.xticks(index, nomi, size=8, rotation=90)
             p.show()
 
+    def grafico_clienti(self):
+        self.lclientic = lista_clienti_controller()
+        valori = []
+        nomi = []
+        if not self.lclientic.get_lista_clienti_noDoppi():
+            print("nulla")
+        else:
+            for cliente in self.lclientic.get_lista_clienti_noDoppi():
+                valori.append(self.quanti_clienti((cliente.nome, cliente.telefono)))
+                nomi.append(cliente.nome)
+            index = np.arange(len(nomi))
+            p.title("Statistiche clienti più presenti")
+            p.bar(index, valori)
+            p.xticks(index, nomi, size=8, rotation=90)
+            p.show()
+
     def quanti(self, portata):
         a = 0
         for p in self.lpiattic.get_lista_stats():
             if p == portata:
+                a += 1
+        return a
+
+    def quanti_clienti(self, cliente):
+        a = 0
+        for p in self.lclientic.get_lista_clienti():
+            if (p.nome, p.telefono) == cliente:
                 a += 1
         return a
