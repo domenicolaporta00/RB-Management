@@ -36,3 +36,18 @@ class lista_coperti_controller():
 
     def save_data_conto(self):
         self.lcm.save_data_conto()
+
+    def aggiungi_consegna(self, consegna):
+        self.lcm.aggiungi_consegna(consegna)
+
+    def get_consegna(self, index):
+        return self.lcm.get_consegna(index)
+
+    def get_lista_consegne_delivery(self):
+        return self.lcm.get_lista_consegne_delivery()
+
+    def cancel_consegne(self):
+        self.lcm.cancel_consegne()
+
+    def save_data_delivery(self):
+        self.lcm.save_data_delivery()

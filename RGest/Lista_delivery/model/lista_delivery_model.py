@@ -23,16 +23,16 @@ class lista_delivery_model():
         if QTime(22, 00) >= orario >= QTime(19, 00):
             self.lista_delivery_cena.append(delivery)
 
-    def remove_delivery(self, nome):
+    def remove_delivery(self, telefono):
         def flag(delivery):
-            if delivery.nome == nome:
+            if delivery.telefono == telefono:
                 return True
             return False
         self.lista_delivery.remove(list(filter(flag, self.lista_delivery))[0])
 
-    def remove_delivery_cena(self, nome):
+    def remove_delivery_cena(self, telefono):
         def flag(delivery):
-            if delivery.nome == nome:
+            if delivery.telefono == telefono:
                 return True
             return False
         self.lista_delivery_cena.remove(list(filter(flag, self.lista_delivery_cena))[0])

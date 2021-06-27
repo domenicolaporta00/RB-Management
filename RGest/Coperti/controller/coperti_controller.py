@@ -8,3 +8,6 @@ class coperti_controller():
 
     def get_data(self):
         return self.cm.data
+
+    def get_ricavo_tot(self):
+        return self.cm.ricavo_tot

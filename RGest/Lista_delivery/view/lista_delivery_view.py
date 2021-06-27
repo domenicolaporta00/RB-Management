@@ -2,7 +2,10 @@ from PyQt5.QtGui import QIcon, QFont, QStandardItemModel, QStandardItem
 from PyQt5.QtWidgets import QMainWindow, QTabWidget, QWidget, QListView, QPushButton, QLabel, QVBoxLayout, QMessageBox
 
 from Cliente.model.cliente_model import cliente_model
+from Consegna_delivery.model.consegna_delivery_model import consegna_delivery_model
+from Delivery.view.delivery_view import delivery_view
 from Lista_clienti.controller.lista_clienti_controller import lista_clienti_controller
+from Lista_coperti.controller.lista_coperti_controller import lista_coperti_controller
 from Lista_delivery.controller.lista_delivery_controller import lista_delivery_controller
 from Lista_delivery.view.inserisci_delivery_view import inserisci_delivery_view
 
@@ -13,7 +16,7 @@ class lista_delivery_view(QMainWindow):
         super(lista_delivery_view, self).__init__()
 
         self.ldc = lista_delivery_controller()
-        # controller che memorizza il numero di ordini delivery
+        self.lcopertic = lista_coperti_controller()
         self.lclientic = lista_clienti_controller()
 
         self.icona = QIcon("images\\Logo_definitivo.jpg")
@@ -73,8 +76,8 @@ class lista_delivery_view(QMainWindow):
         self.lista_label.setText("Elenco delivery")
         self.lista_label.setFont(QFont("Times Roman", 20, QFont.Bold))
         self.lista_label.setStyleSheet("color: red")
-        self.lista_label.move(200, 40)
-        self.lista_label.setFixedSize(350, 40)
+        self.lista_label.move(250, 40)
+        self.lista_label.setFixedSize(250, 40)
 
         self.config_button(self.visualizza, "Modifica", font, 150, 30, 36, 550)
         self.visualizza.clicked.connect(self.mostra_delivery)
@@ -123,8 +126,9 @@ class lista_delivery_view(QMainWindow):
         else:
             selected = self.lista.selectedIndexes()[0].row()
             delivery_selezionato = self.ldc.get_delivery(selected)
-            # self.pv = prenotazioni_view(prenotazione_selezionata, self.genera_lista, self.genera_lista_cena, "pranzo")
-            # self.pv.show()
+            print(delivery_selezionato)
+            self.dv = delivery_view(delivery_selezionato, self.ldc.remove_delivery, self.genera_lista, self.genera_lista_cena, "pranzo")
+            self.dv.show()
 
     def mostra_delivery_cena(self):
         if not self.lista_cena.selectedIndexes():
@@ -132,8 +136,8 @@ class lista_delivery_view(QMainWindow):
         else:
             selected_ = self.lista_cena.selectedIndexes()[0].row()
             delivery_selezionato_ = self.ldc.get_delivery_cena(selected_)
-            # self.pv = prenotazioni_view(prenotazione_selezionata_, self.genera_lista, self.genera_lista_cena, "cena")
-            # self.pv.show()
+            self.dv = delivery_view(delivery_selezionato_, self.ldc.remove_delivery_cena, self.genera_lista, self.genera_lista_cena, "cena")
+            self.dv.show()
 
     def cancel(self):
         self.ldc.cancel()
@@ -161,6 +165,7 @@ class lista_delivery_view(QMainWindow):
         for delivery in self.ldc.get_lista_delivery_cena():
             n += 1
         # aggiungi i delivery della giornata attraverso il controller
+        self.lcopertic.aggiungi_consegna(consegna_delivery_model(n))
         for delivery in self.ldc.get_lista_delivery_cena():
             '''if self.controllo(cliente_model(delivery.cognome, delivery.telefono)):
                 pass
@@ -182,5 +187,5 @@ class lista_delivery_view(QMainWindow):
 
     def closeEvent(self, event):
         self.ldc.save_data()
-        # salva il numero dei delivery
+        self.lcopertic.save_data_delivery()
         self.lclientic.save_data()
