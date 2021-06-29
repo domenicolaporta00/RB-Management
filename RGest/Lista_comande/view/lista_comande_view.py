@@ -7,8 +7,10 @@ from Lista_comande.view.inserisci_comanda_view import inserisci_comanda_view
 
 class lista_comande_view(QMainWindow):
 
-    def __init__(self):
+    def __init__(self, isDelivery):
         super(lista_comande_view, self).__init__()
+
+        self.isDelivery = isDelivery
 
         self.lcomandec = lista_comande_controller()
 
@@ -38,11 +40,14 @@ class lista_comande_view(QMainWindow):
         self.lista.move(125, 100)
         self.lista.setFixedSize(500, 400)
 
-        self.lista_label.setText("Elenco delle comande")
+        if self.isDelivery:
+            self.lista_label.setText("Elenco delle comande delivery")
+        elif not self.isDelivery:
+            self.lista_label.setText("Elenco delle comande a tavola")
         self.lista_label.setFont(QFont("Times Roman", 20, QFont.Bold))
         self.lista_label.setStyleSheet("color: red")
-        self.lista_label.move(225, 40)
-        self.lista_label.setFixedSize(300, 40)
+        self.lista_label.move(170, 40)
+        self.lista_label.setFixedSize(410, 40)
 
         self.config_button(self.aggiungi, "Aggiungi", font, 150, 30, 200, 550)
         self.aggiungi.clicked.connect(self.apri_inserimento)

@@ -16,7 +16,7 @@ if __name__ == "__main__":
     splash.show()
     time.sleep(0.5)
     #vC = VistaCredenziali()
-    vC = Schermata_principale_view()
+    vC = Schermata_principale_view("Domenico")
     #vC = costi_covid_view(1, 1)
     #vC = progress_bar_view()
     vC.show()

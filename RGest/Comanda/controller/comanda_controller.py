@@ -6,6 +6,9 @@ class comanda_controller():
     def get_piatti_list(self):
         return self.comanda_model.piatti_list
 
+    '''def get_isDelivery(self):
+        return self.comanda_model.isDelivery'''
+
     '''def get_nome(self):
         return self.comanda_model.nome
 

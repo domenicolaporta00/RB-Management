@@ -22,6 +22,7 @@ class inserisci_comanda_view(QMainWindow):
         self.isNuovo = isNuovo
         self.ordine = ordine
         self.contr = comanda_controller(ordine)
+        # self.isDelivery = isDelivery
 
         self.lcomandac = lista_comande_controller()
         self.lpiattic = lista_piatti_controller()
@@ -98,12 +99,7 @@ class inserisci_comanda_view(QMainWindow):
         self.schermata()
 
     def schermata(self):
-        #self.lpiattic.cancel_stats()
-        #print("len =", len(self.lpiattic.get_lista_stats()))
-        for i in self.lpiattic.get_lista_stats():
-            if i == ("insalata", 3.0):
-                print("insalata")
-        print(self.lpiattic.get_lista_stats())
+        # self.lpiattic.cancel_stats()
         font = QFont("Times Roman", 11)
         f = QFont("Times Roman", 11, QFont.Bold)
 
@@ -246,12 +242,12 @@ class inserisci_comanda_view(QMainWindow):
                 self.lista.setRowCount(a)
                 nome, prezzo = data
                 item = QTableWidgetItem(nome)
-                item2 = QTableWidgetItem("€"+str(prezzo))
+                item2 = QTableWidgetItem("€" + str(prezzo))
                 self.lista.setItem(row, 0, item)
                 self.lista.setItem(row, 1, item2)
                 self.conto_finale += prezzo
             self.lista_totale.setItem(0, 0, QTableWidgetItem("Totale"))
-            self.lista_totale.setItem(0, 1, QTableWidgetItem("€"+str(self.conto_finale)))
+            self.lista_totale.setItem(0, 1, QTableWidgetItem("€" + str(self.conto_finale)))
 
     def conferma(self):
         if self.tab_widget.currentIndex() != 9:
@@ -290,7 +286,9 @@ class inserisci_comanda_view(QMainWindow):
             self.lcopertic.aggiungi_conto(conto_model(self.conto_finale))
             for piatto in self.piatti_ordine:
                 self.lpiattic.aggiungi_stat(piatto)
+            print(789)
             self.controller.elimina(self.ordine)
+            print(678)
             self.callback()
             QMessageBox.information(None, "RGest", "Conto pagato! Ricavi e statistiche sui piatti memorizzati "
                                                    "correttamente!")

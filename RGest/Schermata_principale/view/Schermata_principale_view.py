@@ -1,11 +1,14 @@
+import os
 import webbrowser
 
 import matplotlib.pyplot as p
 import numpy as np
 import pywhatkit
-from PyQt5.QtCore import QTime
+from PyQt5.QtCore import QTime, QDate
 from PyQt5.QtGui import QIcon, QPixmap, QFont
 from PyQt5.QtWidgets import QMainWindow, QLabel, QPushButton, QMenu, QAction, QMessageBox, QInputDialog
+from gtts import gTTS
+from playsound import playsound
 
 from Costi.view.costi_view import costi_view
 from Costi_covid.view.costi_covid_view import costi_covid_view
@@ -24,19 +27,21 @@ from Tasse.view.tasse_view import tasse_view
 
 
 class Schermata_principale_view(QMainWindow):
-    def __init__(self):
+    def __init__(self, nome):
         super(Schermata_principale_view, self).__init__()
 
-        self.lpiattic = lista_piatti_controller()
+        # self.lpiattic = lista_piatti_controller()
         self.lpv = lista_prenotazioni_view()
         self.ldv = lista_dipendenti_view()
-        self.lcomandav = lista_comande_view()
+        self.lcomandav_noDelivery = lista_comande_view(False)
+        self.lcomandav_Delivery = lista_comande_view(True)
         # self.lpiattiv = lista_piatti_view()
         self.lccc = lista_costi_covid_controller()
         self.ltc = lista_tasse_controller()
         # self.ldc = lista_dipendenti_controller()
         # self.ccv = costi_covid_view(self.lccc)
         # self.cv = costi_view()
+        self.nome = nome
 
         self.icona = QIcon("images\\Logo_definitivo.jpg")
 
@@ -52,6 +57,8 @@ class Schermata_principale_view(QMainWindow):
         self.config_menubar("Info", QIcon("images\\pint.jpg"), "Tutorial", 'Ctrl+W').triggered.connect(self.tutorial)
         self.config_menubar("Contatti", QIcon("images\\telefono.png"), "Contatta dipendenti",
                             "Ctrl+E").triggered.connect(self.contatti)
+        self.config_menubar("Ora e data", QIcon("images\\orologio.jpg"), "Ora e data", 'Ctrl+R').triggered.connect(
+            self.data_ora)
 
         self.serviziButton = QPushButton(self)
         self.magazzinoButton = QPushButton(self)
@@ -236,6 +243,16 @@ class Schermata_principale_view(QMainWindow):
     def tutorial(self):
         print("Tutorial da fare")
 
+    def data_ora(self):
+        audio = "speech.mp3"
+        language = "it"
+        oggi = QDate.currentDate().toString("dddd d MMMM yyyy")
+        ora = QTime.currentTime().toString("hh:mm")
+        sp = gTTS(text="Ciao " + self.nome + " sono le " + ora + " di " + oggi, lang=language, slow=False)
+        sp.save(audio)
+        playsound(audio)
+        os.remove(audio)
+
     def contatti(self):
         self.ldc = lista_dipendenti_controller()
         if not self.ldc.get_lista_dipendenti():
@@ -279,7 +296,7 @@ class Schermata_principale_view(QMainWindow):
         self.ldv.show()
 
     def comanda(self):
-        self.lcomandav.show()
+        self.lcomandav_noDelivery.show()
 
     def costi_covid(self):
         self.ccv = costi_covid_view(self.lccc)
@@ -306,9 +323,10 @@ class Schermata_principale_view(QMainWindow):
         self.ldeliveryv.show()
 
     def comandaDelivery(self):
-        pass
+        self.lcomandav_Delivery.show()
 
     def grafico(self):
+        self.lpiattic = lista_piatti_controller()
         valori = []
         nomi = []
         if not self.lpiattic.get_lista_stats():

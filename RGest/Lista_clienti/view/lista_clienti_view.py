@@ -3,7 +3,7 @@ import time
 from PyQt5.QtCore import QTime, Qt
 from PyQt5.QtGui import QIcon, QFont, QStandardItemModel, QStandardItem, QPixmap
 from PyQt5.QtWidgets import QMainWindow, QListView, QPushButton, QLabel, QInputDialog, QMessageBox, QSplashScreen, \
-    QProgressBar
+    QProgressBar, QTableWidget, QTableWidgetItem
 
 from Lista_clienti.controller.lista_clienti_controller import lista_clienti_controller
 
@@ -28,7 +28,7 @@ class lista_clienti_view(QMainWindow):
         self.setWindowIcon(self.icona)
         self.setStyleSheet("background-color: rgb(230, 230, 230)")
 
-        self.lista = QListView(self)
+        self.lista = QTableWidget(self)
 
         self.messaggio = QPushButton(self)
 
@@ -41,9 +41,9 @@ class lista_clienti_view(QMainWindow):
         f = QFont("Times Roman", 11, QFont.Bold)
 
         self.genera_lista()
-        self.lista.setStyleSheet("background-color: rgb(255, 255, 255); color: rgb(0, 0, 0)")
-        self.lista.move(75, 100)
-        self.lista.setFixedSize(600, 400)
+        #self.lista.setStyleSheet("background-color: rgb(255, 255, 255); color: rgb(0, 0, 0)")
+        self.lista.move(129, 100)
+        self.lista.setFixedSize(492, 400)
 
         self.config_label(self.label, "Elenco di tutti i clienti", 225, 40, 300, 40, font)
 
@@ -51,6 +51,21 @@ class lista_clienti_view(QMainWindow):
         self.messaggio.clicked.connect(self.invia_mex)
 
     def genera_lista(self):
+        self.lista.setColumnCount(3)
+        self.lista.setColumnWidth(0, 150)
+        self.lista.setColumnWidth(1, 150)
+        self.lista.setColumnWidth(2, 150)
+        self.lista.setHorizontalHeaderLabels(["Nome", "Telefono", "Prima prenotazione"])
+        a = 0
+        for row, date in enumerate(self.lclientic.get_lista_clienti_noDoppi()):
+            a += 1
+            self.lista.setRowCount(a)
+            item = QTableWidgetItem(date.nome)
+            item2 = QTableWidgetItem(str(date.telefono))
+            item3 = QTableWidgetItem(date.data)
+            self.lista.setItem(row, 0, item)
+            self.lista.setItem(row, 1, item2)
+            self.lista.setItem(row, 2, item3)
         '''self.lclientic.cancel()
         self.lclientic.cancel_noDoppi()
         self.lclientic.save_data()'''
@@ -59,7 +74,7 @@ class lista_clienti_view(QMainWindow):
                 pass
             else:
                 self.clienti_noDoppi.append(cliente)'''
-        self.list_view_model = QStandardItemModel(self.lista)
+        '''self.list_view_model = QStandardItemModel(self.lista)
         for cliente in self.lclientic.get_lista_clienti_noDoppi():
             item = QStandardItem()
             item.setText(cliente.nome + " " + cliente.telefono + " prima prenotazione " + cliente.data)
@@ -67,7 +82,7 @@ class lista_clienti_view(QMainWindow):
             item.setEnabled(False)
             item.setFont(QFont("Times Roman", 11, QFont.Bold))
             self.list_view_model.appendRow(item)
-        self.lista.setModel(self.list_view_model)
+        self.lista.setModel(self.list_view_model)'''
 
     def config_button(self, button, text, font, a, b, x, y):
         button.setText(text)

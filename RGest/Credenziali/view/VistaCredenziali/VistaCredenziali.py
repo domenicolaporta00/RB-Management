@@ -1,5 +1,5 @@
 from PyQt5.QtGui import QPixmap, QIcon, QFont
-from PyQt5.QtWidgets import QMainWindow, QLineEdit, QLabel, QPushButton, QMessageBox, QFrame
+from PyQt5.QtWidgets import QMainWindow, QLineEdit, QLabel, QPushButton, QMessageBox, QFrame, QInputDialog
 
 from Credenziali.controller.ControllerCredenziali import ControllerCredenziali
 from Credenziali.view.VistaCredenziali.VistaCambioCredenziali import VistaCambioCredenziali
@@ -31,7 +31,7 @@ class VistaCredenziali(QMainWindow):
 
         self.vcc = VistaCambioCredenziali()
         self.controller_credenziali = ControllerCredenziali()
-        self.spv = Schermata_principale_view()
+        # self.spv = Schermata_principale_view()
 
         self.schermata()
 
@@ -75,8 +75,18 @@ class VistaCredenziali(QMainWindow):
     def controllo(self):
         if self.controller_credenziali.controllaCredenziali(self.insertNome.text(), self.insertPassword.text()):
             QMessageBox.information(None, "RGest", "Accesso effettuato correttamente.")
-            self.spv.show()
             self.close()
+            # self.spv.show()
+            text, select = QInputDialog.getText(None, "RGest", "Come ti chiami?")
+            if not select:
+                pass
+            else:
+                if not text:
+                    QMessageBox.warning(None, "RGest", "Digitare qualcosa!")
+                else:
+                    self.nome = text
+            self.spv = Schermata_principale_view(self.nome)
+            self.spv.show()
         elif self.insertNome.text().isspace() or self.insertPassword.text().isspace():
             QMessageBox.warning(None, "RGest", "Compilare tutti i campi!")
         elif self.insertNome.text() == "" or self.insertPassword.text() == "":

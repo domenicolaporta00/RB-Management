@@ -1,5 +1,5 @@
 from PyQt5.QtGui import QFont, QPixmap, QIcon
-from PyQt5.QtWidgets import QMainWindow, QLabel, QLineEdit, QPushButton, QMessageBox
+from PyQt5.QtWidgets import QMainWindow, QLabel, QLineEdit, QPushButton, QMessageBox, QInputDialog
 
 from Credenziali.controller.ControllerCredenziali import ControllerCredenziali
 from Schermata_principale.view.Schermata_principale_view import Schermata_principale_view
@@ -32,7 +32,7 @@ class VistaCambioCredenziali(QMainWindow):
         self.confermaButton = QPushButton(self)
 
         self.controller_credenziali = ControllerCredenziali()
-        self.spv = Schermata_principale_view()
+        # self.spv = Schermata_principale_view()
 
         self.schermata()
 
@@ -92,6 +92,15 @@ class VistaCambioCredenziali(QMainWindow):
             self.controller_credenziali.aggiornaCredenziali(self.nNUText.text(), self.nPText.text())
             QMessageBox.information(None, "RGest", "Credenziali modificate correttamente.")
             self.close()
+            text, select = QInputDialog.getText(None, "RGest", "Come ti chiami?")
+            if not select:
+                pass
+            else:
+                if not text:
+                    QMessageBox.warning(None, "RGest", "Digitare qualcosa!")
+                else:
+                    self.nome = text
+            self.spv = Schermata_principale_view(self.nome)
             self.spv.show()
 
         elif not self.controller_credenziali.controlloPassword(self.nPText.text()):
