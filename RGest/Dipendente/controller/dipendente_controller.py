@@ -27,6 +27,9 @@ class dipendente_controller():
     def set_id(self, id):
         self.dm.id = id
 
+    def set_data_inizio(self, di):
+        self.dm.data_inizio = di
+
     def get_cognome(self):
         return self.dm.cognome
 
@@ -50,3 +53,6 @@ class dipendente_controller():
 
     def get_id(self):
         return self.dm.id
+
+    def get_data_inizio(self):
+        return self.dm.data_inizio

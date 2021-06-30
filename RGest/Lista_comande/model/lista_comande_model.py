@@ -1,4 +1,6 @@
-import os, pickle
+import os
+import pickle
+
 
 class lista_comande_model():
 

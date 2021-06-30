@@ -14,7 +14,6 @@ class tasse_view(QMainWindow):
         self.controller = controller
         # self.callback = callback
         self.jsonobject = {}
-        print("aaa")
 
         self.ltc = lista_tasse_controller()
 

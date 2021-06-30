@@ -24,9 +24,9 @@ class inserisci_comanda_view(QMainWindow):
         self.contr = comanda_controller(ordine)
         # self.isDelivery = isDelivery
 
-        self.lcomandac = lista_comande_controller()
-        self.lpiattic = lista_piatti_controller()
-        self.lcopertic = lista_coperti_controller()
+        # self.lcomandac = lista_comande_controller() passato già nel costruttore, non serve
+        self.lpiattic = lista_piatti_controller()  # per prendere i piatti originali e per salvare le stats
+        self.lcopertic = lista_coperti_controller()  # per memorizzare il conto (data, ora e importo)
 
         self.icona = QIcon("images\\Logo_definitivo.jpg")
 

@@ -72,7 +72,7 @@
   {
     "nome": "torta ai 5 cioccolati",
     "tipo": "dolce",
-    "prezzo": 4.0
+    "prezzo": 5.0
   },
   {
     "nome": "frutta di stagione",
@@ -105,7 +105,7 @@
     "prezzo": 3.0
   },
   {
-    "nome": "amaro della casa",
+    "nome": "jägermeister",
     "tipo": "digestivo",
     "prezzo": 2.0
   },

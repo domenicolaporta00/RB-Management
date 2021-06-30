@@ -1,0 +1,110 @@
+[
+  {
+    "nome": "una porzione di frutti di mare",
+    "prezzo": 5.0
+  },
+  {
+    "nome": "una porzione di affettati",
+    "prezzo": 5.0
+  },
+  {
+    "nome": "una porzione di formaggi",
+    "prezzo": 5.0
+  },
+  {
+    "nome": "10kg di pasta",
+    "prezzo": 10.0
+  },
+  {
+    "nome": "1kg di cime di rape",
+    "prezzo": 4.0
+  },
+  {
+    "nome": "1kg di salsa di pomodoro",
+    "prezzo": 2.5
+  },
+  {
+    "nome": "1kg di seppie",
+    "prezzo": 19.0
+  },
+  {
+    "nome": "1kg di orate",
+    "prezzo": 9.0
+  },
+  {
+    "nome": "1kg di filetto di vitello",
+    "prezzo": 28.0
+  },
+  {
+    "nome": "1kg di carne mista",
+    "prezzo": 7.0
+  },
+  {
+    "nome": "1kg di insalata",
+    "prezzo": 0.7
+  },
+  {
+    "nome": "pomodori",
+    "prezzo": 0.7
+  },
+  {
+    "nome": "1kg di patate",
+    "prezzo": 0.4
+  },
+  {
+    "nome": "1kg di verdure miste'",
+    "prezzo": 8.5
+  },
+  {
+    "nome": "una cheesekake",
+    "prezzo": 22.0
+  },
+  {
+    "nome": "un tiramisu'",
+    "prezzo": 15.0
+  },
+  {
+    "nome": "una torta ai 5 cioccolati",
+    "prezzo": 30.0
+  },
+  {
+    "nome": "1kg di frutta mista",
+    "prezzo": 12.0
+  },
+  {
+    "nome": "700ml di jagermeister",
+    "prezzo": 12.0
+  },
+  {
+    "nome": "una confezione di cialde di caffe' (180pz)",
+    "prezzo": 37.0
+  },
+  {
+    "nome": "una confezione di lattine di coca cola (6pz)",
+    "prezzo": 3.0
+  },
+  {
+    "nome": "una confezione di lattine di the (6pz)",
+    "prezzo": 3.0
+  },
+  {
+    "nome": "venti casse di acqua (120pz)",
+    "prezzo": 60.0
+  },
+  {
+    "nome": "un cartone di vino (2pz)",
+    "prezzo": 12.0
+  },
+  {
+    "nome": "una confezione di lattine di birra (6pz)",
+    "prezzo": 4.0
+  },
+  {
+    "nome": "10kg di sale",
+    "prezzo": 2.0
+  },
+  {
+    "nome": "1l d'olio",
+    "prezzo": 9.0
+  }
+]

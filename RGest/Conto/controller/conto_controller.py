@@ -1,4 +1,4 @@
-class coperti_controller():
+class conto_controller():
 
     def __init__(self, cm):
         self.cm = cm

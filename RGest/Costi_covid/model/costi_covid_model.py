@@ -8,5 +8,5 @@ class costi_covid_model():
         self.guanti = guanti
         self.igienizzanti = igienizzanti
         self.disinfestazione = disinfestazione
-        self.data = QDate.currentDate().toString("dddd d MMMM yyyy")
+        self.data = QDate.currentDate().toString("ddd d MMM yyyy")
         self.totale = float(mascherine) + float(gel) + float(guanti) + float(igienizzanti) + float(disinfestazione)

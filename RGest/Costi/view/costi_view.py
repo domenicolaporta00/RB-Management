@@ -2,6 +2,7 @@ from PyQt5.QtGui import QIcon, QFont, QStandardItemModel, QStandardItem
 from PyQt5.QtWidgets import QMainWindow, QTabWidget, QTableWidget, QPushButton, QWidget, QBoxLayout, QListView, \
     QVBoxLayout, QGridLayout, QTableWidgetItem
 
+from Lista_contiMP.controller.lista_contiMP_controller import lista_contiMP_controller
 from Lista_costi_covid.controller.lista_costi_covid_controller import lista_costi_covid_controller
 from Lista_dipendenti.controller.lista_dipendenti_controller import lista_dipendenti_controller
 from Lista_tasse.controller.lista_tasse_controller import lista_tasse_controller
@@ -15,6 +16,7 @@ class costi_view(QMainWindow):
         self.ldc = lista_dipendenti_controller()
         self.lccc = lista_costi_covid_controller()
         self.ltc = lista_tasse_controller()
+        self.lcMPc = lista_contiMP_controller()
 
         self.icona = QIcon("images\\Logo_definitivo.jpg")
 
@@ -28,6 +30,7 @@ class costi_view(QMainWindow):
         self.tab1 = QWidget(self)
         self.tab2 = QWidget(self)
         self.tab3 = QWidget(self)
+        self.tab4 = QWidget(self)
 
         self.schermata()
 
@@ -41,6 +44,7 @@ class costi_view(QMainWindow):
         self.tab_widget.addTab(self.tab1, "Dipendenti")
         self.tab_widget.addTab(self.tab2, "Costi covid")
         self.tab_widget.addTab(self.tab3, "Tasse")
+        self.tab_widget.addTab(self.tab4, "Ordini materie prime")
 
         self.lista = QTableWidget()
         self.totale = QTableWidget()
@@ -63,6 +67,12 @@ class costi_view(QMainWindow):
         self.totale_tasse.setStyleSheet("color: rgb(255, 0, 0)")
         self.genera_lista_tasse()
 
+        self.lista_costiMP = QTableWidget()
+        self.totale_costiMP = QTableWidget()
+        self.lista_costiMP.setStyleSheet("color: rgb(255, 0, 0)")
+        self.totale_costiMP.setStyleSheet("color: rgb(255, 0, 0)")
+        self.genera_lista_costiMP()
+
         layout1 = QGridLayout(self)
         layout1.addWidget(self.lista, 0, 0)
         layout1.addWidget(self.totale, 1, 0)
@@ -78,14 +88,23 @@ class costi_view(QMainWindow):
         layout3.addWidget(self.totale_tasse, 1, 0)
         self.tab3.setLayout(layout3)
 
+        layout4 = QGridLayout(self)
+        layout4.addWidget(self.lista_costiMP, 0, 0)
+        layout4.addWidget(self.totale_costiMP, 1, 0)
+        self.tab4.setLayout(layout4)
+
     def genera_lista(self):
         tot = 0
         a = 0
-        self.lista.setColumnCount(3)
+        self.lista.setColumnCount(4)
         self.totale.setColumnCount(2)
         self.totale.setRowCount(1)
         self.totale.setEnabled(False)
-        self.lista.setHorizontalHeaderLabels(["Nominativo", "Ruolo", "Stipendio"])
+        self.lista.setColumnWidth(0, 100)
+        self.lista.setColumnWidth(1, 150)
+        self.lista.setColumnWidth(2, 100)
+        self.lista.setColumnWidth(3, 175)
+        self.lista.setHorizontalHeaderLabels(["Nominativo", "Ruolo", "Stipendio", "Data assunzione"])
         self.totale.setHorizontalHeaderLabels(["Totale", "Importo"])
         for row, date in enumerate(self.ldc.get_lista_dipendenti()):
             a += 1
@@ -93,41 +112,26 @@ class costi_view(QMainWindow):
             item = QTableWidgetItem(date.nome)
             item2 = QTableWidgetItem(date.ruolo)
             item3 = QTableWidgetItem("€" + str(date.stipendio))
+            item4 = QTableWidgetItem(date.data_inizio)
             self.lista.setItem(row, 0, item)
             self.lista.setItem(row, 1, item2)
             self.lista.setItem(row, 2, item3)
+            self.lista.setItem(row, 3, item4)
             tot += int(date.stipendio)
         self.totale.setItem(0, 0, QTableWidgetItem("Totale"))
         self.totale.setItem(0, 1, QTableWidgetItem("€" + str(tot)))
-        '''self.list_view_model = QStandardItemModel(self.lista)
-        for dipendente in self.ldc.get_lista_dipendenti():
-            item = QStandardItem()
-            item.setText(dipendente.ruolo + " €" + dipendente.stipendio)
-            item.setEditable(False)
-            item.setEnabled(False)
-            item.setFont(QFont("Times Roman", 11, QFont.Bold))
-            self.list_view_model.appendRow(item)
-            tot += int(dipendente.stipendio)
-        self.lista.setModel(self.list_view_model)
-        self.totale_view_model = QStandardItemModel(self.totale)
-        itemTotale = QStandardItem()
-        itemTotale.setText("Totale     €" + str(tot))
-        itemTotale.setEditable(False)
-        itemTotale.setEnabled(False)
-        itemTotale.setFont(QFont("Times Roman", 11, QFont.Bold))
-        self.totale_view_model.appendRow(itemTotale)
-        self.totale.setModel(self.totale_view_model)'''
 
     def genera_lista_covid(self):
         tot = 0
-        # self.list_covid_view_model = QStandardItemModel(self.lista_covid)
-        # self.lccc.cancel()
-        # self.lccc.save_data()
         a = 0
         self.lista_covid.setColumnCount(7)
         self.totale_covid.setColumnCount(2)
         self.totale_covid.setRowCount(1)
         self.totale_covid.setEnabled(False)
+        self.lista_covid.setColumnWidth(1, 75)
+        self.lista_covid.setColumnWidth(2, 75)
+        self.lista_covid.setColumnWidth(5, 175)
+        self.lista_covid.setColumnWidth(6, 75)
         self.lista_covid.setHorizontalHeaderLabels(["Mascherine", "Gel", "Guanti", "Igienizzante", "Disinfestazione",
                                                     "Data", "Totale"])
         self.totale_covid.setHorizontalHeaderLabels(["Totale", "Importo"])
@@ -151,24 +155,6 @@ class costi_view(QMainWindow):
             tot += date.totale
         self.totale_covid.setItem(0, 0, QTableWidgetItem("Totale"))
         self.totale_covid.setItem(0, 1, QTableWidgetItem("€" + str(tot)))
-        '''for ordine in self.lccc.get_lista_covid():
-            item = QStandardItem()
-            item.setText("Ordine " + str(a) + ": " + ordine.data + "     €" + str(ordine.totale))
-            item.setEditable(False)
-            item.setEnabled(False)
-            item.setFont(QFont("Times Roman", 11, QFont.Bold))
-            self.list_covid_view_model.appendRow(item)
-            tot += ordine.totale
-            a = a + 1
-        self.lista_covid.setModel(self.list_covid_view_model)
-        self.totale_covid_view_model = QStandardItemModel(self.totale_covid)
-        itemTotale = QStandardItem()
-        itemTotale.setText("Totale     €" + str(tot))
-        itemTotale.setEditable(False)
-        itemTotale.setEnabled(False)
-        itemTotale.setFont(QFont("Times Roman", 11, QFont.Bold))
-        self.totale_covid_view_model.appendRow(itemTotale)
-        self.totale_covid.setModel(self.totale_covid_view_model)'''
 
     def genera_lista_tasse(self):
         tot1 = 0
@@ -177,13 +163,11 @@ class costi_view(QMainWindow):
         tot4 = 0
         tot5 = 0
         a = 0
-        # self.list_tax_view_model = QStandardItemModel(self.lista_tasse)
-        # self.ltc.cancel()
-        # self.ltc.save_data()
         self.lista_tasse.setColumnCount(6)
         self.totale_tasse.setColumnCount(1)
         self.totale_tasse.setRowCount(6)
         self.totale_tasse.setEnabled(False)
+        self.lista_tasse.setColumnWidth(5, 175)
         self.lista_tasse.setHorizontalHeaderLabels(["Acqua", "Luce", "Gas", "Tv", "Affitto",
                                                     "Data"])
         self.totale_tasse.setHorizontalHeaderLabels(["Importo"])
@@ -216,34 +200,27 @@ class costi_view(QMainWindow):
         self.totale_tasse.setItem(3, 0, QTableWidgetItem("€" + str(tot4)))
         self.totale_tasse.setItem(4, 0, QTableWidgetItem("€" + str(tot5)))
         self.totale_tasse.setItem(5, 0, QTableWidgetItem("€" + str(sum(tot))))
-        '''for tax in self.ltc.get_lista_tasse():
-            item = QStandardItem()
-            item.setText(self.stringa(tax.data, tax.acqua, tax.luce, tax.gas, tax.tv, tax.affitto))
-            item.setEditable(False)
-            item.setEnabled(False)
-            item.setFont(QFont("Times Roman", 11, QFont.Bold))
-            self.list_tax_view_model.appendRow(item)
-            tot1 += int(tax.acqua)
-            tot2 += int(tax.luce)
-            tot3 += int(tax.gas)
-            tot4 += int(tax.tv)
-            tot5 += int(tax.affitto)
-        self.lista_tasse.setModel(self.list_tax_view_model)
-        self.totale_tasse_view_model = QStandardItemModel(self.totale_tasse)
-        itemTotale = QStandardItem()
-        itemTotale.setText(
-            "Totale     Acqua: €" + str(tot1) + ", luce: €" + str(tot2) + ", gas: €" + str(tot3) + ", tv: €" + str(
-                tot4) + ", affitto: €" + str(tot5))
-        print(3)
-        itemTotale.setEditable(False)
-        itemTotale.setEnabled(False)
-        itemTotale.setFont(QFont("Times Roman", 11, QFont.Bold))
-        self.totale_tasse_view_model.appendRow(itemTotale)
-        self.totale_tasse.setModel(self.totale_tasse_view_model)
 
-    def stringa(self, a, b, c, d, e, f):
-        return a + " Acqua: €" + b + ", luce: €" + c + ", gas: €" + d + ", tv: €" + e + ", affitto: €" + f
-'''
-    # def closeEvent(self, event):
-    #   self.ldc.save_data()
-    #  self.lccc.save_data()
+    def genera_lista_costiMP(self):
+        self.lista_costiMP.setColumnCount(3)
+        self.totale_costiMP.setColumnCount(2)
+        self.totale_costiMP.setRowCount(1)
+        self.lista_costiMP.setColumnWidth(1, 175)
+        self.lista_costiMP.setColumnWidth(0, 75)
+        self.totale_costiMP.setEnabled(False)
+        self.lista_costiMP.setHorizontalHeaderLabels(["Orario", "Data", "Costo"])
+        self.totale_costiMP.setHorizontalHeaderLabels(["Totale", "Importo"])
+        a = 0
+        tot = 0
+        for row, date in enumerate(self.lcMPc.get_lista_contoMP()):
+            a += 1
+            self.lista_costiMP.setRowCount(a)
+            item = QTableWidgetItem(date.orario)
+            item2 = QTableWidgetItem(date.data)
+            item3 = QTableWidgetItem("€" + str(date.conto))
+            self.lista_costiMP.setItem(row, 0, item)
+            self.lista_costiMP.setItem(row, 1, item2)
+            self.lista_costiMP.setItem(row, 2, item3)
+            tot += date.conto
+        self.totale_costiMP.setItem(0, 0, QTableWidgetItem("Totale"))
+        self.totale_costiMP.setItem(0, 1, QTableWidgetItem("€" + str(tot)))

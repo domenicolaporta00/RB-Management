@@ -27,7 +27,6 @@ class lista_piatti_controller():
 
     def aggiungi_stat(self, stat):
         self.lpiattim.aggiungi_stat(stat)
-        print("stat aggiunta")
 
     def cancel_stats(self):
         self.lpiattim.cancel_stats()

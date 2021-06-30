@@ -20,6 +20,7 @@ from Lista_costi_covid.controller.lista_costi_covid_controller import lista_cost
 from Lista_delivery.view.lista_delivery_view import lista_delivery_view
 from Lista_dipendenti.controller.lista_dipendenti_controller import lista_dipendenti_controller
 from Lista_dipendenti.view.lista_dipendenti_view import lista_dipendenti_view
+from Lista_ordiniMP.view.lista_ordiniMP_view import lista_ordiniMP_view
 from Lista_piatti.controller.lista_piatti_controller import lista_piatti_controller
 from Lista_prenotazioni.view.lista_prenotazioni_view import lista_prenotazioni_view
 from Lista_tasse.controller.lista_tasse_controller import lista_tasse_controller
@@ -85,9 +86,9 @@ class Schermata_principale_view(QMainWindow):
         menu.addAction("Prenotazioni                 ", self.prenotazioni)
         menu.addAction("Comanda", self.comanda)
 
-        '''menu2 = QMenu()
-        menu2.addAction("Magazzino standard")
-        menu2.addAction("Magazzino gluten-free")'''
+        menu2 = QMenu()
+        menu2.addAction("Magazzino")
+        menu2.addAction("Ordine materie prime", self.ordine_materie)
 
         menu3 = QMenu()
         menu3.addAction("Gestione personale      ", self.dipendenti)
@@ -143,7 +144,7 @@ class Schermata_principale_view(QMainWindow):
         self.magazzinoButton.setText("Gestione magazzino")
         self.magazzinoButton.setFont(font)
         self.magazzinoButton.setFixedSize(175, 50)
-        # self.magazzinoButton.setMenu(menu2)
+        self.magazzinoButton.setMenu(menu2)
         self.magazzinoButton.setStyleSheet("background-color: red; border-radius: 10px; color: rgb(255, 255, 255)")
 
         self.backofficeButton.move(175, 425)
@@ -324,6 +325,10 @@ class Schermata_principale_view(QMainWindow):
 
     def comandaDelivery(self):
         self.lcomandav_Delivery.show()
+
+    def ordine_materie(self):
+        self.lordiniMPv = lista_ordiniMP_view()
+        self.lordiniMPv.show()
 
     def grafico(self):
         self.lpiattic = lista_piatti_controller()
