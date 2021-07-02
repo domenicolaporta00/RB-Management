@@ -1,7 +1,7 @@
 import time
 
 from PyQt5.QtGui import QIcon, QPixmap, QFont
-from PyQt5.QtWidgets import QMainWindow, QProgressBar, QLabel, QPushButton, QBoxLayout, QVBoxLayout, QWidget
+from PyQt5.QtWidgets import QMainWindow, QProgressBar, QLabel, QPushButton, QBoxLayout, QVBoxLayout, QWidget, QComboBox
 
 from Credenziali.view.VistaCredenziali.VistaCredenziali import VistaCredenziali
 
@@ -18,9 +18,11 @@ class progress_bar_view(QMainWindow):
         self.setWindowIcon(self.icona)
         self.setStyleSheet("background-color: rgb(255, 255, 255)")
 
-        self.vC = VistaCredenziali()
+        # self.vC = VistaCredenziali()
 
         self.progressbar = QProgressBar(self)
+
+        self.cb = QComboBox(self)
 
         self.logo = QLabel(self)
 
@@ -31,11 +33,17 @@ class progress_bar_view(QMainWindow):
     def schermata(self):
         pixmax = QPixmap("images\\Logo_definitivo.jpg")
         self.logo.setPixmap(pixmax)
-        self.logo.move(225, 100)
+        self.logo.move(225, 50)
         self.logo.setFixedSize(300, 300)
 
-        self.config_button(self.button, "Avvia app", QFont("Times Roman", 11, QFont.Bold), 300, 30, 225, 530)
+        self.config_button(self.button, "OK", QFont("Times Roman", 11, QFont.Bold), 300, 30, 225, 530)
         self.button.clicked.connect(self.parti)
+
+        self.cb.setFont(QFont("Times Roman", 11))
+        self.cb.setFixedSize(300, 30)
+        self.cb.move(225, 400)
+        self.cb.addItem(QIcon("images\\italia.jpg"), "Italiano")
+        self.cb.addItem(QIcon("images\\inglese.png"), "Inglese")
 
         self.progressbar.setRange(0, 100)
         self.progressbar.setTextVisible(False)
@@ -45,6 +53,7 @@ class progress_bar_view(QMainWindow):
         self.close()
 
     def parti(self):
+        self.vC = VistaCredenziali(self.cb.currentText())
         maximum = self.progressbar.maximum()
         for n in range(maximum + 1):
             time.sleep(0.02)

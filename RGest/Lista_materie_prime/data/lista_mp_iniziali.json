@@ -106,5 +106,13 @@
   {
     "nome": "1l d'olio",
     "prezzo": 9.0
+  },
+  {
+    "nome": "materie prime gluten-free (per un menu')",
+    "prezzo": 20.0
+  },
+  {
+    "nome": "materie prime senza lattosio (per un menu')",
+    "prezzo": 20.0
   }
 ]

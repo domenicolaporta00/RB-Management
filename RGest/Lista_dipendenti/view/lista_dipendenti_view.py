@@ -8,8 +8,10 @@ from Lista_dipendenti.view.inserisci_dipendente_view import inserisci_dipendente
 
 class lista_dipendenti_view(QMainWindow):
 
-    def __init__(self):
+    def __init__(self, lingua):
         super(lista_dipendenti_view, self).__init__()
+
+        self.lingua = lingua
 
         self.ldc = lista_dipendenti_controller()
 
@@ -32,6 +34,19 @@ class lista_dipendenti_view(QMainWindow):
         self.schermata()
 
     def schermata(self):
+
+        global str5, str4, str3, str2
+        if self.lingua == "Inglese":
+            str2 = "List of employees"
+            str3 = "Add"
+            str4 = "Modification"
+            str5 = "Delete everything"
+        elif self.lingua == "Italiano":
+            str2 = "Elenco dei dipendenti"
+            str3 = "Aggiungi"
+            str4 = "Modifica"
+            str5 = "Elimina tutto"
+
         font = QFont("Times Roman", 11, QFont.Bold)
 
         self.genera_lista()
@@ -40,17 +55,17 @@ class lista_dipendenti_view(QMainWindow):
         self.lista.move(125, 100)
         self.lista.setFixedSize(500, 400)
 
-        self.lista_label.setText("Elenco dei dipendenti")
+        self.lista_label.setText(str2)
         self.lista_label.setFont(QFont("Times Roman", 20, QFont.Bold))
         self.lista_label.setStyleSheet("color: red")
         self.lista_label.move(200, 40)
         self.lista_label.setFixedSize(350, 40)
 
-        self.config_button(self.aggiungi, "Aggiungi", font, 150, 30, 100, 550)
+        self.config_button(self.aggiungi, str3, font, 150, 30, 100, 550)
         self.aggiungi.clicked.connect(self.apri_inserimento)
-        self.config_button(self.visualizza, "Modifica", font, 150, 30, 500, 550)
+        self.config_button(self.visualizza, str4, font, 150, 30, 500, 550)
         self.visualizza.clicked.connect(self.mostra_dipendente)
-        self.config_button(self.elimina, "Elimina tutto", font, 150, 30, 300, 550)
+        self.config_button(self.elimina, str5, font, 150, 30, 300, 550)
         self.elimina.clicked.connect(self.cancel)
 
     def genera_lista(self):
@@ -75,8 +90,13 @@ class lista_dipendenti_view(QMainWindow):
         self.newelement()
 
     def mostra_dipendente(self):
+        global str1
+        if self.lingua == "Inglese":
+            str1 = "Select an employee!"
+        if self.lingua == "Italiano":
+            str1 = "Selezionare un dipendente!"
         if not self.lista.selectedIndexes():
-            QMessageBox.warning(None, "RGest", "Selezionare un dipendente!")
+            QMessageBox.warning(None, "RGest", str1)
         else:
             selected = self.lista.selectedIndexes()[0].row()
             dipendente_selezionato = self.ldc.get_dipendente(selected)
@@ -84,10 +104,15 @@ class lista_dipendenti_view(QMainWindow):
             self.dv.show()
 
     def cancel(self):
+        global str1
+        if self.lingua == "Inglese":
+            str1 = "All employees have been canceled!"
+        if self.lingua == "Italiano":
+            str1 = "Tutti i dipendenti sono stati cancellati!"
         self.ldc.cancel()
         self.ldc.save_data()
         self.genera_lista()
-        QMessageBox.information(None, "RGest", "Tutte i dipendenti sono stati cancellati!")
+        QMessageBox.information(None, "RGest", "Tutti i dipendenti sono stati cancellati!")
 
     def newelement(self):
         self.closeEvent(self.ldc.save_data())

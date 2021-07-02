@@ -19,17 +19,20 @@ class lista_materie_prime_controller():
     def save_data(self):
         self.lmatprimem.save_data()
 
-    '''def get_lista_stats(self):
-        return self.lpiattim.get_lista_stats()
+    def get_lista_magazzino(self):
+        return self.lmatprimem.get_lista_magazzino()
 
-    def get_stat(self, i):
-        return self.lpiattim.get_stat(i)
+    def get_mp_inMag(self, i):
+        return self.lmatprimem.get_mp_inMag(i)
 
-    def aggiungi_stat(self, stat):
-        self.lpiattim.aggiungi_stat(stat)
+    def aggiungi_inMag(self, mp):
+        self.lmatprimem.aggiungi_inMag(mp)
 
-    def cancel_stats(self):
-        self.lpiattim.cancel_stats()
+    def elimina_MP_daMag(self, mp):
+        self.lmatprimem.elimina_MP_daMag(mp)
 
-    def save_data_stats(self):
-        self.lpiattim.save_data_stats()'''
+    def cancel_lista_magazzino(self):
+        self.lmatprimem.cancel_lista_magazzino()
+
+    def save_data_magazzino(self):
+        self.lmatprimem.save_data_magazzino()

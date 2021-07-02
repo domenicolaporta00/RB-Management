@@ -15,8 +15,10 @@ from Tasse.view.tasse_view import tasse_view
 
 class lista_clienti_view(QMainWindow):
 
-    def __init__(self):
+    def __init__(self, lingua):
         super(lista_clienti_view, self).__init__()
+
+        self.lingua = lingua
 
         self.lclientic = lista_clienti_controller()
 
@@ -41,7 +43,6 @@ class lista_clienti_view(QMainWindow):
         f = QFont("Times Roman", 11, QFont.Bold)
 
         self.genera_lista()
-        #self.lista.setStyleSheet("background-color: rgb(255, 255, 255); color: rgb(0, 0, 0)")
         self.lista.move(129, 100)
         self.lista.setFixedSize(492, 400)
 
@@ -66,23 +67,6 @@ class lista_clienti_view(QMainWindow):
             self.lista.setItem(row, 0, item)
             self.lista.setItem(row, 1, item2)
             self.lista.setItem(row, 2, item3)
-        '''self.lclientic.cancel()
-        self.lclientic.cancel_noDoppi()
-        self.lclientic.save_data()'''
-        '''for cliente in self.lclientic.get_lista_clienti():
-            if self.controllo(cliente):
-                pass
-            else:
-                self.clienti_noDoppi.append(cliente)'''
-        '''self.list_view_model = QStandardItemModel(self.lista)
-        for cliente in self.lclientic.get_lista_clienti_noDoppi():
-            item = QStandardItem()
-            item.setText(cliente.nome + " " + cliente.telefono + " prima prenotazione " + cliente.data)
-            item.setEditable(False)
-            item.setEnabled(False)
-            item.setFont(QFont("Times Roman", 11, QFont.Bold))
-            self.list_view_model.appendRow(item)
-        self.lista.setModel(self.list_view_model)'''
 
     def config_button(self, button, text, font, a, b, x, y):
         button.setText(text)

@@ -10,7 +10,7 @@ class lista_materie_prime_model():
     def __init__(self):
         super(lista_materie_prime_model, self).__init__()
         self.lista_mp = []
-        # self.lista_stats = []
+        self.lista_magazzino = []
         if os.path.isfile('Lista_materie_prime\\data\\lista_mp_salvata.pickle'):
             with open('Lista_materie_prime\\data\\lista_mp_salvata.pickle', 'rb') as f:
                 self.lista_mp = pickle.load(f)
@@ -19,9 +19,9 @@ class lista_materie_prime_model():
                 lista_mp_iniziali = json.load(f)
             for mp in lista_mp_iniziali:
                 self.aggiungi_mp(materie_prime_model(mp["nome"], mp["prezzo"]))
-        '''if os.path.isfile('Lista_piatti\\data\\lista_stats_salvata.pickle'):
-            with open('Lista_piatti\\data\\lista_stats_salvata.pickle', 'rb') as F:
-                self.lista_stats = pickle.load(F)'''
+        if os.path.isfile('Lista_materie_prime\\data\\lista_magazzino_salvata.pickle'):
+            with open('Lista_materie_prime\\data\\lista_magazzino_salvata.pickle', 'rb') as F:
+                self.lista_magazzino = pickle.load(F)
 
     def aggiungi_mp(self, mp):
         self.lista_mp.append(mp)
@@ -36,18 +36,21 @@ class lista_materie_prime_model():
         with open('Lista_materie_prime\\data\\lista_mp_salvata.pickle', 'wb') as handle:
             pickle.dump(self.lista_mp, handle, pickle.HIGHEST_PROTOCOL)
 
-    '''def aggiungi_stat(self, stat):
-        self.lista_stats.append(stat)
+    def aggiungi_inMag(self, mp):
+        self.lista_magazzino.append(mp)
 
-    def get_stat(self, i):
-        return self.lista_stats[i]
+    def get_mp_inMag(self, i):
+        return self.lista_magazzino[i]
 
-    def get_lista_stats(self):
-        return self.lista_stats
+    def get_lista_magazzino(self):
+        return self.lista_magazzino
 
-    def cancel_stats(self):
-        self.lista_stats = []
+    def elimina_MP_daMag(self, mp):
+        self.lista_magazzino.remove(mp)
 
-    def save_data_stats(self):
-        with open('Lista_piatti\\data\\lista_stats_salvata.pickle', 'wb') as handle:
-            pickle.dump(self.lista_stats, handle, pickle.HIGHEST_PROTOCOL)'''
+    def cancel_lista_magazzino(self):
+        self.lista_magazzino = []
+
+    def save_data_magazzino(self):
+        with open('Lista_materie_prime\\data\\lista_magazzino_salvata.pickle', 'wb') as handle:
+            pickle.dump(self.lista_magazzino, handle, pickle.HIGHEST_PROTOCOL)

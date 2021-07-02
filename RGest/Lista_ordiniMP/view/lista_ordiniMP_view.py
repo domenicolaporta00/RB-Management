@@ -7,8 +7,10 @@ from Lista_ordiniMP.view.inserisci_ordineMP_view import inserisci_ordineMP_view
 
 class lista_ordiniMP_view(QMainWindow):
 
-    def __init__(self):
+    def __init__(self, lingua):
         super(lista_ordiniMP_view, self).__init__()
+
+        self.lingua = lingua
 
         self.lordiniMPc = lista_ordiniMP_controller()
 

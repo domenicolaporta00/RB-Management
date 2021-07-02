@@ -26,7 +26,7 @@ class inserisci_ordineMP_view(QMainWindow):
         # self.isDelivery = isDelivery
 
         # self.lcomandac = lista_ordiniMP_controller()  #  non serve, già passato nel costruttore
-        self.lmatprimec = lista_materie_prime_controller()  # per prendere le mp originali e per memorizzare le stats
+        self.lmatprimec = lista_materie_prime_controller()   # per prendere le mp originali e per memorizzare le stats
         self.lcMPc = lista_contiMP_controller()
 
         self.icona = QIcon("images\\Logo_definitivo.jpg")
@@ -161,13 +161,13 @@ class inserisci_ordineMP_view(QMainWindow):
             self.lcMPc.aggiungi_contoMP(contoMP_model(self.conto_finale))
             for mp in self.matprime_ordine:
                 print(mp)
-                # self.lpiattic.aggiungi_stat(mp) prima creare le stats
+                self.lmatprimec.aggiungi_inMag(mp)
             self.controller.elimina(self.ordine)
             self.callback()
             QMessageBox.information(None, "RGest", "Ordine pagato! Costi e statistiche sulle materie prime acquistate "
                                                    "memorizzati correttamente!")
             self.close()
-            # print("len stats =", len(self.lpiattic.get_lista_stats()))
+            print("len magazzino =", len(self.lmatprimec.get_lista_magazzino()))
 
     def config_layout2(self, tw, tw2, widget):
         layout = QGridLayout(self)
@@ -208,4 +208,4 @@ class inserisci_ordineMP_view(QMainWindow):
 
     def closeEvent(self, event):
         self.lcMPc.save_data()
-        # self.lpiattic.save_data_stats() prima fare le stats
+        self.lmatprimec.save_data_magazzino()

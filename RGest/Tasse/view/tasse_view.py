@@ -8,8 +8,10 @@ from Tasse.model.tasse_model import tasse_model
 
 class tasse_view(QMainWindow):
 
-    def __init__(self, controller):
+    def __init__(self, controller, lingua):
         super(tasse_view, self).__init__()
+
+        self.lingua = lingua
 
         self.controller = controller
         # self.callback = callback
@@ -38,16 +40,31 @@ class tasse_view(QMainWindow):
         self.schermata()
 
     def schermata(self):
+
+        global str1, str2, str3, str4, str5
+        if self.lingua == "Inglese":
+            str1 = "Water"
+            str2 = "Electricity"
+            str3 = "Rent"
+            str4 = "Confirm"
+            str5 = "Complete the following fields"
+        if self.lingua == "Italiano":
+            str1 = "Acqua"
+            str2 = "Luce"
+            str3 = "Affitto"
+            str4 = "Conferma"
+            str5 = "Completa i seguenti campi"
+
         validator = QRegExpValidator(QRegExp("[0-9]+"))
         font = QFont("Times Roman", 15, QFont.Bold)
 
-        self.config_label(self.completa, "Completa i seguenti campi",
+        self.config_label(self.completa, str5,
                           200, 30, 750, 75, QFont("Times Roman", 20, QFont.Bold))
-        self.config_label(self.acqua, "Acqua", 210, 140, 190, 30, font)
-        self.config_label(self.luce, "Luce", 210, 220, 190, 30, font)
+        self.config_label(self.acqua, str1, 210, 140, 190, 30, font)
+        self.config_label(self.luce, str2, 210, 220, 190, 30, font)
         self.config_label(self.gas, "Gas", 210, 300, 190, 30, font)
         self.config_label(self.tv, "Tv", 210, 380, 190, 30, font)
-        self.config_label(self.affitto, "Affitto", 210, 460, 190, 30, font)
+        self.config_label(self.affitto, str3, 210, 460, 190, 30, font)
 
         self.Config_lineEdit("Acqua", 345, 140, "", validator)
         self.Config_lineEdit("Luce", 345, 220, "", validator)
@@ -55,7 +72,7 @@ class tasse_view(QMainWindow):
         self.Config_lineEdit("Tv", 345, 380, "", validator)
         self.Config_lineEdit("Affitto", 345, 460, "", validator)
 
-        self.config_button("Conferma", 300, 540, self.confermaButton)
+        self.config_button(str4, 300, 540, self.confermaButton)
         self.confermaButton.clicked.connect(self.conferma)
 
     def config_button(self, text, x, y, bottone):
@@ -84,6 +101,13 @@ class tasse_view(QMainWindow):
         self.jsonobject[tipo] = lineEdit
 
     def conferma(self):
+        global str2, str1
+        if self.lingua == "Inglese":
+            str1 = "Fill in all fields!"
+            str2 = "Taxes entered correctly."
+        if self.lingua == "Italiano":
+            str1 = "Compilare tutti i campi!"
+            str2 = "Tasse inserite correttamente."
         acqua = self.jsonobject["Acqua"].text()
         luce = self.jsonobject["Luce"].text()
         gas = self.jsonobject["Gas"].text()
@@ -91,11 +115,11 @@ class tasse_view(QMainWindow):
         affitto = self.jsonobject["Affitto"].text()
         if self.isBlank(acqua) or self.isBlank(luce) or self.isBlank(
                 gas) or self.isBlank(tv) or self.isBlank(affitto):
-            QMessageBox.warning(None, "RGest", "Compilare tutti i campi!")
+            QMessageBox.warning(None, "RGest", str1)
         else:
             self.controller.aggiungi_tasse(tasse_model(acqua, luce, gas, tv, affitto))
             # self.callback()
-            QMessageBox.information(None, "RGest", "Tasse inserite correttamente.")
+            QMessageBox.information(None, "RGest", str2)
             self.controller.save_data()
             self.close()
 

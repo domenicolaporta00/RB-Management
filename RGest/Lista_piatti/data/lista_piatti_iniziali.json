@@ -105,7 +105,7 @@
     "prezzo": 3.0
   },
   {
-    "nome": "jägermeister",
+    "nome": "jagermeister",
     "tipo": "digestivo",
     "prezzo": 2.0
   },
@@ -113,5 +113,15 @@
     "nome": "caffe'",
     "tipo": "digestivo",
     "prezzo": 1.0
+  },
+  {
+    "nome": "menu' per celiaci",
+    "tipo": "menu' speciali",
+    "prezzo": 30.0
+  },
+  {
+    "nome": "menu' lactose free",
+    "tipo": "menu' speciali",
+    "prezzo": 30.0
   }
 ]

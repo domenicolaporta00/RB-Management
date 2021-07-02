@@ -14,9 +14,10 @@ from Prenotazioni.view.prenotazioni_view import prenotazioni_view
 
 class lista_prenotazioni_view(QMainWindow):
 
-    def __init__(self):
+    def __init__(self, lingua):
         super(lista_prenotazioni_view, self).__init__()
 
+        self.lingua = lingua
         # self.lcomandec = lista_comande_controller()
         self.lpc = lista_prenotazioni_controller()
         self.lcc = lista_coperti_controller()
@@ -49,14 +50,32 @@ class lista_prenotazioni_view(QMainWindow):
         self.schermata()
 
     def schermata(self):
+        global str6, str5, str7, str4, str3, str1, str2
+        if self.lingua == "Inglese":
+            str1 = "Lunch"
+            str2 = "Dinner"
+            str3 = "Reservation list"
+            str4 = "Modification"
+            str5 = "Add"
+            str6 = "Ends the day"
+            str7 = "Delete everything"
+        elif self.lingua == "Italiano":
+            str1 = "Pranzo"
+            str2 = "Cena"
+            str3 = "Elenco delle prenotazioni"
+            str4 = "Modifica"
+            str5 = "Aggiungi"
+            str6 = "Termina giornata"
+            str7 = "Elimina tutto"
+
         font = QFont("Times Roman", 11, QFont.Bold)
 
         self.tab_widget.setFixedSize(700, 450)
         self.tab_widget.move(25, 75)
         self.tab_widget.setStyleSheet("background-color: rgb(255, 255, 255)")
         self.tab_widget.setFont(font)
-        self.tab_widget.addTab(self.tab1, "Pranzo")
-        self.tab_widget.addTab(self.tab2, "Cena")
+        self.tab_widget.addTab(self.tab1, str1)
+        self.tab_widget.addTab(self.tab2, str2)
 
         self.genera_lista()
         self.lista.setModel(self.list_view_model)
@@ -78,21 +97,21 @@ class lista_prenotazioni_view(QMainWindow):
         layout2.addWidget(self.visualizza_cena)
         self.tab2.setLayout(layout2)
 
-        self.lista_label.setText("Elenco delle prenotazioni")
+        self.lista_label.setText(str3)
         self.lista_label.setFont(QFont("Times Roman", 20, QFont.Bold))
         self.lista_label.setStyleSheet("color: red")
         self.lista_label.move(200, 40)
         self.lista_label.setFixedSize(350, 40)
 
-        self.config_button(self.visualizza, "Modifica", font, 150, 30, 36, 550)
+        self.config_button(self.visualizza, str4, font, 150, 30, 36, 550)
         self.visualizza.clicked.connect(self.mostra_prenotazione)
-        self.config_button(self.visualizza_cena, "Modifica", font, 150, 30, 36, 550)
+        self.config_button(self.visualizza_cena, str4, font, 150, 30, 36, 550)
         self.visualizza_cena.clicked.connect(self.mostra_prenotazione_cena)
-        self.config_button(self.aggiungi, "Aggiungi", font, 150, 30, 211, 482)
+        self.config_button(self.aggiungi, str5, font, 150, 30, 211, 482)
         self.aggiungi.clicked.connect(self.apri_inserimento)
-        self.config_button(self.elimina, "Elimina tutto", font, 150, 30, 387, 482)
+        self.config_button(self.elimina, str7, font, 150, 30, 387, 482)
         self.elimina.clicked.connect(self.cancel)
-        self.config_button(self.salva, "Termina giornata", font, 150, 30, 562, 482)
+        self.config_button(self.salva, str6, font, 150, 30, 562, 482)
         self.salva.clicked.connect(self.termina)
 
     def config_button(self, button, text, font, a, b, x, y):
@@ -106,28 +125,43 @@ class lista_prenotazioni_view(QMainWindow):
         self.newelement()
 
     def genera_lista(self):
+        global str1
+        if self.lingua == "Inglese":
+            str1 = " Table: "
+        if self.lingua == "Italiano":
+            str1 = " Tavolo: "
         self.list_view_model = QStandardItemModel(self.lista)
         for prenotazione in self.lpc.get_lista_prenotazioni():
             item = QStandardItem()
-            item.setText(prenotazione.cognome + " Tavolo: " + str(prenotazione.tavolo))
+            item.setText(prenotazione.cognome + str1 + str(prenotazione.tavolo))
             item.setEditable(False)
             item.setFont(QFont("Times Roman", 11, QFont.Bold))
             self.list_view_model.appendRow(item)
         self.lista.setModel(self.list_view_model)
 
     def genera_lista_cena(self):
+        global str1
+        if self.lingua == "Inglese":
+            str1 = " Table: "
+        if self.lingua == "Italiano":
+            str1 = " Tavolo: "
         self.list_view_model_cena = QStandardItemModel(self.lista_cena)
         for prenotazione in self.lpc.get_lista_prenotazioni_cena():
             item = QStandardItem()
-            item.setText(prenotazione.cognome + " Tavolo: " + str(prenotazione.tavolo))
+            item.setText(prenotazione.cognome + str1 + str(prenotazione.tavolo))
             item.setEditable(False)
             item.setFont(QFont("Times Roman", 11, QFont.Bold))
             self.list_view_model_cena.appendRow(item)
         self.lista_cena.setModel(self.list_view_model_cena)
 
     def mostra_prenotazione(self):
+        global str1
+        if self.lingua == "Inglese":
+            str1 = "Select a reservation!"
+        if self.lingua == "Italiano":
+            str1 = "Selezionare una prenotazione!"
         if not self.lista.selectedIndexes():
-            QMessageBox.warning(None, "RGest", "Selezionare una prenotazione!")
+            QMessageBox.warning(None, "RGest", str1)
         else:
             selected = self.lista.selectedIndexes()[0].row()
             prenotazione_selezionata = self.lpc.get_prenotazione(selected)
@@ -135,8 +169,13 @@ class lista_prenotazioni_view(QMainWindow):
             self.pv.show()
 
     def mostra_prenotazione_cena(self):
+        global str1
+        if self.lingua == "Inglese":
+            str1 = "Select a reservation!"
+        if self.lingua == "Italiano":
+            str1 = "Selezionare una prenotazione!"
         if not self.lista_cena.selectedIndexes():
-            QMessageBox.warning(None, "RGest", "Selezionare una prenotazione!")
+            QMessageBox.warning(None, "RGest", str1)
         else:
             selected_ = self.lista_cena.selectedIndexes()[0].row()
             prenotazione_selezionata_ = self.lpc.get_prenotazione_cena(selected_)
@@ -144,12 +183,17 @@ class lista_prenotazioni_view(QMainWindow):
             self.pv.show()
 
     def cancel(self):
+        global str1
+        if self.lingua == "Inglese":
+            str1 = "All reservations have been canceled!"
+        if self.lingua == "Italiano":
+            str1 = "Tutte le prenotazioni sono state cancellate!"
         self.lpc.cancel()
         self.lpc.cancel_cena()
         self.lpc.save_data()
         self.genera_lista()
         self.genera_lista_cena()
-        QMessageBox.information(None, "RGest", "Tutte le prenotazioni sono state cancellate!")
+        QMessageBox.information(None, "RGest", str1)
 
     def newelement(self):
         self.closeEvent(self.lpc.save_data())
@@ -157,12 +201,20 @@ class lista_prenotazioni_view(QMainWindow):
         self.ipv.show()
 
     def termina(self):
+        global str1, str2
+        if self.lingua == "Inglese":
+            str1 = "Empty table!"
+            str2 = "Day over! The number of seats and customer contacts were saved successfully!"
+        if self.lingua == "Italiano":
+            str1 = "Tavolo vuoto!"
+            str2 = "Giornata terminata! Il numero dei coperti e i contatti dei clienti sono stati salvati " \
+                   "correttamente! "
         n = 0
         for prenotazioni in self.lpc.get_lista_prenotazioni():
             n += int(prenotazioni.posti)
         #self.lcc.aggiungi_coperto(coperti_model(n))
         for prenotazioni in self.lpc.get_lista_prenotazioni():
-            if prenotazioni.cognome == "Tavolo vuoto!":
+            if prenotazioni.cognome == str1:
                 pass
             else:
                 '''if self.controllo(cliente_model(prenotazioni.cognome, prenotazioni.telefono)):
@@ -173,7 +225,7 @@ class lista_prenotazioni_view(QMainWindow):
             n += int(prenotazioni.posti)
         self.lcc.aggiungi_coperto(coperti_model(n))
         for prenotazioni in self.lpc.get_lista_prenotazioni_cena():
-            if prenotazioni.cognome == "Tavolo vuoto!":
+            if prenotazioni.cognome == str1:
                 pass
             else:
                 '''if self.controllo(cliente_model(prenotazioni.cognome, prenotazioni.telefono)):
@@ -184,8 +236,7 @@ class lista_prenotazioni_view(QMainWindow):
         self.lpc.cancel_cena()
         self.genera_lista()
         self.genera_lista_cena()
-        QMessageBox.information(None, "RGest", "Giornata terminata! Il numero dei coperti e i contatti dei clienti "
-                                               "sono stati salvati correttamente!")
+        QMessageBox.information(None, "RGest", str2)
         self.close()
 
     def controllo(self, c):

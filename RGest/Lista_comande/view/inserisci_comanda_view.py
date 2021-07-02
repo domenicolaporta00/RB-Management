@@ -7,7 +7,9 @@ from Comanda.model.comanda_model import comanda_model
 from Conto.model.conto_model import conto_model
 from Lista_comande.controller.lista_comande_controller import lista_comande_controller
 from Lista_coperti.controller.lista_coperti_controller import lista_coperti_controller
+from Lista_materie_prime.controller.lista_materie_prime_controller import lista_materie_prime_controller
 from Lista_piatti.controller.lista_piatti_controller import lista_piatti_controller
+from Materie_prime.model.materie_prime_model import materie_prime_model
 
 
 class inserisci_comanda_view(QMainWindow):
@@ -54,6 +56,7 @@ class inserisci_comanda_view(QMainWindow):
         self.digestivi = QWidget(self)
         self.intolleranze = QWidget(self)
         self.bevande = QWidget(self)
+        self.menuSpeciali = QWidget(self)
         self.tutto = QWidget(self)
 
         self.cba = QComboBox(self)
@@ -64,7 +67,9 @@ class inserisci_comanda_view(QMainWindow):
         self.cbf = QComboBox(self)
         self.cbdi = QComboBox(self)
         self.cbb = QComboBox(self)
+        self.cbms = QComboBox(self)
 
+        self.intolleranze_foto = QLabel()
         self.piatto1 = QLabel(self)
         self.piatto2 = QLabel(self)
         self.piatto3 = QLabel(self)
@@ -87,6 +92,8 @@ class inserisci_comanda_view(QMainWindow):
         self.piatto20 = QLabel(self)
         self.piatto21 = QLabel(self)
         self.piatto22 = QLabel(self)
+        self.piatto23 = QLabel(self)
+        self.piatto24 = QLabel(self)
 
         self.listaAntipasti = [self.piatto1, self.piatto2]
         self.listaPrimi = [self.piatto3, self.piatto4, self.piatto5, self.piatto6]
@@ -96,6 +103,7 @@ class inserisci_comanda_view(QMainWindow):
         self.listaFrutta = [self.piatto15]
         self.listaDigestivi = [self.piatto16, self.piatto17]
         self.listaBevande = [self.piatto18, self.piatto19, self.piatto20, self.piatto21, self.piatto22]
+        self.listaMenuSpeciali = [self.piatto23, self.piatto24]
         self.schermata()
 
     def schermata(self):
@@ -146,6 +154,9 @@ class inserisci_comanda_view(QMainWindow):
             elif t == "bevanda":
                 self.cbb.addItem(piatti.nome + " €" + str(piatti.prezzo))
                 self.cbb.setFont(font)
+            elif t == "menu' speciali":
+                self.cbms.addItem(piatti.nome + " €" + str(piatti.prezzo))
+                self.cbms.setFont(font)
 
         self.tab_widget.setFixedSize(700, 500)
         self.tab_widget.move(25, 25)
@@ -160,6 +171,7 @@ class inserisci_comanda_view(QMainWindow):
         self.tab_widget.addTab(self.frutta, "Frutta")
         self.tab_widget.addTab(self.digestivi, "Digestivi")
         self.tab_widget.addTab(self.bevande, "Bevande")
+        self.tab_widget.addTab(self.menuSpeciali, "Menu' speciali")
         self.tab_widget.addTab(self.tutto, "Totale")
 
         a = 1
@@ -189,6 +201,11 @@ class inserisci_comanda_view(QMainWindow):
         for b in self.listaBevande:
             self.config_foto(b, QPixmap(string + str(a) + estensione), 250, 250)
             a += 1
+        for ms in self.listaMenuSpeciali:
+            self.config_foto(ms, QPixmap(string + str(a) + estensione), 250, 250)
+            a += 1
+
+        self.config_foto(self.intolleranze_foto, QPixmap("images\\allergeni.jpg"), 650, 450)
 
         self.config_layout(self.cba, self.listaAntipasti, 0, 0, self.antipasti)
         self.config_layout(self.cbp, self.listaPrimi, 0, 0, self.primi)
@@ -198,26 +215,126 @@ class inserisci_comanda_view(QMainWindow):
         self.config_layout(self.cbf, self.listaFrutta, 0, 0, self.frutta)
         self.config_layout(self.cbdi, self.listaDigestivi, 0, 0, self.digestivi)
         self.config_layout(self.cbb, self.listaBevande, 0, 0, self.bevande)
-        self.config_layout2(self.lista, self.lista_totale, self.tutto)
+        self.config_layout(self.cbms, self.listaMenuSpeciali, 0, 0, self.menuSpeciali)
+        self.config_layout2(self.tutto, self.lista, self.lista_totale)
+        self.config_layout2(self.intolleranze, self.intolleranze_foto)
+
+    def controllo(self, nome):
+        self.lmatprimec = lista_materie_prime_controller()
+
+        def quanti(matPrima):
+            a = 0
+            for mp in self.lmatprimec.get_lista_magazzino():
+                if mp == (matPrima.nome, matPrima.prezzo):
+                    a += 1
+            return a
+
+        if nome == "crudo di mare" and quanti(self.lmatprimec.get_mp(0)) == 0:
+            return False
+        if nome == "antipasto di terra" and quanti(self.lmatprimec.get_mp(1)) == 0 and quanti(
+                self.lmatprimec.get_mp(1)) == 0:
+            return False
+        if nome == "orecchiette e cipe di rapa" and quanti(self.lmatprimec.get_mp(3)) == 0 and quanti(
+                self.lmatprimec.get_mp(4)) == 0:
+            return False
+        if nome == "spaghetti allo scoglio" and quanti(self.lmatprimec.get_mp(3)) == 0 and quanti(
+                self.lmatprimec.get_mp(0)) == 0:
+            return False
+        if nome == "penne al pomodoro" and quanti(self.lmatprimec.get_mp(3)) == 0 and quanti(
+                self.lmatprimec.get_mp(5)) == 0:
+            return False
+        if nome == "ravioli al nero di seppia" and quanti(self.lmatprimec.get_mp(3)) == 0 and quanti(
+                self.lmatprimec.get_mp(6)) == 0:
+            return False
+        if nome == "orata al cartoccio" and quanti(self.lmatprimec.get_mp(7)) == 0:
+            return False
+        if nome == "filetto di vitello" and quanti(self.lmatprimec.get_mp(8)) == 0:
+            return False
+        if nome == "arrosto" and quanti(self.lmatprimec.get_mp(9)) == 0:
+            return False
+        if nome == "insalata" and quanti(self.lmatprimec.get_mp(10)) == 0 and quanti(self.lmatprimec.get_mp(11)) == 0:
+            return False
+        if nome == "patate al forno" and quanti(self.lmatprimec.get_mp(12)) == 0:
+            return False
+        if nome == "verdure grigliate" and quanti(self.lmatprimec.get_mp(13)) == 0:
+            return False
+        if nome == "cheesecake alle fragole" and quanti(self.lmatprimec.get_mp(14)) == 0:
+            return False
+        if nome == "tiramisu'" and quanti(self.lmatprimec.get_mp(15)) == 0:
+            return False
+        if nome == "torta ai 5 cioccolati" and quanti(self.lmatprimec.get_mp(16)) == 0:
+            return False
+        if nome == "frutta di stagione" and quanti(self.lmatprimec.get_mp(17)) == 0:
+            return False
+        if nome == "coca cola" and quanti(self.lmatprimec.get_mp(20)) == 0:
+            return False
+        if nome == "the" and quanti(self.lmatprimec.get_mp(21)) == 0:
+            return False
+        if nome == "acqua" and quanti(self.lmatprimec.get_mp(22)) == 0:
+            return False
+        if nome == "vino" and quanti(self.lmatprimec.get_mp(23)) == 0:
+            return False
+        if nome == "birra" and quanti(self.lmatprimec.get_mp(24)) == 0:
+            return False
+        if nome == "jagermeister" and quanti(self.lmatprimec.get_mp(18)) == 0:
+            return False
+        if nome == "caffe'" and quanti(self.lmatprimec.get_mp(19)) == 0:
+            return False
+        if nome == "menu' per celiaci" and quanti(self.lmatprimec.get_mp(27)) == 0:
+            return False
+        if nome == "menu' lactose free" and quanti(self.lmatprimec.get_mp(28)) == 0:
+            return False
+        return True
 
     def agg(self):
+        s = "Materia prima esaurita! Impossibile aggiungere questo piatto!"
         a = self.tab_widget.currentIndex()
-        if a == 1:
+
+        if a == 1 and self.controllo(self.nome(self.cba.currentText())):
             self.piatti_ordine.append((self.nome(self.cba.currentText()), self.prezzo(self.cba.currentText())))
-        elif a == 2:
+        elif a == 1 and not self.controllo(self.nome(self.cba.currentText())):
+            QMessageBox.warning(None, "RGest", s)
+
+        elif a == 2 and self.controllo(self.nome(self.cbp.currentText())):
             self.piatti_ordine.append((self.nome(self.cbp.currentText()), self.prezzo(self.cbp.currentText())))
-        elif a == 3:
+        elif a == 2 and not self.controllo(self.nome(self.cbp.currentText())):
+            QMessageBox.warning(None, "RGest", s)
+
+        elif a == 3 and self.controllo(self.nome(self.cbs.currentText())):
             self.piatti_ordine.append((self.nome(self.cbs.currentText()), self.prezzo(self.cbs.currentText())))
-        elif a == 4:
+        elif a == 3 and not self.controllo(self.nome(self.cbs.currentText())):
+            QMessageBox.warning(None, "RGest", s)
+
+        elif a == 4 and self.controllo(self.nome(self.cbc.currentText())):
             self.piatti_ordine.append((self.nome(self.cbc.currentText()), self.prezzo(self.cbc.currentText())))
-        elif a == 5:
+        elif a == 4 and not self.controllo(self.nome(self.cbc.currentText())):
+            QMessageBox.warning(None, "RGest", s)
+
+        elif a == 5 and self.controllo(self.nome(self.cbdo.currentText())):
             self.piatti_ordine.append((self.nome(self.cbdo.currentText()), self.prezzo(self.cbdo.currentText())))
-        elif a == 6:
+        elif a == 5 and not self.controllo(self.nome(self.cbdo.currentText())):
+            QMessageBox.warning(None, "RGest", s)
+
+        elif a == 6 and self.controllo(self.nome(self.cbf.currentText())):
             self.piatti_ordine.append((self.nome(self.cbf.currentText()), self.prezzo(self.cbf.currentText())))
-        elif a == 7:
+        elif a == 6 and not self.controllo(self.nome(self.cbf.currentText())):
+            QMessageBox.warning(None, "RGest", s)
+
+        elif a == 7 and self.controllo(self.nome(self.cbdi.currentText())):
             self.piatti_ordine.append((self.nome(self.cbdi.currentText()), self.prezzo(self.cbdi.currentText())))
-        elif a == 8:
+        elif a == 7 and not self.controllo(self.nome(self.cbdi.currentText())):
+            QMessageBox.warning(None, "RGest", s)
+
+        elif a == 8 and self.controllo(self.nome(self.cbb.currentText())):
             self.piatti_ordine.append((self.nome(self.cbb.currentText()), self.prezzo(self.cbb.currentText())))
+        elif a == 8 and not self.controllo(self.nome(self.cbb.currentText())):
+            QMessageBox.warning(None, "RGest", s)
+
+        elif a == 9 and self.controllo(self.nome(self.cbms.currentText())):
+            self.piatti_ordine.append((self.nome(self.cbms.currentText()), self.prezzo(self.cbms.currentText())))
+        elif a == 9 and not self.controllo(self.nome(self.cbms.currentText())):
+            QMessageBox.warning(None, "RGest", s)
+
         self.genera_lista()
 
     def genera_lista(self):
@@ -250,7 +367,7 @@ class inserisci_comanda_view(QMainWindow):
             self.lista_totale.setItem(0, 1, QTableWidgetItem("€" + str(self.conto_finale)))
 
     def conferma(self):
-        if self.tab_widget.currentIndex() != 9:
+        if self.tab_widget.currentIndex() != 10:
             QMessageBox.warning(None, "RGest", "Per confermare andare alla schermata finale!")
         else:
             if not self.piatti_ordine:
@@ -266,7 +383,7 @@ class inserisci_comanda_view(QMainWindow):
                 self.close()
 
     def cancella(self):
-        if self.tab_widget.currentIndex() != 9:
+        if self.tab_widget.currentIndex() != 10:
             QMessageBox.warning(None, "RGest", "Per eliminare una portata andare alla schermata finale!")
         else:
             if not self.lista.selectedItems():
@@ -286,16 +403,13 @@ class inserisci_comanda_view(QMainWindow):
             self.lcopertic.aggiungi_conto(conto_model(self.conto_finale))
             for piatto in self.piatti_ordine:
                 self.lpiattic.aggiungi_stat(piatto)
-            print(789)
             self.controller.elimina(self.ordine)
-            print(678)
             self.callback()
             QMessageBox.information(None, "RGest", "Conto pagato! Ricavi e statistiche sui piatti memorizzati "
                                                    "correttamente!")
             self.close()
-            print("len stats =", len(self.lpiattic.get_lista_stats()))
 
-    def config_layout2(self, tw, tw2, widget):
+    def config_layout2(self, widget, tw, tw2=None):
         layout = QGridLayout(self)
         layout.addWidget(tw, 0, 0)
         layout.addWidget(tw2, 0, 1)

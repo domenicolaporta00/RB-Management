@@ -10,8 +10,10 @@ from Lista_tasse.controller.lista_tasse_controller import lista_tasse_controller
 
 class costi_view(QMainWindow):
 
-    def __init__(self):
+    def __init__(self, lingua):
         super(costi_view, self).__init__()
+
+        self.lingua = lingua
 
         self.ldc = lista_dipendenti_controller()
         self.lccc = lista_costi_covid_controller()
@@ -35,16 +37,29 @@ class costi_view(QMainWindow):
         self.schermata()
 
     def schermata(self):
+
+        global str2, str1, str3, str4
+        if self.lingua == "Inglese":
+            str1 = "Employees"
+            str2 = "Covid costs"
+            str3 = "Taxes"
+            str4 = "Raw material orders"
+        if self.lingua == "Italiano":
+            str1 = "Dipendenti"
+            str2 = "Costi covid"
+            str3 = "Tasse"
+            str4 = "Ordini materie prime"
+
         font = QFont("Times Roman", 11)
 
         self.tab_widget.setFixedSize(750, 600)
         self.tab_widget.move(0, 0)
         self.tab_widget.setStyleSheet("background-color: rgb(255, 255, 255)")
         self.tab_widget.setFont(font)
-        self.tab_widget.addTab(self.tab1, "Dipendenti")
-        self.tab_widget.addTab(self.tab2, "Costi covid")
-        self.tab_widget.addTab(self.tab3, "Tasse")
-        self.tab_widget.addTab(self.tab4, "Ordini materie prime")
+        self.tab_widget.addTab(self.tab1, str1)
+        self.tab_widget.addTab(self.tab2, str2)
+        self.tab_widget.addTab(self.tab3, str3)
+        self.tab_widget.addTab(self.tab4, str4)
 
         self.lista = QTableWidget()
         self.totale = QTableWidget()
@@ -94,6 +109,23 @@ class costi_view(QMainWindow):
         self.tab4.setLayout(layout4)
 
     def genera_lista(self):
+
+        global str2, str1, str3, str4, str5, str6
+        if self.lingua == "Inglese":
+            str1 = "Name"
+            str2 = "Role"
+            str3 = "Salary"
+            str4 = "Assumption date"
+            str5 = "Total"
+            str6 = "Amount"
+        if self.lingua == "Italiano":
+            str1 = "Nominativo"
+            str2 = "Ruolo"
+            str3 = "Stipendio"
+            str4 = "Data assunzione"
+            str5 = "Totale"
+            str6 = "Importo"
+
         tot = 0
         a = 0
         self.lista.setColumnCount(4)
@@ -104,8 +136,8 @@ class costi_view(QMainWindow):
         self.lista.setColumnWidth(1, 150)
         self.lista.setColumnWidth(2, 100)
         self.lista.setColumnWidth(3, 175)
-        self.lista.setHorizontalHeaderLabels(["Nominativo", "Ruolo", "Stipendio", "Data assunzione"])
-        self.totale.setHorizontalHeaderLabels(["Totale", "Importo"])
+        self.lista.setHorizontalHeaderLabels([str1, str2, str3, str4])
+        self.totale.setHorizontalHeaderLabels([str5, str6])
         for row, date in enumerate(self.ldc.get_lista_dipendenti()):
             a += 1
             self.lista.setRowCount(a)
@@ -118,10 +150,29 @@ class costi_view(QMainWindow):
             self.lista.setItem(row, 2, item3)
             self.lista.setItem(row, 3, item4)
             tot += int(date.stipendio)
-        self.totale.setItem(0, 0, QTableWidgetItem("Totale"))
+        self.totale.setItem(0, 0, QTableWidgetItem(str5))
         self.totale.setItem(0, 1, QTableWidgetItem("€" + str(tot)))
 
     def genera_lista_covid(self):
+
+        global str2, str1, str3, str4, str5, str6
+        if self.lingua == "Inglese":
+            str1 = "Masks"
+            str2 = "Gloves"
+            str3 = "Sanitizing"
+            str4 = "Disinfestation"
+            str5 = "Total"
+            str6 = "Date"
+            str7 = "Amount"
+        if self.lingua == "Italiano":
+            str1 = "Mascherine"
+            str2 = "Guanti"
+            str3 = "Igienizzante"
+            str4 = "Disinfestazione"
+            str5 = "Totale"
+            str6 = "Data"
+            str7 = "Importo"
+
         tot = 0
         a = 0
         self.lista_covid.setColumnCount(7)
@@ -132,9 +183,9 @@ class costi_view(QMainWindow):
         self.lista_covid.setColumnWidth(2, 75)
         self.lista_covid.setColumnWidth(5, 175)
         self.lista_covid.setColumnWidth(6, 75)
-        self.lista_covid.setHorizontalHeaderLabels(["Mascherine", "Gel", "Guanti", "Igienizzante", "Disinfestazione",
-                                                    "Data", "Totale"])
-        self.totale_covid.setHorizontalHeaderLabels(["Totale", "Importo"])
+        self.lista_covid.setHorizontalHeaderLabels([str1, "Gel", str2, str3, str4,
+                                                    str6, str5])
+        self.totale_covid.setHorizontalHeaderLabels([str5, str7])
         for row, date in enumerate(self.lccc.get_lista_covid()):
             a += 1
             self.lista_covid.setRowCount(a)
@@ -153,10 +204,27 @@ class costi_view(QMainWindow):
             self.lista_covid.setItem(row, 5, item6)
             self.lista_covid.setItem(row, 6, item7)
             tot += date.totale
-        self.totale_covid.setItem(0, 0, QTableWidgetItem("Totale"))
+        self.totale_covid.setItem(0, 0, QTableWidgetItem(str5))
         self.totale_covid.setItem(0, 1, QTableWidgetItem("€" + str(tot)))
 
     def genera_lista_tasse(self):
+
+        global str1, str2, str3, str4, str5, str6
+        if self.lingua == "Inglese":
+            str1 = "Water"
+            str2 = "Electricity"
+            str3 = "Rent"
+            str4 = "Date"
+            str5 = "Amount"
+            str6 = "Total"
+        if self.lingua == "Italiano":
+            str1 = "Acqua"
+            str2 = "Luce"
+            str3 = "Affitto"
+            str4 = "Data"
+            str5 = "Importo"
+            str6 = "Totale"
+
         tot1 = 0
         tot2 = 0
         tot3 = 0
@@ -168,11 +236,11 @@ class costi_view(QMainWindow):
         self.totale_tasse.setRowCount(6)
         self.totale_tasse.setEnabled(False)
         self.lista_tasse.setColumnWidth(5, 175)
-        self.lista_tasse.setHorizontalHeaderLabels(["Acqua", "Luce", "Gas", "Tv", "Affitto",
-                                                    "Data"])
-        self.totale_tasse.setHorizontalHeaderLabels(["Importo"])
-        self.totale_tasse.setVerticalHeaderLabels(["Acqua", "Luce", "Gas", "Tv", "Affitto",
-                                                   "Totale"])
+        self.lista_tasse.setHorizontalHeaderLabels([str1, str2, "Gas", "Tv", str3,
+                                                    str4])
+        self.totale_tasse.setHorizontalHeaderLabels([str5])
+        self.totale_tasse.setVerticalHeaderLabels([str1, str2, "Gas", "Tv", "str3",
+                                                   str6])
         for row, date in enumerate(self.ltc.get_lista_tasse()):
             a += 1
             self.lista_tasse.setRowCount(a)
@@ -202,14 +270,29 @@ class costi_view(QMainWindow):
         self.totale_tasse.setItem(5, 0, QTableWidgetItem("€" + str(sum(tot))))
 
     def genera_lista_costiMP(self):
+
+        global str1, str2, str3, str4, str5, str6
+        if self.lingua == "Inglese":
+            str1 = "Time"
+            str2 = "Date"
+            str3 = "Cost"
+            str5 = "Amount"
+            str6 = "Total"
+        if self.lingua == "Italiano":
+            str1 = "Orario"
+            str2 = "Data"
+            str3 = "Costo"
+            str5 = "Importo"
+            str6 = "Totale"
+
         self.lista_costiMP.setColumnCount(3)
         self.totale_costiMP.setColumnCount(2)
         self.totale_costiMP.setRowCount(1)
         self.lista_costiMP.setColumnWidth(1, 175)
         self.lista_costiMP.setColumnWidth(0, 75)
         self.totale_costiMP.setEnabled(False)
-        self.lista_costiMP.setHorizontalHeaderLabels(["Orario", "Data", "Costo"])
-        self.totale_costiMP.setHorizontalHeaderLabels(["Totale", "Importo"])
+        self.lista_costiMP.setHorizontalHeaderLabels([str1, str2, str3])
+        self.totale_costiMP.setHorizontalHeaderLabels([str5, str6])
         a = 0
         tot = 0
         for row, date in enumerate(self.lcMPc.get_lista_contoMP()):
@@ -222,5 +305,5 @@ class costi_view(QMainWindow):
             self.lista_costiMP.setItem(row, 1, item2)
             self.lista_costiMP.setItem(row, 2, item3)
             tot += date.conto
-        self.totale_costiMP.setItem(0, 0, QTableWidgetItem("Totale"))
+        self.totale_costiMP.setItem(0, 0, QTableWidgetItem(str6))
         self.totale_costiMP.setItem(0, 1, QTableWidgetItem("€" + str(tot)))

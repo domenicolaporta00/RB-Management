@@ -20,7 +20,9 @@ from Lista_costi_covid.controller.lista_costi_covid_controller import lista_cost
 from Lista_delivery.view.lista_delivery_view import lista_delivery_view
 from Lista_dipendenti.controller.lista_dipendenti_controller import lista_dipendenti_controller
 from Lista_dipendenti.view.lista_dipendenti_view import lista_dipendenti_view
+from Lista_ordiniMP.view.consumoMP_view import consumoMP_view
 from Lista_ordiniMP.view.lista_ordiniMP_view import lista_ordiniMP_view
+from Lista_ordiniMP.view.magazzino_view import magazzino_view
 from Lista_piatti.controller.lista_piatti_controller import lista_piatti_controller
 from Lista_prenotazioni.view.lista_prenotazioni_view import lista_prenotazioni_view
 from Lista_tasse.controller.lista_tasse_controller import lista_tasse_controller
@@ -28,14 +30,28 @@ from Tasse.view.tasse_view import tasse_view
 
 
 class Schermata_principale_view(QMainWindow):
-    def __init__(self, nome):
+    def __init__(self, nome, lingua):
+        global str4, str2, str5, str3
         super(Schermata_principale_view, self).__init__()
 
+        self.lingua = lingua
+
+        if self.lingua == "Inglese":
+            str2 = "Contacts"
+            str3 = "Contact employees"
+            str4 = "Clock"
+            str5 = "Time and date"
+        elif self.lingua == "Italiano":
+            str2 = "Contatti"
+            str3 = "Contatta dipendenti"
+            str4 = "Orologio"
+            str5 = "Ora e data"
+
         # self.lpiattic = lista_piatti_controller()
-        self.lpv = lista_prenotazioni_view()
-        self.ldv = lista_dipendenti_view()
-        self.lcomandav_noDelivery = lista_comande_view(False)
-        self.lcomandav_Delivery = lista_comande_view(True)
+        self.lpv = lista_prenotazioni_view(lingua)
+        self.ldv = lista_dipendenti_view(lingua)
+        self.lcomandav_noDelivery = lista_comande_view(False, lingua)
+        self.lcomandav_Delivery = lista_comande_view(True, lingua)
         # self.lpiattiv = lista_piatti_view()
         self.lccc = lista_costi_covid_controller()
         self.ltc = lista_tasse_controller()
@@ -56,9 +72,9 @@ class Schermata_principale_view(QMainWindow):
         self.menu_bar.setStyleSheet("background-color: rgb(240, 240, 240)")
         self.config_menubar("File", QIcon("images\\exit.png"), "Exit", 'Ctrl+Q').triggered.connect(self.close)
         self.config_menubar("Info", QIcon("images\\pint.jpg"), "Tutorial", 'Ctrl+W').triggered.connect(self.tutorial)
-        self.config_menubar("Contatti", QIcon("images\\telefono.png"), "Contatta dipendenti",
+        self.config_menubar(str2, QIcon("images\\telefono.png"), str3,
                             "Ctrl+E").triggered.connect(self.contatti)
-        self.config_menubar("Ora e data", QIcon("images\\orologio.jpg"), "Ora e data", 'Ctrl+R').triggered.connect(
+        self.config_menubar(str4, QIcon("images\\orologio.jpg"), str5, 'Ctrl+R').triggered.connect(
             self.data_ora)
 
         self.serviziButton = QPushButton(self)
@@ -81,20 +97,77 @@ class Schermata_principale_view(QMainWindow):
         self.schermata()
 
     def schermata(self):
+        global str26, str25, str24, str23, str22, str21, str20, str19, str18, str17, str16, str15, str14, str13, str12, str11, str10, str9, str8, str7, str6, str5, str4, str1, str2, str3
+        if self.lingua == "Inglese":
+            str1 = "Warehouse"
+            str2 = "Booking"
+            str3 = "Commands"
+            str4 = "Order raw materials"
+            str5 = "Consumption of raw materials"
+            str6 = "Personal management"
+            str7 = "Taxes"
+            str8 = "Costs"
+            str9 = "Earnings"
+            str10 = "Customer list"
+            str11 = "Best selling dishes statistics"
+            str12 = "Customers more present"
+            str13 = "Government website"
+            str14 = "Colors of the regions"
+            str15 = "Good rules to follow"
+            str16 = "Covid trend"
+            str17 = "Order products"
+            str18 = "Calls"
+            str19 = "Orders"
+            str20 = "                 Welcome in RGest. \nPlease select an option from the menu:"
+            str21 = "Service MGMT"
+            str22 = "Warehouse MGMT"
+            str23 = "Backoffice MGMT"
+            str24 = "Data"
+            str25 = "Delivery MGMT"
+            str26 = "Developer info"
+        elif self.lingua == "Italiano":
+            str1 = "Magazzino"
+            str2 = "Prenotazione"
+            str3 = "Comanda"
+            str4 = "Ordine materie prime"
+            str5 = "Consumo materie prime"
+            str6 = "Gestione personale"
+            str7 = "Tasse"
+            str8 = "Costi"
+            str9 = "Guadagni"
+            str10 = "Lista clienti"
+            str11 = "Lista piatti più venduti"
+            str12 = "Clienti più presenti"
+            str13 = "Sito del governo"
+            str14 = "Colori delle regioni"
+            str15 = "Buone regole da seguire"
+            str16 = "Andamento covid"
+            str17 = "Ordine prodotti"
+            str18 = "Chiamate"
+            str19 = "Ordini"
+            str20 = "                 Benvenuto in RGest. \nPrego selezionare un opzione dal menù:"
+            str21 = "Gestione servizi"
+            str22 = "Gestione magazzino"
+            str23 = "Gestione management"
+            str24 = "Dati"
+            str25 = "Gestione delivery"
+            str26 = "Info sviluppatori"
+
         font = QFont("Times Roman", 11, QFont.Bold)
         menu = QMenu()
-        menu.addAction("Prenotazioni                 ", self.prenotazioni)
-        menu.addAction("Comanda", self.comanda)
+        menu.addAction(str2, self.prenotazioni)
+        menu.addAction(str3, self.comanda)
 
         menu2 = QMenu()
-        menu2.addAction("Magazzino")
-        menu2.addAction("Ordine materie prime", self.ordine_materie)
+        menu2.addAction(str1, self.magazzino_click)
+        menu2.addAction(str4, self.ordine_materie)
+        menu2.addAction(str5, self.consumo_materie)
 
         menu3 = QMenu()
-        menu3.addAction("Gestione personale      ", self.dipendenti)
-        menu3.addAction("Tasse", self.tasse)
-        menu3.addAction("Costi", self.costi)
-        menu3.addAction("Guadagni", self.guadagni)
+        menu3.addAction(str6, self.dipendenti)
+        menu3.addAction(str7, self.tasse)
+        menu3.addAction(str8, self.costi)
+        menu3.addAction(str9, self.guadagni)
 
         menuS = QMenu()
         menuS.addAction("Ciccolini Joshua            ", self.cj)
@@ -102,20 +175,20 @@ class Schermata_principale_view(QMainWindow):
         menuS.addAction("La Porta Domenico", self.dlp)
 
         menuDati = QMenu()
-        menuDati.addAction("Lista clienti", self.dati_clienti)
-        menuDati.addAction("Statistiche piatti venduti", self.grafico)
-        menuDati.addAction("Clienti più presenti", self.grafico_clienti)
+        menuDati.addAction(str10, self.dati_clienti)
+        menuDati.addAction(str11, self.grafico)
+        menuDati.addAction(str12, self.grafico_clienti)
 
         menuCovid = QMenu()
-        menuCovid.addAction("Visita il sito del Governo", self.governo)
-        menuCovid.addAction("Controlla i colori delle regioni", self.colori)
-        menuCovid.addAction("Elenco buone norme da seguire", self.norme)
-        menuCovid.addAction("Andamento Covid", self.andamento)
-        menuCovid.addAction("Ordine prodotti", self.costi_covid)
+        menuCovid.addAction(str13, self.governo)
+        menuCovid.addAction(str14, self.colori)
+        menuCovid.addAction(str15, self.norme)
+        menuCovid.addAction(str16, self.andamento)
+        menuCovid.addAction(str17, self.costi_covid)
 
         menuDelivery = QMenu()
-        menuDelivery.addAction("Chiamate                     ", self.chiamate)
-        menuDelivery.addAction("Comande", self.comandaDelivery)
+        menuDelivery.addAction(str18, self.chiamate)
+        menuDelivery.addAction(str19, self.comandaDelivery)
 
         str = "images\\"
 
@@ -127,35 +200,35 @@ class Schermata_principale_view(QMainWindow):
         deliveryPixmap = QPixmap(str + "delivery.png")
         LogoPixmax = QPixmap(str + "Logo_tagliato.png")
 
-        self.selezionare.setText("                 Benvenuto in RGest. \nPrego, selezionare un'opzione dal menù:")
+        self.selezionare.setText(str20)
         self.selezionare.setFont(QFont("Times Roman", 20, QFont.Bold))
         self.selezionare.setStyleSheet("color: red")
         self.selezionare.move(100, 50)
         self.selezionare.setFixedSize(750, 100)
 
         self.serviziButton.move(175, 175)
-        self.serviziButton.setText("Gestione servizi")
+        self.serviziButton.setText(str21)
         self.serviziButton.setFont(font)
         self.serviziButton.setFixedSize(175, 50)
         self.serviziButton.setMenu(menu)
         self.serviziButton.setStyleSheet("background-color: red; border-radius: 10px; color: rgb(255, 255, 255)")
 
         self.magazzinoButton.move(175, 300)
-        self.magazzinoButton.setText("Gestione magazzino")
+        self.magazzinoButton.setText(str22)
         self.magazzinoButton.setFont(font)
         self.magazzinoButton.setFixedSize(175, 50)
         self.magazzinoButton.setMenu(menu2)
         self.magazzinoButton.setStyleSheet("background-color: red; border-radius: 10px; color: rgb(255, 255, 255)")
 
         self.backofficeButton.move(175, 425)
-        self.backofficeButton.setText("Gestione backoffice")
+        self.backofficeButton.setText(str23)
         self.backofficeButton.setFont(font)
         self.backofficeButton.setFixedSize(175, 50)
         self.backofficeButton.setMenu(menu3)
         self.backofficeButton.setStyleSheet("background-color: red; border-radius: 10px; color: rgb(255, 255, 255)")
 
         self.datiButton.move(400, 175)
-        self.datiButton.setText("Dati")
+        self.datiButton.setText(str24)
         self.datiButton.setFont(font)
         self.datiButton.setFixedSize(175, 50)
         self.datiButton.setMenu(menuDati)
@@ -169,7 +242,7 @@ class Schermata_principale_view(QMainWindow):
         self.infoCovidButton.setMenu(menuCovid)
 
         self.deliveryButton.move(400, 425)
-        self.deliveryButton.setText("Gestione delivery")
+        self.deliveryButton.setText(str25)
         self.deliveryButton.setFont(font)
         self.deliveryButton.setFixedSize(175, 50)
         self.deliveryButton.setMenu(menuDelivery)
@@ -179,7 +252,7 @@ class Schermata_principale_view(QMainWindow):
         self.logo.setFixedSize(110, 110)
         self.logo.move(200, 500)
 
-        self.sviluppatori.setText("Info sviluppatori")
+        self.sviluppatori.setText(str26)
         self.sviluppatori.move(400, 525)
         self.sviluppatori.setFont(font)
         self.sviluppatori.setFixedSize(175, 50)
@@ -245,39 +318,57 @@ class Schermata_principale_view(QMainWindow):
         print("Tutorial da fare")
 
     def data_ora(self):
-        audio = "speech.mp3"
-        language = "it"
+        global language, str1
         oggi = QDate.currentDate().toString("dddd d MMMM yyyy")
         ora = QTime.currentTime().toString("hh:mm")
-        sp = gTTS(text="Ciao " + self.nome + " sono le " + ora + " di " + oggi, lang=language, slow=False)
+        if self.lingua == "Inglese":
+            language = "en"
+            str1 = "Hello " + self.nome + " it's " + ora + " on " + oggi
+        if self.lingua == "Italiano":
+            language = "it"
+            str1 = "Ciao " + self.nome + " sono le " + ora + " di " + oggi
+        audio = "speech.mp3"
+        sp = gTTS(text=str1, lang=language, slow=False)
         sp.save(audio)
         playsound(audio)
         os.remove(audio)
 
     def contatti(self):
+        global str5, str4, str3, str2, str1
+        if self.lingua == "Inglese":
+            str1 = "Empty customer list. Unable to send messages."
+            str2 = "Write your message. (Warning! The procedure can take\na long time and cannot be done" \
+                   "in the background.\nIt is recommended to run outside business hours!\nPress ok to" \
+                   "to continue!) "
+            str3 = "Type something!"
+            str4 = "The system will open whatsapp web for each employee stored and there will be twenty seconds to" \
+                   "provision to frame the QR code; at the end of twenty seconds the message will be sent" \
+                   "correctly and you will go to the next one. Do not interact with the application while sending the" \
+                   "messages! "
+            str5 = "Sending messages finished."
+        if self.lingua == "Italiano":
+            str1 = "Lista clienti vuota. Impossibile inviare messaggi."
+            str2 = "Scrivi il messaggio. (Attenzione! La procedura può impiegare\ntanto tempo e non può essere fatta " \
+                   "in background.\nSi consiglia di eseguire fuori dall'orario lavorativo!\nPremere ok per " \
+                   "continuare!) "
+            str3 = "Digitare qualcosa!"
+            str4 = "Il sistema aprirà whatsapp web per ogni dipendente memorizzato e ci saranno venti secondi a " \
+                   "disposizione per inquadrare il QR code; al termine dei venti secondi il messaggio verrà inviato " \
+                   "correttamente e si passerà al successivo. Non interagire con l'applicazione durante l'invio dei " \
+                   "messaggi! "
+            str5 = "Invio messaggi terminato."
         self.ldc = lista_dipendenti_controller()
         if not self.ldc.get_lista_dipendenti():
-            QMessageBox.warning(None, "RGest", "Lista clienti vuota. Impossibile inviare messaggi.")
+            QMessageBox.warning(None, "RGest", str1)
         else:
-            text, select = QInputDialog.getText(None, "RGest",
-                                                "Scrivi il messaggio. (Attenzione! La procedura può impiegare\ntanto "
-                                                "tempo "
-                                                "e non può essere fatta "
-                                                "in background.\nSi consiglia di eseguire fuori dall'orario "
-                                                "lavorativo!\n"
-                                                "Premere ok per continuare!)")
+            text, select = QInputDialog.getText(None, "RGest", str2)
             if not select:
                 pass
             else:
                 if not text:
-                    QMessageBox.warning(None, "RGest", "Digitare qualcosa!")
+                    QMessageBox.warning(None, "RGest", str3)
                 else:
-                    QMessageBox.warning(None, "RGest",
-                                        "Il sistema aprirà whatsapp web per ogni dipendente memorizzato e ci "
-                                        "saranno venti secondi a disposizione per inquadrare il QR code; "
-                                        "al termine dei venti secondi il messaggio verrà inviato "
-                                        "correttamente e si passerà al successivo. Non interagire con "
-                                        "l'applicazione durante l'invio dei messaggi!")
+                    QMessageBox.warning(None, "RGest", str4)
                     for dipendente in self.ldc.get_lista_dipendenti():
                         ora = QTime.currentTime().hour()
                         minuto = QTime.currentTime().minute() + 1
@@ -288,7 +379,7 @@ class Schermata_principale_view(QMainWindow):
                             mex = "Car* " + dipendente.nome + ", " + text
                             # print("Invio " + mex + " a " + dipendente.nome + " numero " + dipendente.telefono)
                             pywhatkit.sendwhatmsg("+39" + dipendente.telefono, mex, ora, minuto)
-                    QMessageBox.information(None, "RGest", "Invio messaggi terminato.")
+                    QMessageBox.information(None, "RGest", str5)
 
     def prenotazioni(self):
         self.lpv.show()
@@ -300,64 +391,89 @@ class Schermata_principale_view(QMainWindow):
         self.lcomandav_noDelivery.show()
 
     def costi_covid(self):
-        self.ccv = costi_covid_view(self.lccc)
+        self.ccv = costi_covid_view(self.lccc, self.lingua)
         self.ccv.show()
 
     def tasse(self):
-        self.tv = tasse_view(self.ltc)
+        self.tv = tasse_view(self.ltc, self.lingua)
         self.tv.show()
 
     def costi(self):
-        self.cv = costi_view()
+        self.cv = costi_view(self.lingua)
         self.cv.show()
 
     def guadagni(self):
-        self.gv = guadagni_view()
+        self.gv = guadagni_view(self.lingua)
         self.gv.show()
 
+    # da qui continuare a modificare
     def dati_clienti(self):
-        self.lclientiv = lista_clienti_view()
+        self.lclientiv = lista_clienti_view(self.lingua)
         self.lclientiv.show()
 
     def chiamate(self):
-        self.ldeliveryv = lista_delivery_view()
+        self.ldeliveryv = lista_delivery_view(self.lingua)
         self.ldeliveryv.show()
 
     def comandaDelivery(self):
         self.lcomandav_Delivery.show()
 
     def ordine_materie(self):
-        self.lordiniMPv = lista_ordiniMP_view()
+        self.lordiniMPv = lista_ordiniMP_view(self.lingua)
         self.lordiniMPv.show()
 
+    def consumo_materie(self):
+        self.consumoMPv = consumoMP_view(self.lingua)
+        self.consumoMPv.show()
+
+    def magazzino_click(self):
+        self.magazzinov = magazzino_view(self.lingua)
+        self.magazzinov.show()
+
     def grafico(self):
+        global str2, str1
+        if self.lingua == "Inglese":
+            str1 = "No plates sold"
+            str2 = "Statistics plates sold"
+        if self.lingua == "Italiano":
+            str1 = "Nessun piatto venduto"
+            str2 = "Statistiche piatti più venduti"
+
         self.lpiattic = lista_piatti_controller()
         valori = []
         nomi = []
         if not self.lpiattic.get_lista_stats():
-            print("nulla")
+            QMessageBox.warning(None, "RGest", str1)
         else:
             for piatto in self.lpiattic.get_lista_piatti():
                 valori.append(self.quanti((piatto.nome, piatto.prezzo)))
                 nomi.append(piatto.nome)
             index = np.arange(len(nomi))
-            p.title("Statistiche piatti venduti")
+            p.title(str2)
             p.bar(index, valori)
             p.xticks(index, nomi, size=8, rotation=90)
             p.show()
 
     def grafico_clienti(self):
+        global str2, str1
+        if self.lingua == "Inglese":
+            str1 = "No customers in the list"
+            str2 = "Most present customer statistics"
+        if self.lingua == "Italiano":
+            str1 = "Nessun cliente nella lista"
+            str2 = "Statistiche clienti più presenti"
+
         self.lclientic = lista_clienti_controller()
         valori = []
         nomi = []
         if not self.lclientic.get_lista_clienti_noDoppi():
-            print("nulla")
+            QMessageBox.warning(None, "RGest", str1)
         else:
             for cliente in self.lclientic.get_lista_clienti_noDoppi():
                 valori.append(self.quanti_clienti((cliente.nome, cliente.telefono)))
                 nomi.append(cliente.nome)
             index = np.arange(len(nomi))
-            p.title("Statistiche clienti più presenti")
+            p.title(str2)
             p.bar(index, valori)
             p.xticks(index, nomi, size=8, rotation=90)
             p.show()

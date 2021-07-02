@@ -12,8 +12,10 @@ from Lista_delivery.view.inserisci_delivery_view import inserisci_delivery_view
 
 class lista_delivery_view(QMainWindow):
 
-    def __init__(self):
+    def __init__(self, lingua):
         super(lista_delivery_view, self).__init__()
+
+        self.lingua = lingua
 
         self.ldc = lista_delivery_controller()
         self.lcopertic = lista_coperti_controller()

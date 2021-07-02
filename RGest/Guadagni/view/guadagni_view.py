@@ -7,11 +7,12 @@ from Lista_coperti.controller.lista_coperti_controller import lista_coperti_cont
 
 class guadagni_view(QMainWindow):
 
-    def __init__(self):
+    def __init__(self, lingua):
         super(guadagni_view, self).__init__()
 
+        self.lingua = lingua
+
         self.lcc = lista_coperti_controller()
-        # controller dei guadagni
 
         self.icona = QIcon("images\\Logo_definitivo.jpg")
 
@@ -29,15 +30,26 @@ class guadagni_view(QMainWindow):
         self.schermata()
 
     def schermata(self):
+
+        global str2, str1, str3
+        if self.lingua == "Inglese":
+            str1 = "Place settings"
+            str2 = "Orders"
+            str3 = "Home delivery"
+        if self.lingua == "Italiano":
+            str1 = "Coperti"
+            str2 = "Ordini"
+            str3 = "Consegne delivery"
+
         font = QFont("Times Roman", 11)
 
         self.tab_widget.setFixedSize(750, 600)
         self.tab_widget.move(0, 0)
         self.tab_widget.setStyleSheet("background-color: rgb(255, 255, 255)")
         self.tab_widget.setFont(font)
-        self.tab_widget.addTab(self.tab1, "Coperti")
-        self.tab_widget.addTab(self.tab2, "Ordini")
-        self.tab_widget.addTab(self.tab3, "Consegne delivery")
+        self.tab_widget.addTab(self.tab1, str1)
+        self.tab_widget.addTab(self.tab2, str2)
+        self.tab_widget.addTab(self.tab3, str3)
 
         self.lista = QTableWidget()
         self.totale = QTableWidget()
@@ -76,6 +88,21 @@ class guadagni_view(QMainWindow):
     def genera_lista(self):
         # self.lcc.cancel()
         # self.lcc.save_data()
+
+        global str2, str1, str3, str5, str6
+        if self.lingua == "Inglese":
+            str1 = "Date"
+            str2 = "Place settings"
+            str3 = "Proceeds"
+            str5 = "Total"
+            str6 = "Amount"
+        if self.lingua == "Italiano":
+            str1 = "Data"
+            str2 = "Coperti"
+            str3 = "Ricavo"
+            str5 = "Totale"
+            str6 = "Importo"
+
         tot = 0
         self.lista.setColumnCount(3)
         self.totale.setColumnCount(2)
@@ -85,8 +112,8 @@ class guadagni_view(QMainWindow):
         self.lista.setColumnWidth(2, 75)
         #self.lista.setColumnWidth(0, 75)
         self.totale.setEnabled(False)
-        self.lista.setHorizontalHeaderLabels(["Data", "Coperti", "Ricavo"])
-        self.totale.setHorizontalHeaderLabels(["Totale", "Importo"])
+        self.lista.setHorizontalHeaderLabels([str1, str2, str3])
+        self.totale.setHorizontalHeaderLabels([str5, str6])
         a = 0
         tot = 0
         for row, date in enumerate(self.lcc.get_lista_coperti()):
@@ -99,18 +126,33 @@ class guadagni_view(QMainWindow):
             self.lista.setItem(row, 1, item2)
             self.lista.setItem(row, 2, item3)
             tot += date.ricavo_tot
-        self.totale.setItem(0, 0, QTableWidgetItem("Totale"))
+        self.totale.setItem(0, 0, QTableWidgetItem(str5))
         self.totale.setItem(0, 1, QTableWidgetItem("€" + str(tot)))
 
     def genera_lista_ordini(self):
+
+        global str2, str1, str3, str5, str6
+        if self.lingua == "Inglese":
+            str1 = "Date"
+            str2 = "Time"
+            str3 = "Proceeds"
+            str5 = "Total"
+            str6 = "Amount"
+        if self.lingua == "Italiano":
+            str1 = "Data"
+            str2 = "Orario"
+            str3 = "Ricavo"
+            str5 = "Totale"
+            str6 = "Importo"
+
         self.lista_ordini.setColumnCount(3)
         self.totale_ordini.setColumnCount(2)
         self.totale_ordini.setRowCount(1)
         self.lista_ordini.setColumnWidth(1, 150)
         self.lista_ordini.setColumnWidth(0, 75)
         self.totale_ordini.setEnabled(False)
-        self.lista_ordini.setHorizontalHeaderLabels(["Orario", "Data", "Ricavo"])
-        self.totale_ordini.setHorizontalHeaderLabels(["Totale", "Importo"])
+        self.lista_ordini.setHorizontalHeaderLabels([str2, str1, str3])
+        self.totale_ordini.setHorizontalHeaderLabels([str5, str6])
         a = 0
         tot = 0
         for row, date in enumerate(self.lcc.get_lista_conto()):
@@ -123,10 +165,25 @@ class guadagni_view(QMainWindow):
             self.lista_ordini.setItem(row, 1, item2)
             self.lista_ordini.setItem(row, 2, item3)
             tot += date.conto
-        self.totale_ordini.setItem(0, 0, QTableWidgetItem("Totale"))
+        self.totale_ordini.setItem(0, 0, QTableWidgetItem(str5))
         self.totale_ordini.setItem(0, 1, QTableWidgetItem("€"+str(tot)))
 
     def genera_lista_delivery(self):
+
+        global str2, str1, str3, str5, str6
+        if self.lingua == "Inglese":
+            str1 = "Date"
+            str2 = "Deliveries"
+            str3 = "Proceeds"
+            str5 = "Total"
+            str6 = "Amount"
+        if self.lingua == "Italiano":
+            str1 = "Data"
+            str2 = "Consegne"
+            str3 = "Ricavo"
+            str5 = "Totale"
+            str6 = "Importo"
+
         self.lista_delivery.setColumnCount(3)
         self.totale_delivery.setColumnCount(2)
         self.totale_delivery.setRowCount(1)
@@ -134,8 +191,8 @@ class guadagni_view(QMainWindow):
         self.lista_delivery.setColumnWidth(1, 75)
         self.lista_delivery.setColumnWidth(2, 75)
         self.totale_delivery.setEnabled(False)
-        self.lista_delivery.setHorizontalHeaderLabels(["Data", "Consegne", "Ricavo"])
-        self.totale_delivery.setHorizontalHeaderLabels(["Totale", "Importo"])
+        self.lista_delivery.setHorizontalHeaderLabels([str1, str2, str3])
+        self.totale_delivery.setHorizontalHeaderLabels([str5, str6])
         a = 0
         tot = 0
         for row, date in enumerate(self.lcc.get_lista_consegne_delivery()):
@@ -148,7 +205,7 @@ class guadagni_view(QMainWindow):
             self.lista_delivery.setItem(row, 1, item2)
             self.lista_delivery.setItem(row, 2, item3)
             tot += date.ricavo_tot
-        self.totale_delivery.setItem(0, 0, QTableWidgetItem("Totale"))
+        self.totale_delivery.setItem(0, 0, QTableWidgetItem(str5))
         self.totale_delivery.setItem(0, 1, QTableWidgetItem("€" + str(tot)))
 
 
