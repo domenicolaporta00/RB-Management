@@ -32,6 +32,17 @@ class lista_ordiniMP_view(QMainWindow):
         self.schermata()
 
     def schermata(self):
+
+        global str1_, str2_, str3_
+        if self.lingua == "Inglese":
+            str1_ = "List of raw material orders to be confirmed"
+            str2_ = "Add"
+            str3_ = "View"
+        if self.lingua == "Italiano":
+            str1_ = "Elenco degli ordini materie prime da confermare"
+            str2_ = "Aggiungi"
+            str3_ = "Visualizza"
+
         font = QFont("Times Roman", 11, QFont.Bold)
 
         self.genera_lista()
@@ -40,24 +51,32 @@ class lista_ordiniMP_view(QMainWindow):
         self.lista.move(125, 100)
         self.lista.setFixedSize(500, 400)
 
-        self.lista_label.setText("Elenco degli ordini materie prime da confermare")
+        self.lista_label.setText(str1_)
         self.lista_label.setFont(QFont("Times Roman", 20, QFont.Bold))
         self.lista_label.setStyleSheet("color: red")
         self.lista_label.move(45, 40)
         self.lista_label.setFixedSize(660, 40)
 
-        self.config_button(self.aggiungi, "Aggiungi", font, 150, 30, 200, 550)
+        self.config_button(self.aggiungi, str2_, font, 150, 30, 200, 550)
         self.aggiungi.clicked.connect(self.apri_inserimento)
-        self.config_button(self.visualizza, "Visualizza", font, 150, 30, 400, 550)
+        self.config_button(self.visualizza, str3_, font, 150, 30, 400, 550)
         self.visualizza.clicked.connect(self.mostra)
 
     def genera_lista(self):
+
+        global str1, str2
+        if self.lingua == "Inglese":
+            str1 = "Order number "
+            str2 = " elements"
+        if self.lingua == "Italiano":
+            str1 = "Ordine numero "
+            str2 = " elementi"
+
         self.list_view_model = QStandardItemModel(self.lista)
         n = 1
         for ordine in self.lordiniMPc.get_lista_ordiniMP():
             item = QStandardItem()
-            item.setText(
-                "Ordine numero " + str(n) + ", " + str(ordine.numero) + " elementi")
+            item.setText(str1 + str(n) + ", " + str(ordine.numero) + str2)
             item.setEditable(False)
             item.setFont(QFont("Times Roman", 11, QFont.Bold))
             self.list_view_model.appendRow(item)
@@ -69,17 +88,24 @@ class lista_ordiniMP_view(QMainWindow):
 
     def newelement(self):
         self.closeEvent(self.lordiniMPc.save_data())
-        self.icv = inserisci_ordineMP_view(self.lordiniMPc, self.genera_lista, [], True)
+        self.icv = inserisci_ordineMP_view(self.lordiniMPc, self.genera_lista, [], True, self.lingua)
         self.icv.show()
 
     def mostra(self):
+
+        global str11
+        if self.lingua == "Inglese":
+            str11 = "Select an order!"
+        if self.lingua == "Italiano":
+            str11 = "Selezionare un ordine!"
+
         if not self.lista.selectedIndexes():
-            QMessageBox.warning(None, "RGest", "Selezionare un ordine!")
+            QMessageBox.warning(None, "RGest", str11)
         else:
             selected = self.lista.selectedIndexes()[0].row()
             ordineMP_selected = self.lordiniMPc.get_ordineMP(selected)
             self.ioMPv = inserisci_ordineMP_view(self.lordiniMPc, self.genera_lista, ordineMP_selected.mp_list, False,
-                                                 ordineMP_selected)
+                                                 self.lingua, ordineMP_selected)
             self.ioMPv.show()
 
     def config_button(self, button, text, font, a, b, x, y):

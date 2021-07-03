@@ -31,6 +31,15 @@ class consumoMP_view(QMainWindow):
         self.schermata()
 
     def schermata(self):
+
+        global str1, str2
+        if self.lingua == "Inglese":
+            str1 = "Select a product to delete"
+            str2 = "Delete"
+        if self.lingua == "Italiano":
+            str1 = "Seleziona un prodotto da eliminare"
+            str2 = "Elimina"
+
         font = QFont("Times Roman", 11, QFont.Bold)
         f = QFont("Times Roman", 20, QFont.Bold)
 
@@ -41,9 +50,9 @@ class consumoMP_view(QMainWindow):
         self.lista.setFixedSize(500, 400)
         self.lista.setSelectionMode(2)
 
-        self.config_label(self.lista_label, "Seleziona un prodotto da eliminare", 135, 40, 480, 40, f)
+        self.config_label(self.lista_label, str1, 135, 40, 480, 40, f)
 
-        self.config_button(self.elimina, "Elimina", font, 150, 30, 300, 550)
+        self.config_button(self.elimina, str2, font, 150, 30, 300, 550)
         self.elimina.clicked.connect(self.elimina_click)
 
     def genera_lista(self):
@@ -59,8 +68,17 @@ class consumoMP_view(QMainWindow):
         self.lista.setModel(self.list_view_model)
 
     def elimina_click(self):
+
+        global str11, str21
+        if self.lingua == "Inglese":
+            str11 = "Select a product!"
+            str21 = "Products deleted successfully!"
+        if self.lingua == "Italiano":
+            str11 = "Selezionare un prodotto!"
+            str21 = "Prodotti eliminati correttamente!"
+
         if not self.lista.selectedIndexes():
-            QMessageBox.warning(None, "RGest", "Selezionare un prodotto!")
+            QMessageBox.warning(None, "RGest", str11)
         else:
             lista_ordinata = []
             selected_list = self.lista.selectedIndexes()
@@ -71,7 +89,7 @@ class consumoMP_view(QMainWindow):
             for i in range(len(lista_ordinata)):
                 MP_selected = self.lmatprimec.get_mp_inMag(lista_ordinata[i])
                 self.lmatprimec.elimina_MP_daMag(MP_selected)
-            QMessageBox.warning(None, "RGest", "Prodotti eliminati correttamente!")
+            QMessageBox.warning(None, "RGest", str21)
             self.genera_lista()
 
     def config_button(self, button, text, font, a, b, x, y):

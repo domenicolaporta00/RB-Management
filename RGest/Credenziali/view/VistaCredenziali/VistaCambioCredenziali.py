@@ -17,7 +17,7 @@ class VistaCambioCredenziali(QMainWindow):
         self.setWindowTitle("RGest")
         self.setFixedSize(750, 650)
         self.setWindowIcon(self.icona)
-        #self.setStyleSheet("background-color: rgb(0, 255, 255)")
+        # self.setStyleSheet("background-color: rgb(0, 255, 255)")
 
         self.vecchia_password = QLabel(self)
         self.nuovo_nome_utente = QLabel(self)
@@ -96,48 +96,51 @@ class VistaCambioCredenziali(QMainWindow):
         self.confermaButton.clicked.connect(self.aggiornamentoCredenziali)
 
     def aggiornamentoCredenziali(self):
-        global str7, str6, str5, str4, str3, str2
+        global str7_, str6_, str5_, str4_, str3_, str2_
         if self.lingua == "Inglese":
-            str2 = "Fill in all fields"
-            str3 = "Confirm different password! Credentials not changed!"
-            str4 = "Credentials changed successfully."
-            str5 = "What's your name?"
-            str6 = "Type something"
-            str7 = "Wrong old password! Credentials not changed!"
+            str2_ = "Fill in all fields"
+            str3_ = "Confirm different password! Credentials not changed!"
+            str4_ = "Credentials changed successfully."
+            str5_ = "What's your name?"
+            str6_ = "Type something"
+            str7_ = "Wrong old password! Credentials not changed!"
         elif self.lingua == "Italiano":
-            str2 = "Compilare tutti i campi!"
-            str3 = "Conferma password diversa! Credenziali non modificate!"
-            str4 = "Credenziali modificate correttamente"
-            str5 = "Come ti chiami?"
-            str6 = "Digitare qualcosa!"
-            str7 = "Vecchia password errata! Credenziali non modificate!"
+            str2_ = "Compilare tutti i campi!"
+            str3_ = "Conferma password diversa! Credenziali non modificate!"
+            str4_ = "Credenziali modificate correttamente"
+            str5_ = "Come ti chiami?"
+            str6_ = "Digitare qualcosa!"
+            str7_ = "Vecchia password errata! Credenziali non modificate!"
 
         if self.nPText.text().isspace() or self.nNUText.text().isspace() or self.vPText.text().isspace() or self.cPText.text().isspace():
-            QMessageBox.warning(None, "RGest", str2)
+            QMessageBox.warning(None, "RGest", str2_)
 
         elif self.nPText.text() == "" or self.nNUText.text() == "" or self.vPText.text() == "" or self.cPText.text() == "":
-            QMessageBox.warning(None, "RGest", str2)
+            QMessageBox.warning(None, "RGest", str2_)
 
         elif self.nPText.text() != self.cPText.text():
-            QMessageBox.critical(None, "RGest", str3)
+            QMessageBox.critical(None, "RGest", str3_)
 
         elif self.controller_credenziali.controlloPassword(self.vPText.text()):
             self.controller_credenziali.aggiornaCredenziali(self.nNUText.text(), self.nPText.text())
-            QMessageBox.information(None, "RGest", str4)
+            QMessageBox.information(None, "RGest", str4_)
             self.close()
-            text, select = QInputDialog.getText(None, "RGest", str5)
-            if not select:
-                pass
-            else:
-                if not text:
-                    QMessageBox.warning(None, "RGest", str6)
+            a = 0
+            while a == 0:
+                text, select = QInputDialog.getText(None, "RGest", str5_)
+                if not select:
+                    pass
                 else:
-                    self.nome = text
+                    if not text or text.isspace():
+                        QMessageBox.warning(None, "RGest", str6_)
+                    else:
+                        self.nome = text
+                        a = 1
             self.spv = Schermata_principale_view(self.nome, self.lingua)
             self.spv.show()
 
         elif not self.controller_credenziali.controlloPassword(self.nPText.text()):
-            QMessageBox.critical(None, "RGest", str7)
+            QMessageBox.critical(None, "RGest", str7_)
 
     def config_button(self, button, text, font, a, b, x, y):
         button.setText(text)

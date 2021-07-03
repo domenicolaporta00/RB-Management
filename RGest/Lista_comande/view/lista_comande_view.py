@@ -71,18 +71,18 @@ class lista_comande_view(QMainWindow):
         self.visualizza.clicked.connect(self.mostra)
 
     def genera_lista(self):
-        global str2, str1
+        global str21, str11
         if self.lingua == "Inglese":
-            str1 = "Order number "
-            str2 = " courses"
+            str11 = "Order number "
+            str21 = " courses"
         if self.lingua == "Italiano":
-            str1 = "Ordine numero "
-            str2 = " piatti"
+            str11 = "Ordine numero "
+            str21 = " piatti"
         self.list_view_model = QStandardItemModel(self.lista)
         n = 1
         for comanda in self.lcomandec.get_lista_comande():
             item = QStandardItem()
-            item.setText(str1 + str(n) + ", " + str(comanda.numero) + str2)
+            item.setText(str11 + str(n) + ", " + str(comanda.numero) + str21)
             item.setEditable(False)
             item.setFont(QFont("Times Roman", 11, QFont.Bold))
             self.list_view_model.appendRow(item)
@@ -93,36 +93,40 @@ class lista_comande_view(QMainWindow):
         self.newelement()
 
     def newelement(self):
-        global str2, str1
+
+        global str22, str12
         if self.lingua == "Inglese":
-            str1 = "Empty warehouse! Impossible to order!"
-            str2 = "Oil and/or salt not in warehouse! Impossible to order!"
+            str12 = "Empty warehouse! Impossible to order!"
+            str22 = "Oil and/or salt not in warehouse! Impossible to order!"
         if self.lingua == "Italiano":
-            str1 = "Magazzino vuoto! Impossibile ordinare!"
-            str2 = "Olio e/o sale non presenti in magazzino! Impossibile ordinare!"
+            str12 = "Magazzino vuoto! Impossibile ordinare!"
+            str22 = "Olio e/o sale non presenti in magazzino! Impossibile ordinare!"
+
         if self.magazzinoVuoto():
-            QMessageBox.warning(None, "RGest", str1)
+            QMessageBox.warning(None, "RGest", str12)
         if not self.magazzinoVuoto():
             if not self.sale_olio():
-                QMessageBox.warning(None, "RGest", str2)
+                QMessageBox.warning(None, "RGest", str22)
             if self.sale_olio():
                 self.closeEvent(self.lcomandec.save_data())
-                self.icv = inserisci_comanda_view(self.lcomandec, self.genera_lista, [], True)
+                self.icv = inserisci_comanda_view(self.lcomandec, self.genera_lista, [], True, self.lingua)
                 self.icv.show()
 
     def mostra(self):
+
         global str1
         if self.lingua == "Inglese":
             str1 = "Select an order!"
         if self.lingua == "Italiano":
             str1 = "Selezionare un ordine!"
+
         if not self.lista.selectedIndexes():
             QMessageBox.warning(None, "RGest", str1)
         else:
             selected = self.lista.selectedIndexes()[0].row()
             ordine_selected = self.lcomandec.get_comanda(selected)
             self.vc = inserisci_comanda_view(self.lcomandec, self.genera_lista, ordine_selected.piatti_list, False,
-                                             ordine_selected)
+                                             self.lingua, ordine_selected)
             self.vc.show()
 
     def config_button(self, button, text, font, a, b, x, y):

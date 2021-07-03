@@ -8,8 +8,10 @@ from Lista_delivery.controller.lista_delivery_controller import lista_delivery_c
 
 class inserisci_delivery_view(QMainWindow):
 
-    def __init__(self, controller, callback, cb_cena):
+    def __init__(self, controller, callback, cb_cena, lingua):
         super(inserisci_delivery_view, self).__init__()
+
+        self.lingua = lingua
 
         # self.lcomandec = lista_comande_controller()
         self.controller = controller
@@ -38,20 +40,37 @@ class inserisci_delivery_view(QMainWindow):
         self.schermata()
 
     def schermata(self):
+
+        global str6, str4, str3, str2, str1, str5
+        if self.lingua == "Inglese":
+            str1 = "Complete the following fields"
+            str2 = "Surname and name"
+            str3 = "Time"
+            str4 = "Address"
+            str5 = "Telephone"
+            str6 = "Confirm"
+        if self.lingua == "Italiano":
+            str1 = "Completa i seguenti campi"
+            str2 = "Cognome e nome"
+            str3 = "Orario"
+            str4 = "Indirizzo"
+            str5 = "Telefono"
+            str6 = "Conferma"
+
         font = QFont("Times Roman", 15, QFont.Bold)
 
-        self.config_label(self.completa, "Completa i seguenti campi", 100, 30, 750, 75, QFont("Times Roman", 20, QFont.Bold))
-        self.config_label(self.cognome, "Cognome e nome", 180, 140, 200, 30, font)
-        self.config_label(self.orario, "Orario", 180, 260, 200, 30, font)
-        self.config_label(self.indirizzo, "Indirizzo", 180, 320, 200, 30, font)
-        self.config_label(self.telefono, "Telefono", 180, 380, 200, 30, font)
+        self.config_label(self.completa, str1, 100, 30, 750, 75, QFont("Times Roman", 20, QFont.Bold))
+        self.config_label(self.cognome, str2, 170, 140, 200, 30, font)
+        self.config_label(self.orario, str3, 170, 200, 200, 30, font)
+        self.config_label(self.indirizzo, str4, 170, 260, 200, 30, font)
+        self.config_label(self.telefono, str5, 170, 320, 200, 30, font)
 
         self.Config_lineEdit("Cognome", 375, 140, "", False, QRegExpValidator(QRegExp("[a-z-A-Z- ]+")))
-        self.config_timeEdit("Orario", 375, 260)
-        self.Config_lineEdit("Indirizzo", 375, 320, "", False, None)
-        self.Config_lineEdit("Telefono", 375, 380, "", False, QRegExpValidator(QRegExp("[0-9]+")))
+        self.config_timeEdit("Orario", 375, 200)
+        self.Config_lineEdit("Indirizzo", 375, 260, "", False, None)
+        self.Config_lineEdit("Telefono", 375, 320, "", False, QRegExpValidator(QRegExp("[0-9]+")))
 
-        self.ok.setText("Conferma")
+        self.ok.setText(str6)
         self.ok.setStyleSheet("background-color: red; border-radius: 10px; color: rgb(255, 255, 255)")
         self.ok.setFont(QFont("Times Roman", 11, QFont.Bold))
         self.ok.move(300, 520)
@@ -66,9 +85,16 @@ class inserisci_delivery_view(QMainWindow):
         label.setFixedSize(a, b)
 
     def Config_lineEdit(self, tipo, a, b, text, flag, validatore):
+
+        global str7
+        if self.lingua == "Inglese":
+            str7 = "Enter data..."
+        if self.lingua == "Italiano":
+            str7 = "Inserire i dati..."
+
         lineEdit = QLineEdit(self)
         lineEdit.setValidator(validatore)
-        lineEdit.setPlaceholderText("Inserire i dati...")
+        lineEdit.setPlaceholderText(str7)
         lineEdit.setText(text)
         lineEdit.setReadOnly(flag)
         lineEdit.move(a, b)
@@ -88,23 +114,32 @@ class inserisci_delivery_view(QMainWindow):
         self.jsonobject[tipo] = timeEdit
 
     def aggiunta_delivery(self):
+
+        global str8, str9, str10
+        if self.lingua == "Inglese":
+            str8 = "Fill in all fields!"
+            str9 = "Impossible to book at the time entered!\nPossible times:\nlunch 12:00-14:00\ndinner 19:00-22:00"
+            str10 = "Delivery order entered correctly."
+        if self.lingua == "Italiano":
+            str8 = "Compilare tutti i campi!"
+            str9 = "Impossibile prenotare all'orario inserito!\nOrari possibili:\npranzo 12:00-14:00\ncena 19:00-22:00"
+            str10 = "Ordine delivery inserito correttamente."
+
         cognome = self.jsonobject["Cognome"].text()
         orario = self.jsonobject["Orario"].time()
         indirizzo = self.jsonobject["Indirizzo"].text()
         telefono = self.jsonobject["Telefono"].text()
         if self.isBlank(cognome) or self.isBlank(telefono) or self.isBlank(indirizzo):
-            QMessageBox.warning(None, "RGest", "Compilare tutti i campi!")
+            QMessageBox.warning(None, "RGest", str8)
         elif QTime(19, 00) > orario > QTime(14, 00):
-            QMessageBox.warning(None, "RGest", "Impossibile prenotare all'orario inserito!\nOrari "
-                                               "possibili:\npranzo 12:00-14:00\ncena 19:00-22:00")
+            QMessageBox.warning(None, "RGest", str9)
         else:
             ora = orario.toString(format("hh:mm"))
             self.controller.aggiungi_delivery(
                 delivery_model(cognome, ora, telefono, indirizzo), orario)
-            # self.lcomandec.save_data()
             self.callback()
             self.cb_cena()
-            QMessageBox.information(None, "RGest", "Ordine delivery inserito correttamente.")
+            QMessageBox.information(None, "RGest", str10)
             self.close()
 
     def isBlank(self, a):

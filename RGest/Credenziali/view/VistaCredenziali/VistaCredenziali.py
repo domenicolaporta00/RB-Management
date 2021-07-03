@@ -1,5 +1,5 @@
 from PyQt5.QtGui import QPixmap, QIcon, QFont
-from PyQt5.QtWidgets import QMainWindow, QLineEdit, QLabel, QPushButton, QMessageBox, QFrame, QInputDialog
+from PyQt5.QtWidgets import QMainWindow, QLineEdit, QLabel, QPushButton, QMessageBox, QInputDialog
 
 from Credenziali.controller.ControllerCredenziali import ControllerCredenziali
 from Credenziali.view.VistaCredenziali.VistaCambioCredenziali import VistaCambioCredenziali
@@ -18,7 +18,6 @@ class VistaCredenziali(QMainWindow):
         self.setWindowTitle("RGest")
         self.setFixedSize(750, 650)
         self.setWindowIcon(self.icona)
-        #self.setStyleSheet("background-color: rgb(0, 255, 255)")
 
         self.testoNome = QLabel(self)
         self.testoPassword = QLabel(self)
@@ -31,16 +30,12 @@ class VistaCredenziali(QMainWindow):
         self.accedi = QPushButton(self)
         self.cc = QPushButton(self)
 
-        # self.vcc = VistaCambioCredenziali()
         self.controller_credenziali = ControllerCredenziali()
-        # self.spv = Schermata_principale_view()
 
         self.schermata()
 
     def schermata(self):
-        print(1)
         global str1, str2, str8, str9
-        print(2)
         font = QFont("Times Roman", 11)
         f = QFont("Times Roman", 11, QFont.Bold)
         pixmax = QPixmap("images\\Logo_splash.png")
@@ -81,6 +76,7 @@ class VistaCredenziali(QMainWindow):
         self.cc.clicked.connect(self.cambioCredenziali)
 
     def controllo(self):
+
         global str3, str4, str5, str6, str7
         if self.lingua == "Inglese":
             str3 = "Signed in successfully"
@@ -94,18 +90,21 @@ class VistaCredenziali(QMainWindow):
             str5 = "Digitare qualcosa!"
             str6 = "Compilare tutti i campi!"
             str7 = "Dati di accesso errati!"
+
         if self.controller_credenziali.controllaCredenziali(self.insertNome.text(), self.insertPassword.text()):
             QMessageBox.information(None, "RGest", str3)
             self.close()
-            # self.spv.show()
-            text, select = QInputDialog.getText(None, "RGest", str4)
-            if not select:
-                pass
-            else:
-                if not text:
-                    QMessageBox.warning(None, "RGest", str5)
+            a = 0
+            while a == 0:
+                text, select = QInputDialog.getText(None, "RGest", str4)
+                if not select:
+                    pass
                 else:
-                    self.nome = text
+                    if not text or text.isspace():
+                        QMessageBox.warning(None, "RGest", str5)
+                    else:
+                        self.nome = text
+                        a = 1
             self.spv = Schermata_principale_view(self.nome, self.lingua)
             self.spv.show()
         elif self.insertNome.text().isspace() or self.insertPassword.text().isspace():

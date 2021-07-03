@@ -1,16 +1,9 @@
-import time
-
-from PyQt5.QtCore import QTime, Qt
-from PyQt5.QtGui import QIcon, QFont, QStandardItemModel, QStandardItem, QPixmap
-from PyQt5.QtWidgets import QMainWindow, QListView, QPushButton, QLabel, QInputDialog, QMessageBox, QSplashScreen, \
-    QProgressBar, QTableWidget, QTableWidgetItem
+import pywhatkit
+from PyQt5.QtCore import QTime
+from PyQt5.QtGui import QIcon, QFont
+from PyQt5.QtWidgets import QMainWindow, QPushButton, QLabel, QInputDialog, QMessageBox, QTableWidget, QTableWidgetItem
 
 from Lista_clienti.controller.lista_clienti_controller import lista_clienti_controller
-
-import pywhatkit
-
-from Lista_prenotazioni.view.lista_prenotazioni_view import lista_prenotazioni_view
-from Tasse.view.tasse_view import tasse_view
 
 
 class lista_clienti_view(QMainWindow):
@@ -39,6 +32,15 @@ class lista_clienti_view(QMainWindow):
         self.schermata()
 
     def schermata(self):
+
+        global str1, str2
+        if self.lingua == "Inglese":
+            str1 = "List of all customers"
+            str2 = "Send a message"
+        if self.lingua == "Italiano":
+            str1 = "Elenco di tutti i clienti"
+            str2 = "Invia un messaggio"
+
         font = QFont("Times Roman", 20, QFont.Bold)
         f = QFont("Times Roman", 11, QFont.Bold)
 
@@ -46,17 +48,28 @@ class lista_clienti_view(QMainWindow):
         self.lista.move(129, 100)
         self.lista.setFixedSize(492, 400)
 
-        self.config_label(self.label, "Elenco di tutti i clienti", 225, 40, 300, 40, font)
+        self.config_label(self.label, str1, 225, 40, 300, 40, font)
 
-        self.config_button(self.messaggio, "Invia un messaggio", f, 180, 30, 285, 550)
+        self.config_button(self.messaggio, str2, f, 180, 30, 285, 550)
         self.messaggio.clicked.connect(self.invia_mex)
 
     def genera_lista(self):
+
+        global str11, str21, str31
+        if self.lingua == "Inglese":
+            str11 = "Name"
+            str21 = "Telephone"
+            str31 = "First booking"
+        if self.lingua == "Italiano":
+            str11 = "Nome"
+            str21 = "Telefono"
+            str31 = "Prima prenotazione"
+
         self.lista.setColumnCount(3)
         self.lista.setColumnWidth(0, 150)
         self.lista.setColumnWidth(1, 150)
         self.lista.setColumnWidth(2, 150)
-        self.lista.setHorizontalHeaderLabels(["Nome", "Telefono", "Prima prenotazione"])
+        self.lista.setHorizontalHeaderLabels([str11, str21, str31])
         a = 0
         for row, date in enumerate(self.lclientic.get_lista_clienti_noDoppi()):
             a += 1
@@ -89,28 +102,42 @@ class lista_clienti_view(QMainWindow):
         return False'''
 
     def invia_mex(self):
+
+        global str52, str42, str32, str22, str12
+        if self.lingua == "Inglese":
+            str12 = "Empty customer list. Unable to send messages."
+            str22 = "Write your message. (Warning! The procedure can take\na long time and cannot be done" \
+                    "in the background.\nIt is recommended to run outside business hours!\nPress ok to" \
+                    "to continue!) "
+            str32 = "Type something!"
+            str42 = "The system will open whatsapp web for each custom stored and there will be twenty seconds to" \
+                    "provision to frame the QR code; at the end of twenty seconds the message will be sent" \
+                    "correctly and you will go to the next one. Do not interact with the application while sending the" \
+                    "messages! "
+            str52 = "Sending messages finished."
+        if self.lingua == "Italiano":
+            str12 = "Lista clienti vuota. Impossibile inviare messaggi."
+            str22 = "Scrivi il messaggio. (Attenzione! La procedura può impiegare\ntanto tempo e non può essere fatta " \
+                    "in background.\nSi consiglia di eseguire fuori dall'orario lavorativo!\nPremere ok per " \
+                    "continuare!) "
+            str32 = "Digitare qualcosa!"
+            str42 = "Il sistema aprirà whatsapp web per ogni cliente memorizzato e ci saranno venti secondi a " \
+                    "disposizione per inquadrare il QR code; al termine dei venti secondi il messaggio verrà inviato " \
+                    "correttamente e si passerà al successivo. Non interagire con l'applicazione durante l'invio dei " \
+                    "messaggi! "
+            str52 = "Invio messaggi terminato."
+
         if not self.lclientic.get_lista_clienti():
-            QMessageBox.warning(None, "RGest", "Lista clienti vuota. Impossibile inviare messaggi.")
+            QMessageBox.warning(None, "RGest", str12)
         else:
-            text, select = QInputDialog.getText(None, "RGest",
-                                                "Scrivi il messaggio. (Attenzione! La procedura può impiegare\ntanto "
-                                                "tempo "
-                                                "e non può essere fatta "
-                                                "in background.\nSi consiglia di eseguire fuori dall'orario "
-                                                "lavorativo!\n"
-                                                "Premere ok per continuare!)")
+            text, select = QInputDialog.getText(None, "RGest", str22)
             if not select:
                 pass
             else:
                 if not text:
-                    QMessageBox.warning(None, "RGest", "Digitare qualcosa!")
+                    QMessageBox.warning(None, "RGest", str32)
                 else:
-                    QMessageBox.warning(None, "RGest",
-                                        "Il sistema aprirà whatsapp web per ogni cliente memorizzato e ci "
-                                        "saranno venti secondi a disposizione per inquadrare il QR code; "
-                                        "al termine dei venti secondi il messaggio verrà inviato "
-                                        "correttamente e si passerà al successivo. Non interagire con "
-                                        "l'applicazione durante l'invio dei messaggi!")
+                    QMessageBox.warning(None, "RGest", str42)
                     self.close()
                     for cliente in self.lclientic.get_lista_clienti():
                         ora = QTime.currentTime().hour()
@@ -121,6 +148,4 @@ class lista_clienti_view(QMainWindow):
                         else:
                             mex = "Car* " + cliente.nome + ", " + text
                             pywhatkit.sendwhatmsg("+39" + cliente.telefono, mex, ora, minuto)
-                    QMessageBox.information(None, "RGest", "Invio messaggi terminato.")
-
-
+                    QMessageBox.information(None, "RGest", str52)

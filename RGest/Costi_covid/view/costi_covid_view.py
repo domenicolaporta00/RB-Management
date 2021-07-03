@@ -48,7 +48,7 @@ class costi_covid_view(QMainWindow):
 
     def schermata(self):
 
-        global str1, str2, str3, str4, str5, str6, str7
+        global str1, str2, str3, str4, str5, str6, str7, str8
         if self.lingua == "Inglese":
             str1 = "Complete the following fields"
             str2 = "Masks boxes..."
@@ -120,13 +120,15 @@ class costi_covid_view(QMainWindow):
         lineEdit.setFixedSize(200, 30)
 
     def Config_lineEdit_risultato(self, tipo, a, b, text):
-        global str1
+
+        global str1_
         if self.lingua == "Inglese":
-            str1 = "Result..."
+            str1_ = "Result..."
         if self.lingua == "Italiano":
-            str1 = "Risultato..."
+            str1_ = "Risultato..."
+
         lineEdit = QLineEdit(self)
-        lineEdit.setPlaceholderText(str1)
+        lineEdit.setPlaceholderText(str1_)
         lineEdit.setText(text)
         lineEdit.setReadOnly(True)
         lineEdit.move(a, b)
@@ -138,13 +140,15 @@ class costi_covid_view(QMainWindow):
         # return lineEdit
 
     def aggiungi_ordine(self):
-        global str1, str2
+
+        global _str1, _str2
         if self.lingua == "Inglese":
-            str1 = "Fill in all fields!"
-            str2 = "Order entered successfully."
+            _str1 = "Fill in all fields!"
+            _str2 = "Order entered successfully."
         if self.lingua == "Italiano":
-            str1 = "Compilare tutti i campi!"
-            str2 = "Ordine inserito correttamente."
+            _str1 = "Compilare tutti i campi!"
+            _str2 = "Ordine inserito correttamente."
+
         mascherina = self.jsonobject["Mascherine"].text()
         gel = self.jsonobject["Gel"].text()
         guanti = self.jsonobject["Guanti"].text()
@@ -155,28 +159,30 @@ class costi_covid_view(QMainWindow):
             self.pezziDisinfestazione.text()) or self.isBlank(self.costoMascherine.text()) or self.isBlank(
             self.costoGel.text()) or self.isBlank(self.costoGuanti.text()) or self.isBlank(
             self.costoIgienizzante.text()) or self.isBlank(self.costoDisinfestazione.text()):
-            QMessageBox.warning(None, "RGest", str1)
+            QMessageBox.warning(None, "RGest", _str1)
         else:
             self.controller.aggiungi_covid(costi_covid_model(mascherina, gel, guanti, igienizzante, disinfestazione))
             # self.callback()
-            QMessageBox.information(None, "RGest", str2)
+            QMessageBox.information(None, "RGest", _str2)
             self.controller.save_data()
             self.close()
 
     def genera(self):
-        global str1, str2
+
+        global str11, str21
         if self.lingua == "Inglese":
-            str1 = "Fill in all fields!"
-            str2 = "Confirm"
+            str11 = "Fill in all fields!"
+            str21 = "Confirm"
         if self.lingua == "Italiano":
-            str1 = "Compilare tutti i campi!"
-            str2 = "Conferma"
+            str11 = "Compilare tutti i campi!"
+            str21 = "Conferma"
+
         if self.isBlank(self.pezziMascherine.text()) or self.isBlank(self.pezziGel.text()) or self.isBlank(
-            self.pezziGuanti.text()) or self.isBlank(self.pezziIgienizzante.text()) or self.isBlank(
+                self.pezziGuanti.text()) or self.isBlank(self.pezziIgienizzante.text()) or self.isBlank(
             self.pezziDisinfestazione.text()) or self.isBlank(self.costoMascherine.text()) or self.isBlank(
             self.costoGel.text()) or self.isBlank(self.costoGuanti.text()) or self.isBlank(
             self.costoIgienizzante.text()) or self.isBlank(self.costoDisinfestazione.text()):
-            QMessageBox.warning(None, "RGest", str1)
+            QMessageBox.warning(None, "RGest", str11)
         else:
             mascherine = self.stringa(self.pezziMascherine.text(), self.costoMascherine.text())
             gel = self.stringa(self.pezziGel.text(), self.costoGel.text())
@@ -190,7 +196,7 @@ class costi_covid_view(QMainWindow):
             self.Config_lineEdit_risultato("Disinfestazione", 500, 460, disinfestazione)
 
             self.conferma = QPushButton(self)
-            self.config_button(str2, 400, 540, self.conferma)
+            self.config_button(str21, 400, 540, self.conferma)
             self.conferma.clicked.connect(self.aggiungi_ordine)
             self.conferma.show()
 

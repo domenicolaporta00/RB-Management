@@ -7,8 +7,11 @@ from Lista_dipendenti.controller.lista_dipendenti_controller import lista_dipend
 
 
 class dipendente_view(QMainWindow):
-    def __init__(self, dipendente, elimina, elimina_callback):
+    def __init__(self, dipendente, elimina, elimina_callback, lingua):
         super(dipendente_view, self).__init__()
+
+        self.lingua = lingua
+
         self.dc = dipendente_controller(dipendente)
         self.elimina_callback = elimina_callback
         self.elimina_dipendente = elimina
@@ -47,18 +50,42 @@ class dipendente_view(QMainWindow):
         self.schermata()
 
     def schermata(self):
+
+        global str1, str8, str7, str6, str5, str4, str3, str2, str9, str11, str12, str13, str14, str15, str16, str10
+        if self.lingua == "Inglese":
+            str1 = "Employee info"
+            str2 = "Surname"
+            str3 = "Name"
+            str4 = "Age"
+            str5 = "Station"
+            str6 = "Role"
+            str7 = "Telephone"
+            str8 = "Salary[€]"
+            str9 = "Delete"
+            str10 = "Modification"
+        if self.lingua == "Italiano":
+            str1 = "Info dipendente"
+            str2 = "Cognome"
+            str3 = "Nome"
+            str4 = "Età"
+            str5 = "Postazione"
+            str6 = "Ruolo"
+            str7 = "Telefono"
+            str8 = "Stipendio[€]"
+            str9 = "Elimina"
+            str10 = "Modifica"
+
         font = QFont("Times Roman", 15, QFont.Bold)
 
-        self.config_label(self.informazione, "Info dipendente",
-                          100, 30, 750, 75, QFont("Times Roman", 20, QFont.Bold))
+        self.config_label(self.informazione, str1, 100, 30, 750, 75, QFont("Times Roman", 20, QFont.Bold))
 
-        self.config_label(self.cognome, "Cognome", 180, 140, 190, 30, font)
-        self.config_label(self.nome, "Nome", 180, 190, 190, 30, font)
-        self.config_label(self.eta, "Età", 180, 240, 190, 30, font)
-        self.config_label(self.ruolo, "Ruolo", 180, 290, 190, 30, font)
-        self.config_label(self.postazione, "Postazione", 180, 340, 190, 30, font)
-        self.config_label(self.stipendio, "Stipendio[€]", 180, 390, 190, 30, font)
-        self.config_label(self.telefono, "Telefono", 180, 440, 190, 30, font)
+        self.config_label(self.cognome, str2, 180, 140, 190, 30, font)
+        self.config_label(self.nome, str3, 180, 190, 190, 30, font)
+        self.config_label(self.eta, str4, 180, 240, 190, 30, font)
+        self.config_label(self.ruolo, str6, 180, 290, 190, 30, font)
+        self.config_label(self.postazione, str5, 180, 340, 190, 30, font)
+        self.config_label(self.stipendio, str8, 180, 390, 190, 30, font)
+        self.config_label(self.telefono, str7, 180, 440, 190, 30, font)
         self.config_label(self.id, "Id", 180, 490, 190, 30, font)
 
         self.Config_lineEdit(375, 140, self.dc.get_cognome(), False, self.cognomeT, QRegExpValidator(QRegExp("[a-z-A-Z- ]+")))
@@ -70,13 +97,13 @@ class dipendente_view(QMainWindow):
         self.Config_lineEdit(375, 440, self.dc.get_telefono(), False, self.telefonoT, QRegExpValidator(QRegExp("[0-9]+")))
         self.Config_lineEdit(375, 490, self.dc.get_id(), True, self.idT, None)
 
-        self.elimina.setText("Elimina")
+        self.elimina.setText(str9)
         self.elimina.setStyleSheet("background-color: red; border-radius: 10px; color: rgb(255, 255, 255)")
         self.elimina.setFont(QFont("Times Roman", 11, QFont.Bold))
         self.elimina.move(200, 560)
         self.elimina.setFixedSize(150, 30)
         self.elimina.clicked.connect(self.elimina_click)
-        self.modifica.setText("Modifica")
+        self.modifica.setText(str10)
         self.modifica.setStyleSheet("background-color: red; border-radius: 10px; color: rgb(255, 255, 255)")
         self.modifica.setFont(QFont("Times Roman", 11, QFont.Bold))
         self.modifica.move(400, 560)
@@ -101,18 +128,39 @@ class dipendente_view(QMainWindow):
         lineEdit.setFixedSize(200, 30)
 
     def elimina_click(self):
+
+        global str11
+        if self.lingua == "Inglese":
+            str11 = "Employee successfully deleted!"
+        if self.lingua == "Italiano":
+            str11 = "Dipendente eliminato correttamente!"
+
         self.elimina_dipendente(self.dc.get_id())
         self.elimina_callback()
-        QMessageBox.information(None, "RGest", "Dipendente eliminato correttamente!")
+        QMessageBox.information(None, "RGest", str11)
         self.close()
 
     def modifica_click(self):
+
+        global str18, str20, str21, str22
+        if self.lingua == "Inglese":
+            str18 = "Fill in all fields!"
+            str20 = "Child labor not allowed!"
+            str21 = "The new employee should already be retired! Impossible to add a person with this age!"
+            str22 = "Employee entered correctly."
+        if self.lingua == "Italiano":
+            str18 = "Compilare tutti i campi!"
+            str20 = "Lavoro minorile non ammesso!"
+            str21 = "Il nuovo dipendente dovrebbe già essere in pensione! Impossibile aggiungere una persona con " \
+                    "questa età! "
+            str22 = "Dipendente inserito correttamente."
+
         if self.isBlank(self.cognomeT.text()) or self.isBlank(self.nomeT.text()) or self.isBlank(self.etaT.text()) or self.isBlank(self.stipendioT.text()) or self.isBlank(self.telefonoT.text()):
-            QMessageBox.warning(None, "RGest", "Compilare tutti i campi!")
+            QMessageBox.warning(None, "RGest", str18)
         elif int(self.etaT.text()) < 14:
-            QMessageBox.critical(None, "RGest", "Lavoro minorile non ammesso!")
+            QMessageBox.critical(None, "RGest", str20)
         elif int(self.etaT.text()) > 67:
-            QMessageBox.critical(None, "RGest", "Il nuovo dipendente dovrebbe già essere in pensione! Impossibile aggiungere una persona con questa età!")
+            QMessageBox.critical(None, "RGest", str21)
         else:
             self.dc.set_cognome(self.cognomeT.text())
             self.dc.set_nome(self.nomeT.text())
@@ -121,7 +169,7 @@ class dipendente_view(QMainWindow):
             self.dc.set_telefono(self.telefonoT.text())
             self.dc.set_id(self.cognomeT.text()[:1]+""+self.nomeT.text()[:1]+self.telefonoT.text())
             self.elimina_callback()
-            QMessageBox.information(None, "RGest", "Dipendente modificato correttamente.")
+            QMessageBox.information(None, "RGest", str22)
             self.close()
 
     def isBlank(self, a):

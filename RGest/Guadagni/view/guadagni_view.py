@@ -89,19 +89,19 @@ class guadagni_view(QMainWindow):
         # self.lcc.cancel()
         # self.lcc.save_data()
 
-        global str2, str1, str3, str5, str6
+        global str21, str11, str31, str51, str61
         if self.lingua == "Inglese":
-            str1 = "Date"
-            str2 = "Place settings"
-            str3 = "Proceeds"
-            str5 = "Total"
-            str6 = "Amount"
+            str11 = "Date"
+            str21 = "Place settings"
+            str31 = "Proceeds"
+            str51 = "Total"
+            str61 = "Amount"
         if self.lingua == "Italiano":
-            str1 = "Data"
-            str2 = "Coperti"
-            str3 = "Ricavo"
-            str5 = "Totale"
-            str6 = "Importo"
+            str11 = "Data"
+            str21 = "Coperti"
+            str31 = "Ricavo"
+            str51 = "Totale"
+            str61 = "Importo"
 
         tot = 0
         self.lista.setColumnCount(3)
@@ -112,8 +112,8 @@ class guadagni_view(QMainWindow):
         self.lista.setColumnWidth(2, 75)
         #self.lista.setColumnWidth(0, 75)
         self.totale.setEnabled(False)
-        self.lista.setHorizontalHeaderLabels([str1, str2, str3])
-        self.totale.setHorizontalHeaderLabels([str5, str6])
+        self.lista.setHorizontalHeaderLabels([str11, str21, str31])
+        self.totale.setHorizontalHeaderLabels([str51, str61])
         a = 0
         tot = 0
         for row, date in enumerate(self.lcc.get_lista_coperti()):
@@ -126,24 +126,24 @@ class guadagni_view(QMainWindow):
             self.lista.setItem(row, 1, item2)
             self.lista.setItem(row, 2, item3)
             tot += date.ricavo_tot
-        self.totale.setItem(0, 0, QTableWidgetItem(str5))
+        self.totale.setItem(0, 0, QTableWidgetItem(str51))
         self.totale.setItem(0, 1, QTableWidgetItem("€" + str(tot)))
 
     def genera_lista_ordini(self):
 
-        global str2, str1, str3, str5, str6
+        global str22, str12, str32, str52, str62
         if self.lingua == "Inglese":
-            str1 = "Date"
-            str2 = "Time"
-            str3 = "Proceeds"
-            str5 = "Total"
-            str6 = "Amount"
+            str12 = "Date"
+            str22 = "Time"
+            str32 = "Proceeds"
+            str52 = "Total"
+            str62 = "Amount"
         if self.lingua == "Italiano":
-            str1 = "Data"
-            str2 = "Orario"
-            str3 = "Ricavo"
-            str5 = "Totale"
-            str6 = "Importo"
+            str12 = "Data"
+            str22 = "Orario"
+            str32 = "Ricavo"
+            str52 = "Totale"
+            str62 = "Importo"
 
         self.lista_ordini.setColumnCount(3)
         self.totale_ordini.setColumnCount(2)
@@ -151,8 +151,8 @@ class guadagni_view(QMainWindow):
         self.lista_ordini.setColumnWidth(1, 150)
         self.lista_ordini.setColumnWidth(0, 75)
         self.totale_ordini.setEnabled(False)
-        self.lista_ordini.setHorizontalHeaderLabels([str2, str1, str3])
-        self.totale_ordini.setHorizontalHeaderLabels([str5, str6])
+        self.lista_ordini.setHorizontalHeaderLabels([str22, str12, str32])
+        self.totale_ordini.setHorizontalHeaderLabels([str52, str62])
         a = 0
         tot = 0
         for row, date in enumerate(self.lcc.get_lista_conto()):
@@ -165,24 +165,24 @@ class guadagni_view(QMainWindow):
             self.lista_ordini.setItem(row, 1, item2)
             self.lista_ordini.setItem(row, 2, item3)
             tot += date.conto
-        self.totale_ordini.setItem(0, 0, QTableWidgetItem(str5))
+        self.totale_ordini.setItem(0, 0, QTableWidgetItem(str52))
         self.totale_ordini.setItem(0, 1, QTableWidgetItem("€"+str(tot)))
 
     def genera_lista_delivery(self):
 
-        global str2, str1, str3, str5, str6
+        global str23, str13, str33, str53, str63
         if self.lingua == "Inglese":
-            str1 = "Date"
-            str2 = "Deliveries"
-            str3 = "Proceeds"
-            str5 = "Total"
-            str6 = "Amount"
+            str13 = "Date"
+            str23 = "Deliveries"
+            str33 = "Proceeds"
+            str53 = "Total"
+            str63 = "Amount"
         if self.lingua == "Italiano":
-            str1 = "Data"
-            str2 = "Consegne"
-            str3 = "Ricavo"
-            str5 = "Totale"
-            str6 = "Importo"
+            str13 = "Data"
+            str23 = "Consegne"
+            str33 = "Ricavo"
+            str53 = "Totale"
+            str63 = "Importo"
 
         self.lista_delivery.setColumnCount(3)
         self.totale_delivery.setColumnCount(2)
@@ -191,8 +191,8 @@ class guadagni_view(QMainWindow):
         self.lista_delivery.setColumnWidth(1, 75)
         self.lista_delivery.setColumnWidth(2, 75)
         self.totale_delivery.setEnabled(False)
-        self.lista_delivery.setHorizontalHeaderLabels([str1, str2, str3])
-        self.totale_delivery.setHorizontalHeaderLabels([str5, str6])
+        self.lista_delivery.setHorizontalHeaderLabels([str13, str23, str33])
+        self.totale_delivery.setHorizontalHeaderLabels([str53, str63])
         a = 0
         tot = 0
         for row, date in enumerate(self.lcc.get_lista_consegne_delivery()):
@@ -205,7 +205,7 @@ class guadagni_view(QMainWindow):
             self.lista_delivery.setItem(row, 1, item2)
             self.lista_delivery.setItem(row, 2, item3)
             tot += date.ricavo_tot
-        self.totale_delivery.setItem(0, 0, QTableWidgetItem(str5))
+        self.totale_delivery.setItem(0, 0, QTableWidgetItem(str53))
         self.totale_delivery.setItem(0, 1, QTableWidgetItem("€" + str(tot)))
 
 

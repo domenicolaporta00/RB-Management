@@ -48,14 +48,33 @@ class lista_delivery_view(QMainWindow):
         self.schermata()
 
     def schermata(self):
+
+        global str6, str5, str7, str4, str3, str1, str2
+        if self.lingua == "Inglese":
+            str1 = "Lunch"
+            str2 = "Dinner"
+            str3 = "Delivery list"
+            str4 = "Modification"
+            str5 = "Add"
+            str6 = "Ends the day"
+            str7 = "Delete everything"
+        elif self.lingua == "Italiano":
+            str1 = "Pranzo"
+            str2 = "Cena"
+            str3 = "Elenco delivery"
+            str4 = "Modifica"
+            str5 = "Aggiungi"
+            str6 = "Termina giornata"
+            str7 = "Elimina tutto"
+
         font = QFont("Times Roman", 11, QFont.Bold)
 
         self.tab_widget.setFixedSize(700, 450)
         self.tab_widget.move(25, 75)
         self.tab_widget.setStyleSheet("background-color: rgb(255, 255, 255)")
         self.tab_widget.setFont(font)
-        self.tab_widget.addTab(self.tab1, "Pranzo")
-        self.tab_widget.addTab(self.tab2, "Cena")
+        self.tab_widget.addTab(self.tab1, str1)
+        self.tab_widget.addTab(self.tab2, str2)
 
         self.genera_lista()
         self.lista.setModel(self.list_view_model)
@@ -75,21 +94,21 @@ class lista_delivery_view(QMainWindow):
         layout2.addWidget(self.visualizza_cena)
         self.tab2.setLayout(layout2)
 
-        self.lista_label.setText("Elenco delivery")
+        self.lista_label.setText(str3)
         self.lista_label.setFont(QFont("Times Roman", 20, QFont.Bold))
         self.lista_label.setStyleSheet("color: red")
         self.lista_label.move(250, 40)
         self.lista_label.setFixedSize(250, 40)
 
-        self.config_button(self.visualizza, "Modifica", font, 150, 30, 36, 550)
+        self.config_button(self.visualizza, str4, font, 150, 30, 36, 550)
         self.visualizza.clicked.connect(self.mostra_delivery)
-        self.config_button(self.visualizza_cena, "Modifica", font, 150, 30, 36, 550)
+        self.config_button(self.visualizza_cena, str4, font, 150, 30, 36, 550)
         self.visualizza_cena.clicked.connect(self.mostra_delivery_cena)
-        self.config_button(self.aggiungi, "Aggiungi", font, 150, 30, 211, 482)
+        self.config_button(self.aggiungi, str5, font, 150, 30, 211, 482)
         self.aggiungi.clicked.connect(self.apri_inserimento)
-        self.config_button(self.elimina, "Elimina tutto", font, 150, 30, 387, 482)
+        self.config_button(self.elimina, str7, font, 150, 30, 387, 482)
         self.elimina.clicked.connect(self.cancel)
-        self.config_button(self.salva, "Termina giornata", font, 150, 30, 562, 482)
+        self.config_button(self.salva, str6, font, 150, 30, 562, 482)
         self.salva.clicked.connect(self.termina)
 
     def config_button(self, button, text, font, a, b, x, y):
@@ -103,58 +122,100 @@ class lista_delivery_view(QMainWindow):
         self.newelement()
 
     def genera_lista(self):
+
+        global str11
+        if self.lingua == "Inglese":
+            str11 = ", "
+        if self.lingua == "Italiano":
+            str11 = ", ore "
+
         self.list_view_model = QStandardItemModel(self.lista)
         for delivery in self.ldc.get_lista_delivery():
             item = QStandardItem()
-            item.setText(delivery.cognome + ", " + delivery.indirizzo + ", ore " + delivery.orario)
+            item.setText(delivery.cognome + ", " + delivery.indirizzo + str11 + delivery.orario)
             item.setEditable(False)
             item.setFont(QFont("Times Roman", 11, QFont.Bold))
             self.list_view_model.appendRow(item)
         self.lista.setModel(self.list_view_model)
 
     def genera_lista_cena(self):
+
+        global str12
+        if self.lingua == "Inglese":
+            str12 = ", "
+        if self.lingua == "Italiano":
+            str12 = ", ore "
+
         self.list_view_model_cena = QStandardItemModel(self.lista_cena)
         for delivery in self.ldc.get_lista_delivery_cena():
             item = QStandardItem()
-            item.setText(delivery.cognome + ", " + delivery.indirizzo + ", ore " + delivery.orario)
+            item.setText(delivery.cognome + ", " + delivery.indirizzo + str12 + delivery.orario)
             item.setEditable(False)
             item.setFont(QFont("Times Roman", 11, QFont.Bold))
             self.list_view_model_cena.appendRow(item)
         self.lista_cena.setModel(self.list_view_model_cena)
 
     def mostra_delivery(self):
+
+        global str13
+        if self.lingua == "Inglese":
+            str13 = "Select an order!"
+        if self.lingua == "Italiano":
+            str13 = "Selezionare un ordine!"
+
         if not self.lista.selectedIndexes():
-            QMessageBox.warning(None, "RGest", "Selezionare un ordine!")
+            QMessageBox.warning(None, "RGest", str13)
         else:
             selected = self.lista.selectedIndexes()[0].row()
             delivery_selezionato = self.ldc.get_delivery(selected)
-            print(delivery_selezionato)
-            self.dv = delivery_view(delivery_selezionato, self.ldc.remove_delivery, self.genera_lista, self.genera_lista_cena, "pranzo")
+            self.dv = delivery_view(delivery_selezionato, self.ldc.remove_delivery, self.genera_lista, self.genera_lista_cena, "pranzo", self.lingua)
             self.dv.show()
 
     def mostra_delivery_cena(self):
+
+        global str14
+        if self.lingua == "Inglese":
+            str14 = "Select an order!"
+        if self.lingua == "Italiano":
+            str14 = "Selezionare un ordine!"
+
         if not self.lista_cena.selectedIndexes():
-            QMessageBox.warning(None, "RGest", "Selezionare un ordine!")
+            QMessageBox.warning(None, "RGest", str14)
         else:
             selected_ = self.lista_cena.selectedIndexes()[0].row()
             delivery_selezionato_ = self.ldc.get_delivery_cena(selected_)
-            self.dv = delivery_view(delivery_selezionato_, self.ldc.remove_delivery_cena, self.genera_lista, self.genera_lista_cena, "cena")
+            self.dv = delivery_view(delivery_selezionato_, self.ldc.remove_delivery_cena, self.genera_lista, self.genera_lista_cena, "cena", self.lingua)
             self.dv.show()
 
     def cancel(self):
+
+        global str15
+        if self.lingua == "Inglese":
+            str15 = "All delivery orders have been canceled!"
+        if self.lingua == "Italiano":
+            str15 = "Tutti gli ordini delivery sono stati cancellati!"
+
         self.ldc.cancel()
         self.ldc.cancel_cena()
         self.ldc.save_data()
         self.genera_lista()
         self.genera_lista_cena()
-        QMessageBox.information(None, "RGest", "Tutti gli ordini delivery sono stati cancellati!")
+        QMessageBox.information(None, "RGest", str15)
 
     def newelement(self):
         self.closeEvent(self.ldc.save_data())
-        self.ipv = inserisci_delivery_view(self.ldc, self.genera_lista, self.genera_lista_cena)
+        self.ipv = inserisci_delivery_view(self.ldc, self.genera_lista, self.genera_lista_cena, self.lingua)
         self.ipv.show()
 
     def termina(self):
+
+        global str16
+        if self.lingua == "Inglese":
+            str16 = "Day over! The number of delivery orders and customer contacts have been successfully saved!"
+        if self.lingua == "Italiano":
+            str16 = "Giornata terminata! Il numero degli ordini delivery e i contatti dei clienti sono stati salvati " \
+                   "correttamente! "
+
         n = 0
         for delivery in self.ldc.get_lista_delivery():
             n += 1
@@ -177,8 +238,7 @@ class lista_delivery_view(QMainWindow):
         self.ldc.cancel_cena()
         self.genera_lista()
         self.genera_lista_cena()
-        QMessageBox.information(None, "RGest", "Giornata terminata! Il numero degli ordini delivery e i contatti dei "
-                                               "clienti sono stati salvati correttamente!")
+        QMessageBox.information(None, "RGest", str16)
         self.close()
 
     def controllo(self, c):

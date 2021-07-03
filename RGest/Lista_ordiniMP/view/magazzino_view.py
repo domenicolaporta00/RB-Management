@@ -28,9 +28,16 @@ class magazzino_view(QMainWindow):
         self.schermata()
 
     def schermata(self):
+
+        global str11
+        if self.lingua == "Inglese":
+            str11 = "Warehouse"
+        if self.lingua == "Italiano":
+            str11 = "Magazzino"
+
         font = QFont("Times Roman", 20, QFont.Bold)
 
-        self.config_label(self.label, "Magazzino", 300, 40, 150, 40, font)
+        self.config_label(self.label, str11, 300, 40, 160, 40, font)
 
         self.genera_lista()
 
@@ -42,10 +49,21 @@ class magazzino_view(QMainWindow):
         return a
 
     def genera_lista(self):
+
+        global str1, str2, str3
+        if self.lingua == "Inglese":
+            str1 = "Product"
+            str2 = "Quantity"
+            str3 = "Unit price"
+        if self.lingua == "Italiano":
+            str1 = "Prodotto"
+            str2 = "Quantità"
+            str3 = "Prezzo unitario"
+
         self.table_widget.move(129, 100)
         self.table_widget.setFixedSize(492, 400)
         self.table_widget.setColumnCount(3)
-        self.table_widget.setHorizontalHeaderLabels(["Prodotto", "Quantità", "Prezzo unitario"])
+        self.table_widget.setHorizontalHeaderLabels([str1, str2, str3])
         self.table_widget.setColumnWidth(0, 250)
         self.table_widget.setColumnWidth(1, 100)
         self.table_widget.setColumnWidth(2, 100)

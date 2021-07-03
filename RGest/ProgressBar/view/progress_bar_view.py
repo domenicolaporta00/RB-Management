@@ -1,7 +1,7 @@
 import time
 
 from PyQt5.QtGui import QIcon, QPixmap, QFont
-from PyQt5.QtWidgets import QMainWindow, QProgressBar, QLabel, QPushButton, QBoxLayout, QVBoxLayout, QWidget, QComboBox
+from PyQt5.QtWidgets import QMainWindow, QProgressBar, QLabel, QPushButton, QComboBox
 
 from Credenziali.view.VistaCredenziali.VistaCredenziali import VistaCredenziali
 
