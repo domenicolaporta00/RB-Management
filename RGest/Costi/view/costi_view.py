@@ -1,6 +1,5 @@
-from PyQt5.QtGui import QIcon, QFont, QStandardItemModel, QStandardItem
-from PyQt5.QtWidgets import QMainWindow, QTabWidget, QTableWidget, QPushButton, QWidget, QBoxLayout, QListView, \
-    QVBoxLayout, QGridLayout, QTableWidgetItem
+from PyQt5.QtGui import QIcon, QFont
+from PyQt5.QtWidgets import QMainWindow, QTabWidget, QTableWidget, QWidget, QGridLayout, QTableWidgetItem
 
 from Lista_contiMP.controller.lista_contiMP_controller import lista_contiMP_controller
 from Lista_costi_covid.controller.lista_costi_covid_controller import lista_costi_covid_controller
@@ -63,21 +62,18 @@ class costi_view(QMainWindow):
 
         self.lista = QTableWidget()
         self.totale = QTableWidget()
-        # self.totale.setFixedSize(726, 25)
         self.lista.setStyleSheet("color: rgb(255, 0, 0)")
         self.totale.setStyleSheet("color: rgb(255, 0, 0)")
         self.genera_lista()
 
         self.lista_covid = QTableWidget()
         self.totale_covid = QTableWidget()
-        # self.totale_covid.setFixedSize(726, 25)
         self.lista_covid.setStyleSheet("color: rgb(255, 0, 0)")
         self.totale_covid.setStyleSheet("color: rgb(255, 0, 0)")
         self.genera_lista_covid()
 
         self.lista_tasse = QTableWidget()
         self.totale_tasse = QTableWidget()
-        # self.totale_tasse.setFixedSize(726, 25)
         self.lista_tasse.setStyleSheet("color: rgb(255, 0, 0)")
         self.totale_tasse.setStyleSheet("color: rgb(255, 0, 0)")
         self.genera_lista_tasse()

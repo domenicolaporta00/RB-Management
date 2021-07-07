@@ -14,7 +14,6 @@ class costi_covid_view(QMainWindow):
         self.lingua = lingua
 
         self.controller = controller
-        # self.callback = callback
         self.jsonobject = {}
 
         self.lccc = lista_costi_covid_controller()
@@ -41,7 +40,6 @@ class costi_covid_view(QMainWindow):
 
         self.completa = QLabel(self)
 
-        # self.conferma = QPushButton(self)
         self.calcola = QPushButton(self)
 
         self.schermata()
@@ -92,8 +90,6 @@ class costi_covid_view(QMainWindow):
 
         self.config_button(str8, 200, 540, self.calcola)
         self.calcola.clicked.connect(self.genera)
-        # self.config_button("Conferma", 400, 440, self.conferma)
-        # self.conferma.clicked.connect(self.aggiungi_ordine)
 
     def config_button(self, text, x, y, bottone):
         bottone.setText(text)
@@ -137,7 +133,6 @@ class costi_covid_view(QMainWindow):
         lineEdit.setFixedSize(200, 30)
         self.jsonobject[tipo] = lineEdit
         lineEdit.show()
-        # return lineEdit
 
     def aggiungi_ordine(self):
 
@@ -162,7 +157,6 @@ class costi_covid_view(QMainWindow):
             QMessageBox.warning(None, "RGest", _str1)
         else:
             self.controller.aggiungi_covid(costi_covid_model(mascherina, gel, guanti, igienizzante, disinfestazione))
-            # self.callback()
             QMessageBox.information(None, "RGest", _str2)
             self.controller.save_data()
             self.close()
@@ -201,8 +195,6 @@ class costi_covid_view(QMainWindow):
             self.conferma.show()
 
     def stringa(self, str1, str2):
-        # if self.isBlank(str1) or self.isBlank(str2):
-        #   return ""
         return str(float(str1) * float(str2))
 
     def isBlank(self, a):

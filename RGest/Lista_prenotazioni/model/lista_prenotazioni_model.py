@@ -23,13 +23,6 @@ class lista_prenotazioni_model():
         if QTime(22, 00) >= orario >= QTime(19, 00):
             self.lista_prenotazioni_cena.append(prenotazione)
 
-    # def cancel(self, tavolo):
-    #   def flag(prenotazione):
-    #      if prenotazione.tavolo == tavolo:
-    #         return True
-    #    return False
-    # self.lista_prenotazioni.remove(list(filter(flag, self.lista_prenotazioni))[0])
-
     def get_prenotazione(self, i):
         return self.lista_prenotazioni[i]
 

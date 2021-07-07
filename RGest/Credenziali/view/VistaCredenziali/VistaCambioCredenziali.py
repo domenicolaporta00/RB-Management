@@ -17,7 +17,6 @@ class VistaCambioCredenziali(QMainWindow):
         self.setWindowTitle("RGest")
         self.setFixedSize(750, 650)
         self.setWindowIcon(self.icona)
-        # self.setStyleSheet("background-color: rgb(0, 255, 255)")
 
         self.vecchia_password = QLabel(self)
         self.nuovo_nome_utente = QLabel(self)
@@ -34,7 +33,6 @@ class VistaCambioCredenziali(QMainWindow):
         self.confermaButton = QPushButton(self)
 
         self.controller_credenziali = ControllerCredenziali()
-        # self.spv = Schermata_principale_view()
 
         self.schermata()
 
@@ -96,6 +94,7 @@ class VistaCambioCredenziali(QMainWindow):
         self.confermaButton.clicked.connect(self.aggiornamentoCredenziali)
 
     def aggiornamentoCredenziali(self):
+
         global str7_, str6_, str5_, str4_, str3_, str2_
         if self.lingua == "Inglese":
             str2_ = "Fill in all fields"

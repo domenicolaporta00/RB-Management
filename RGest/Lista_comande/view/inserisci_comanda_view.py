@@ -1,3 +1,5 @@
+import winsound
+
 from PyQt5.QtGui import QIcon, QFont, QPixmap
 from PyQt5.QtWidgets import QMainWindow, QPushButton, QTabWidget, QWidget, QComboBox, QGridLayout, QMessageBox, QLabel, \
     QTableWidget, QTableWidgetItem
@@ -5,11 +7,9 @@ from PyQt5.QtWidgets import QMainWindow, QPushButton, QTabWidget, QWidget, QComb
 from Comanda.controller.comanda_controller import comanda_controller
 from Comanda.model.comanda_model import comanda_model
 from Conto.model.conto_model import conto_model
-from Lista_comande.controller.lista_comande_controller import lista_comande_controller
 from Lista_coperti.controller.lista_coperti_controller import lista_coperti_controller
 from Lista_materie_prime.controller.lista_materie_prime_controller import lista_materie_prime_controller
 from Lista_piatti.controller.lista_piatti_controller import lista_piatti_controller
-from Materie_prime.model.materie_prime_model import materie_prime_model
 
 
 class inserisci_comanda_view(QMainWindow):
@@ -26,11 +26,9 @@ class inserisci_comanda_view(QMainWindow):
         self.isNuovo = isNuovo
         self.ordine = ordine
         self.contr = comanda_controller(ordine)
-        # self.isDelivery = isDelivery
 
-        # self.lcomandac = lista_comande_controller() passato già nel costruttore, non serve
-        self.lpiattic = lista_piatti_controller()  # per prendere i piatti originali e per salvare le stats
-        self.lcopertic = lista_coperti_controller()  # per memorizzare il conto (data, ora e importo)
+        self.lpiattic = lista_piatti_controller()
+        self.lcopertic = lista_coperti_controller()
 
         self.icona = QIcon("images\\Logo_definitivo.jpg")
 
@@ -146,7 +144,6 @@ class inserisci_comanda_view(QMainWindow):
             str15 = "Menù speciali"
             str16 = "Totale"
 
-        # self.lpiattic.cancel_stats()
         font = QFont("Times Roman", 11)
         f = QFont("Times Roman", 11, QFont.Bold)
 
@@ -335,48 +332,59 @@ class inserisci_comanda_view(QMainWindow):
 
         a = self.tab_widget.currentIndex()
 
+        f, d = 1250, 500
+
         if a == 1 and self.controllo(self.nome(self.cba.currentText())):
             self.piatti_ordine.append((self.nome(self.cba.currentText()), self.prezzo(self.cba.currentText())))
+            winsound.Beep(f, d)
         elif a == 1 and not self.controllo(self.nome(self.cba.currentText())):
             QMessageBox.warning(None, "RGest", s)
 
         elif a == 2 and self.controllo(self.nome(self.cbp.currentText())):
             self.piatti_ordine.append((self.nome(self.cbp.currentText()), self.prezzo(self.cbp.currentText())))
+            winsound.Beep(f, d)
         elif a == 2 and not self.controllo(self.nome(self.cbp.currentText())):
             QMessageBox.warning(None, "RGest", s)
 
         elif a == 3 and self.controllo(self.nome(self.cbs.currentText())):
             self.piatti_ordine.append((self.nome(self.cbs.currentText()), self.prezzo(self.cbs.currentText())))
+            winsound.Beep(f, d)
         elif a == 3 and not self.controllo(self.nome(self.cbs.currentText())):
             QMessageBox.warning(None, "RGest", s)
 
         elif a == 4 and self.controllo(self.nome(self.cbc.currentText())):
             self.piatti_ordine.append((self.nome(self.cbc.currentText()), self.prezzo(self.cbc.currentText())))
+            winsound.Beep(f, d)
         elif a == 4 and not self.controllo(self.nome(self.cbc.currentText())):
             QMessageBox.warning(None, "RGest", s)
 
         elif a == 5 and self.controllo(self.nome(self.cbdo.currentText())):
             self.piatti_ordine.append((self.nome(self.cbdo.currentText()), self.prezzo(self.cbdo.currentText())))
+            winsound.Beep(f, d)
         elif a == 5 and not self.controllo(self.nome(self.cbdo.currentText())):
             QMessageBox.warning(None, "RGest", s)
 
         elif a == 6 and self.controllo(self.nome(self.cbf.currentText())):
             self.piatti_ordine.append((self.nome(self.cbf.currentText()), self.prezzo(self.cbf.currentText())))
+            winsound.Beep(f, d)
         elif a == 6 and not self.controllo(self.nome(self.cbf.currentText())):
             QMessageBox.warning(None, "RGest", s)
 
         elif a == 7 and self.controllo(self.nome(self.cbdi.currentText())):
             self.piatti_ordine.append((self.nome(self.cbdi.currentText()), self.prezzo(self.cbdi.currentText())))
+            winsound.Beep(f, d)
         elif a == 7 and not self.controllo(self.nome(self.cbdi.currentText())):
             QMessageBox.warning(None, "RGest", s)
 
         elif a == 8 and self.controllo(self.nome(self.cbb.currentText())):
             self.piatti_ordine.append((self.nome(self.cbb.currentText()), self.prezzo(self.cbb.currentText())))
+            winsound.Beep(f, d)
         elif a == 8 and not self.controllo(self.nome(self.cbb.currentText())):
             QMessageBox.warning(None, "RGest", s)
 
         elif a == 9 and self.controllo(self.nome(self.cbms.currentText())):
             self.piatti_ordine.append((self.nome(self.cbms.currentText()), self.prezzo(self.cbms.currentText())))
+            winsound.Beep(f, d)
         elif a == 9 and not self.controllo(self.nome(self.cbms.currentText())):
             QMessageBox.warning(None, "RGest", s)
 

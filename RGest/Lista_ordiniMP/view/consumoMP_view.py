@@ -1,6 +1,5 @@
-from PyQt5 import QtWidgets
 from PyQt5.QtGui import QIcon, QFont, QStandardItemModel, QStandardItem
-from PyQt5.QtWidgets import QMainWindow, QListView, QPushButton, QLabel, QMessageBox, QListWidget, QListWidgetItem
+from PyQt5.QtWidgets import QMainWindow, QListView, QPushButton, QLabel, QMessageBox
 
 from Lista_materie_prime.controller.lista_materie_prime_controller import lista_materie_prime_controller
 

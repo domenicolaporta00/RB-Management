@@ -2,8 +2,6 @@ from PyQt5.QtCore import QTime, QRegExp
 from PyQt5.QtGui import QIcon, QFont, QRegExpValidator
 from PyQt5.QtWidgets import QMainWindow, QLabel, QLineEdit, QPushButton, QMessageBox, QTimeEdit
 
-from Comanda.model.comanda_model import comanda_model
-from Lista_comande.controller.lista_comande_controller import lista_comande_controller
 from Lista_prenotazioni.controller.lista_prenotazioni_controller import lista_prenotazioni_controller
 from Prenotazioni.model.prenotazioni_model import prenotazioni_model
 
@@ -15,7 +13,6 @@ class inserisci_prenotazione_view(QMainWindow):
 
         self.lingua = lingua
 
-        # self.lcomandec = lista_comande_controller()
         self.controller = controller
         self.callback = callback
         self.cb_cena = cb_cena
@@ -141,7 +138,6 @@ class inserisci_prenotazione_view(QMainWindow):
         orario = self.jsonobject["Orario"].time()
         info = self.jsonobject["Info extra"].text()
         telefono = self.jsonobject["Telefono"].text()
-        # num_tavoli = self.jsonobject["Numero tavolo"].text()
         if self.isBlank(cognome) or self.isBlank(posti) or self.isBlank(telefono):
             QMessageBox.warning(None, "RGest", str11)
         elif QTime(19, 00) > orario > QTime(14, 00):

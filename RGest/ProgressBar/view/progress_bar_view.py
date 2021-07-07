@@ -18,8 +18,6 @@ class progress_bar_view(QMainWindow):
         self.setWindowIcon(self.icona)
         self.setStyleSheet("background-color: rgb(255, 255, 255)")
 
-        # self.vC = VistaCredenziali()
-
         self.progressbar = QProgressBar(self)
 
         self.cb = QComboBox(self)
@@ -49,7 +47,6 @@ class progress_bar_view(QMainWindow):
         self.progressbar.setTextVisible(False)
         self.progressbar.move(225, 450)
         self.progressbar.setFixedSize(300, 30)
-        #self.progressbar.show()
         self.close()
 
     def parti(self):

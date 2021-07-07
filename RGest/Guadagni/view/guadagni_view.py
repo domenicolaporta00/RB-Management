@@ -1,5 +1,5 @@
-from PyQt5.QtGui import QIcon, QFont, QStandardItemModel, QStandardItem
-from PyQt5.QtWidgets import QMainWindow, QTabWidget, QWidget, QListView, QVBoxLayout, QTableWidget, QGridLayout, \
+from PyQt5.QtGui import QIcon, QFont
+from PyQt5.QtWidgets import QMainWindow, QTabWidget, QWidget, QTableWidget, QGridLayout, \
     QTableWidgetItem
 
 from Lista_coperti.controller.lista_coperti_controller import lista_coperti_controller
@@ -53,7 +53,6 @@ class guadagni_view(QMainWindow):
 
         self.lista = QTableWidget()
         self.totale = QTableWidget()
-        #self.totale.setFixedSize(726, 25)
         self.lista.setStyleSheet("color: rgb(0, 255, 0)")
         self.totale.setStyleSheet("color: rgb(0, 255, 0)")
         self.genera_lista()
@@ -86,8 +85,6 @@ class guadagni_view(QMainWindow):
         self.tab3.setLayout(layout3)
 
     def genera_lista(self):
-        # self.lcc.cancel()
-        # self.lcc.save_data()
 
         global str21, str11, str31, str51, str61
         if self.lingua == "Inglese":
@@ -110,7 +107,6 @@ class guadagni_view(QMainWindow):
         self.lista.setColumnWidth(0, 150)
         self.lista.setColumnWidth(1, 75)
         self.lista.setColumnWidth(2, 75)
-        #self.lista.setColumnWidth(0, 75)
         self.totale.setEnabled(False)
         self.lista.setHorizontalHeaderLabels([str11, str21, str31])
         self.totale.setHorizontalHeaderLabels([str51, str61])

@@ -219,20 +219,12 @@ class lista_delivery_view(QMainWindow):
         n = 0
         for delivery in self.ldc.get_lista_delivery():
             n += 1
-        #self.lcc.aggiungi_coperto(coperti_model(n))
         for delivery in self.ldc.get_lista_delivery():
-            '''if self.controllo(cliente_model(delivery.cognome, delivery.telefono)):
-                pass
-            else:'''
             self.lclientic.aggiungi_cliente(cliente_model(delivery.cognome, delivery.telefono))
         for delivery in self.ldc.get_lista_delivery_cena():
             n += 1
-        # aggiungi i delivery della giornata attraverso il controller
         self.lcopertic.aggiungi_consegna(consegna_delivery_model(n))
         for delivery in self.ldc.get_lista_delivery_cena():
-            '''if self.controllo(cliente_model(delivery.cognome, delivery.telefono)):
-                pass
-            else:'''
             self.lclientic.aggiungi_cliente(cliente_model(delivery.cognome, delivery.telefono))
         self.ldc.cancel()
         self.ldc.cancel_cena()

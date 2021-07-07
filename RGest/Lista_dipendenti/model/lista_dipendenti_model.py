@@ -1,6 +1,7 @@
 import os
 import pickle
 
+
 class lista_dipendenti_model():
 
     def __init__(self):
@@ -24,6 +25,7 @@ class lista_dipendenti_model():
             if dipendente.id == id:
                 return True
             return False
+
         self.lista_dipendenti.remove(list(filter(flag, self.lista_dipendenti))[0])
 
     def cancel(self):

@@ -106,7 +106,6 @@ class delivery_view(QMainWindow):
         lineEdit.setFixedSize(200, 30)
 
     def config_timeEdit(self, a, b, time, timeEdit):
-        #timeEdit = QTimeEdit(self)
         timeEdit.setTime(time)
         if self.turno == "pranzo":
             timeEdit.setMaximumTime(QTime(14, 00))

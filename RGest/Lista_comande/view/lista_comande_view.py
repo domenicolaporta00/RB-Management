@@ -15,7 +15,6 @@ class lista_comande_view(QMainWindow):
         self.isDelivery = isDelivery
 
         self.lcomandec = lista_comande_controller()
-        # self.lmatprimec = lista_materie_prime_controller()
 
         self.icona = QIcon("images\\Logo_definitivo.jpg")
 

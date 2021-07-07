@@ -16,7 +16,7 @@ class lista_prenotazioni_view(QMainWindow):
         super(lista_prenotazioni_view, self).__init__()
 
         self.lingua = lingua
-        # self.lcomandec = lista_comande_controller()
+
         self.lpc = lista_prenotazioni_controller()
         self.lcc = lista_coperti_controller()
         self.lclientic = lista_clienti_controller()
@@ -82,8 +82,6 @@ class lista_prenotazioni_view(QMainWindow):
         self.genera_lista_cena()
         self.lista_cena.setModel(self.list_view_model_cena)
         self.lista_cena.setStyleSheet("background-color: rgb(255, 255, 255)")
-        # self.lista.move(125, 100)
-        # self.lista.setFixedSize(500, 400)
 
         layout1 = QVBoxLayout(self)
         layout1.addWidget(self.lista)
@@ -227,9 +225,6 @@ class lista_prenotazioni_view(QMainWindow):
             if prenotazioni.cognome == str16:
                 pass
             else:
-                '''if self.controllo(cliente_model(prenotazioni.cognome, prenotazioni.telefono)):
-                    pass
-                else:'''
                 self.lclientic.aggiungi_cliente(cliente_model(prenotazioni.cognome, prenotazioni.telefono))
         for prenotazioni in self.lpc.get_lista_prenotazioni_cena():
             n += int(prenotazioni.posti)
@@ -238,9 +233,6 @@ class lista_prenotazioni_view(QMainWindow):
             if prenotazioni.cognome == str16:
                 pass
             else:
-                '''if self.controllo(cliente_model(prenotazioni.cognome, prenotazioni.telefono)):
-                    pass
-                else:'''
                 self.lclientic.aggiungi_cliente(cliente_model(prenotazioni.cognome, prenotazioni.telefono))
         self.lpc.cancel()
         self.lpc.cancel_cena()

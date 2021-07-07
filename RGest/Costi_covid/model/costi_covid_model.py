@@ -1,5 +1,6 @@
 from PyQt5.QtCore import QDate
 
+
 class costi_covid_model():
 
     def __init__(self, mascherine, gel, guanti, igienizzanti, disinfestazione):

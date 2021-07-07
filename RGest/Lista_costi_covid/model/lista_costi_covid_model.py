@@ -1,6 +1,7 @@
 import os
 import pickle
 
+
 class lista_costi_covid_model():
 
     def __init__(self):

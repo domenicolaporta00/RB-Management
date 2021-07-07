@@ -12,13 +12,14 @@ from Schermata_principale.view.Schermata_principale_view import Schermata_princi
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
+
     splash = QSplashScreen(QPixmap("images\\Logo_splash.png"), Qt.WindowStaysOnTopHint)
     splash.show()
     time.sleep(5)
-    #vC = VistaCredenziali()
-    #vC = Schermata_principale_view("Domenico", "Italiano")
-    #vC = costi_covid_view(1, 1)
-    vC = progress_bar_view()
+    # vC = VistaCredenziali()
+    vC = Schermata_principale_view("Domenico", "Italiano")
+    # vC = costi_covid_view(1, 1)
+    #vC = progress_bar_view()
     vC.show()
     splash.finish(vC)
     sys.exit(app.exec())

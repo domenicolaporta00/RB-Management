@@ -35,6 +35,7 @@ class VistaCredenziali(QMainWindow):
         self.schermata()
 
     def schermata(self):
+
         global str1, str2, str8, str9
         font = QFont("Times Roman", 11)
         f = QFont("Times Roman", 11, QFont.Bold)
@@ -50,6 +51,7 @@ class VistaCredenziali(QMainWindow):
             str2 = "Nome utente"
             str8 = "Accedi"
             str9 = "Cambio credenziali"
+
         self.logo.setPixmap(pixmax)
         self.logo.move(240, 300)
         self.logo.setFixedSize(300, 300)

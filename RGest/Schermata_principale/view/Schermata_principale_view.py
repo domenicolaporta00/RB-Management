@@ -68,10 +68,8 @@ class Schermata_principale_view(QMainWindow):
         self.menu_bar.setStyleSheet("background-color: rgb(240, 240, 240)")
         self.config_menubar("File", QIcon("images\\exit.png"), "Exit", 'Ctrl+Q').triggered.connect(self.close)
         self.config_menubar("Info", QIcon("images\\pint.jpg"), "Tutorial", 'Ctrl+W').triggered.connect(self.tutorial)
-        self.config_menubar(str21, QIcon("images\\telefono.png"), str31,
-                            "Ctrl+E").triggered.connect(self.contatti)
-        self.config_menubar(str41, QIcon("images\\orologio.jpg"), str51, 'Ctrl+R').triggered.connect(
-            self.data_ora)
+        self.config_menubar(str21, QIcon("images\\telefono.png"), str31, "Ctrl+E").triggered.connect(self.contatti)
+        self.config_menubar(str41, QIcon("images\\orologio.jpg"), str51, 'Ctrl+R').triggered.connect(self.data_ora)
 
         self.serviziButton = QPushButton(self)
         self.magazzinoButton = QPushButton(self)
@@ -104,7 +102,7 @@ class Schermata_principale_view(QMainWindow):
             str6 = "Personal management"
             str7 = "Taxes"
             str8 = "Costs"
-            str9 = "Earnings"
+            str9 = "Revenues"
             str10 = "Customer list"
             str11 = "Best selling dishes statistics"
             str12 = "Customers more present"
@@ -131,7 +129,7 @@ class Schermata_principale_view(QMainWindow):
             str6 = "Gestione personale"
             str7 = "Tasse"
             str8 = "Costi"
-            str9 = "Guadagni"
+            str9 = "Ricavi"
             str10 = "Lista clienti"
             str11 = "Lista piatti più venduti"
             str12 = "Clienti più presenti"
@@ -167,7 +165,7 @@ class Schermata_principale_view(QMainWindow):
         menu3.addAction(str9, self.guadagni)
 
         menuS = QMenu()
-        menuS.addAction("Ciccolini Joshua            ", self.cj)
+        menuS.addAction("Ciccolini Joshua", self.cj)
         menuS.addAction("Colleluori Davide", self.cd)
         menuS.addAction("La Porta Domenico", self.dlp)
 
@@ -203,58 +201,23 @@ class Schermata_principale_view(QMainWindow):
         self.selezionare.move(100, 50)
         self.selezionare.setFixedSize(750, 100)
 
-        self.serviziButton.move(175, 175)
-        self.serviziButton.setText(str21)
-        self.serviziButton.setFont(font)
-        self.serviziButton.setFixedSize(175, 50)
-        self.serviziButton.setMenu(menu)
-        self.serviziButton.setStyleSheet("background-color: red; border-radius: 10px; color: rgb(255, 255, 255)")
+        self.config_button(self.serviziButton, 175, 175, str21, font, 175, 50, menu)
 
-        self.magazzinoButton.move(175, 300)
-        self.magazzinoButton.setText(str22)
-        self.magazzinoButton.setFont(font)
-        self.magazzinoButton.setFixedSize(175, 50)
-        self.magazzinoButton.setMenu(menu2)
-        self.magazzinoButton.setStyleSheet("background-color: red; border-radius: 10px; color: rgb(255, 255, 255)")
+        self.config_button(self.magazzinoButton, 175, 300, str22, font, 175, 50, menu2)
 
-        self.backofficeButton.move(175, 425)
-        self.backofficeButton.setText(str23)
-        self.backofficeButton.setFont(font)
-        self.backofficeButton.setFixedSize(175, 50)
-        self.backofficeButton.setMenu(menu3)
-        self.backofficeButton.setStyleSheet("background-color: red; border-radius: 10px; color: rgb(255, 255, 255)")
+        self.config_button(self.backofficeButton, 175, 425, str23, font, 175, 50, menu3)
 
-        self.datiButton.move(400, 175)
-        self.datiButton.setText(str24)
-        self.datiButton.setFont(font)
-        self.datiButton.setFixedSize(175, 50)
-        self.datiButton.setMenu(menuDati)
-        self.datiButton.setStyleSheet("background-color: red; border-radius: 10px; color: rgb(255, 255, 255)")
+        self.config_button(self.datiButton, 400, 175, str24, font, 175, 50, menuDati)
 
-        self.infoCovidButton.move(400, 300)
-        self.infoCovidButton.setText("Info Covid")
-        self.infoCovidButton.setFont(font)
-        self.infoCovidButton.setFixedSize(175, 50)
-        self.infoCovidButton.setStyleSheet("background-color: red; border-radius: 10px; color: rgb(255, 255, 255)")
-        self.infoCovidButton.setMenu(menuCovid)
+        self.config_button(self.infoCovidButton, 400, 300, "Info Covid", font, 175, 50, menuCovid)
 
-        self.deliveryButton.move(400, 425)
-        self.deliveryButton.setText(str25)
-        self.deliveryButton.setFont(font)
-        self.deliveryButton.setFixedSize(175, 50)
-        self.deliveryButton.setMenu(menuDelivery)
-        self.deliveryButton.setStyleSheet("background-color: red; border-radius: 10px; color: rgb(255, 255, 255)")
+        self.config_button(self.deliveryButton, 400, 425, str25, font, 175, 50, menuDelivery)
+
+        self.config_button(self.sviluppatori, 400, 525, str26, font, 175, 50, menuS)
 
         self.logo.setPixmap(LogoPixmax)
         self.logo.setFixedSize(110, 110)
         self.logo.move(200, 500)
-
-        self.sviluppatori.setText(str26)
-        self.sviluppatori.move(400, 525)
-        self.sviluppatori.setFont(font)
-        self.sviluppatori.setFixedSize(175, 50)
-        self.sviluppatori.setStyleSheet("background-color: red; border-radius: 10px; color: rgb(255, 255, 255)")
-        self.sviluppatori.setMenu(menuS)
 
         self.config_foto(self.servizi, servizioPixmap, 50, 150, 110, 110)
 
@@ -301,13 +264,19 @@ class Schermata_principale_view(QMainWindow):
         url = "https://www.google.com/search?q=coronavirus&sxsrf=ALeKk00h4z0EaEa1GwW2hezYhnhXnzm0oA%3A1619795169950&ei=4RyMYMK0OYOWkwX5s5eQDQ&oq=coron&gs_lcp=Cgdnd3Mtd2l6EAMYADIHCCMQyQMQJzIFCAAQkgMyBQgAEJIDMgQIIxAnMgQIIxAnMgQIABBDMgQIABBDMggIABCxAxCDATIICAAQsQMQgwEyBAgAEEM6AggAOgoIABCxAxCDARBDUMIfWLkkYMIraABwAHgAgAGbAYgBzgWSAQMxLjWYAQCgAQGqAQdnd3Mtd2l6wAEB&sclient=gws-wiz#wptab=s:H4sIAAAAAAAAAONgVuLVT9c3NMwySk6OL8zJecTozS3w8sc9YSmnSWtOXmO04eIKzsgvd80rySypFNLjYoOyVLgEpVB1ajBI8XOhCvHsYuL2SE3MKckILkksKV7EKl0MpDOLSzKTM1IViktzFJLzi_LzEssyi0qLAQ16CwOLAAAA"
         webbrowser.open(url)
 
+    def config_button(self, button, x, y, text, font, a, b, menu):
+        button.move(x, y)
+        button.setText(text)
+        button.setFont(font)
+        button.setFixedSize(a, b)
+        button.setMenu(menu)
+        button.setStyleSheet("background-color: red; border-radius: 10px; color: rgb(255, 255, 255)")
+
     def config_menubar(self, str, img, _str2, tasti):
         self.menu_def = self.menu_bar.addMenu(str)
         icon = QIcon(img)
         action = QAction(icon, _str2, parent=self)
         action.setShortcut(tasti)
-        # action.setStatusTip('Exit application')
-        # action.triggered.connect(funzione)
         self.menu_def.addAction(action)
         return action
 

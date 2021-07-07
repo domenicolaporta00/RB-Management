@@ -95,12 +95,6 @@ class lista_clienti_view(QMainWindow):
         label.setStyleSheet("color: red")
         label.setFixedSize(a, b)
 
-    '''def controllo(self, c):
-        for cliente in self.clienti_noDoppi:
-            if c.nome == cliente.nome and c.telefono == cliente.telefono:
-                return True
-        return False'''
-
     def invia_mex(self):
 
         global str52, str42, str32, str22, str12

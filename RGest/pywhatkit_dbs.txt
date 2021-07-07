@@ -149,3 +149,8 @@ Time: 18:23
 Phone number: +393892563201
 Message: Car* Lombardi Alessio, buongiorno. Se leggi questo messaggio vuol dire che il mio software funziona. Messaggio inviato automaticamente dal gestionale che sto sviluppando.
 --------------------
+Date: 3:7:2021
+Time: 20:46
+Phone number: +393894215865
+Message: Car* La Porta Michele, Conferma la sua prenotazione?
+--------------------

@@ -22,9 +22,6 @@ class lista_prenotazioni_controller:
     def get_lista_prenotazioni_cena(self):
         return self.lpm.get_lista_prenotazioni_cena()
 
-    # def cancella(self, tavolo):
-    #   self.lpm.cancel(tavolo)
-
     def cancel(self):
         self.lpm.cancel()
 

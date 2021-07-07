@@ -13,7 +13,6 @@ class inserisci_delivery_view(QMainWindow):
 
         self.lingua = lingua
 
-        # self.lcomandec = lista_comande_controller()
         self.controller = controller
         self.callback = callback
         self.cb_cena = cb_cena

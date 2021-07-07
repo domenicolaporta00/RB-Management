@@ -1,3 +1,5 @@
+import winsound
+
 from PyQt5.QtGui import QIcon, QFont
 from PyQt5.QtWidgets import QMainWindow, QTableWidget, QPushButton, QTabWidget, QWidget, QComboBox, QTableWidgetItem, \
     QMessageBox, QGridLayout
@@ -23,10 +25,8 @@ class inserisci_ordineMP_view(QMainWindow):
         self.isNuovo = isNuovo
         self.ordine = ordine
         self.contr = ordineMP_controller(ordine)
-        # self.isDelivery = isDelivery
 
-        # self.lcomandac = lista_ordiniMP_controller()  #  non serve, già passato nel costruttore
-        self.lmatprimec = lista_materie_prime_controller()   # per prendere le mp originali e per memorizzare le stats
+        self.lmatprimec = lista_materie_prime_controller()
         self.lcMPc = lista_contiMP_controller()
 
         self.icona = QIcon("images\\Logo_definitivo.jpg")
@@ -73,7 +73,6 @@ class inserisci_ordineMP_view(QMainWindow):
             str6 = "Ordine"
             str7 = "Totale"
 
-        # self.lpiattic.cancel_stats()
         font = QFont("Times Roman", 11)
         f = QFont("Times Roman", 11, QFont.Bold)
 
@@ -110,8 +109,10 @@ class inserisci_ordineMP_view(QMainWindow):
 
     def agg(self):
         a = self.tab_widget.currentIndex()
+        f, d = 1250, 500
         if a == 0:
             self.matprime_ordine.append((self.nome(self.cb.currentText()), self.prezzo(self.cb.currentText())))
+            winsound.Beep(f, d)
         self.genera_lista()
 
     def genera_lista(self):

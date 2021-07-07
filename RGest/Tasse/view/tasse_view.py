@@ -14,7 +14,6 @@ class tasse_view(QMainWindow):
         self.lingua = lingua
 
         self.controller = controller
-        # self.callback = callback
         self.jsonobject = {}
 
         self.ltc = lista_tasse_controller()
@@ -101,6 +100,7 @@ class tasse_view(QMainWindow):
         self.jsonobject[tipo] = lineEdit
 
     def conferma(self):
+
         global str2, str1
         if self.lingua == "Inglese":
             str1 = "Fill in all fields!"
@@ -108,6 +108,7 @@ class tasse_view(QMainWindow):
         if self.lingua == "Italiano":
             str1 = "Compilare tutti i campi!"
             str2 = "Tasse inserite correttamente."
+
         acqua = self.jsonobject["Acqua"].text()
         luce = self.jsonobject["Luce"].text()
         gas = self.jsonobject["Gas"].text()
@@ -118,7 +119,6 @@ class tasse_view(QMainWindow):
             QMessageBox.warning(None, "RGest", str1)
         else:
             self.controller.aggiungi_tasse(tasse_model(acqua, luce, gas, tv, affitto))
-            # self.callback()
             QMessageBox.information(None, "RGest", str2)
             self.controller.save_data()
             self.close()

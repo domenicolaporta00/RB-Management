@@ -3,7 +3,6 @@ from PyQt5.QtGui import QIcon, QFont, QRegExpValidator
 from PyQt5.QtWidgets import QMainWindow, QLineEdit, QLabel, QPushButton, QMessageBox
 
 from Dipendente.controller.dipendente_controller import dipendente_controller
-from Lista_dipendenti.controller.lista_dipendenti_controller import lista_dipendenti_controller
 
 
 class dipendente_view(QMainWindow):
@@ -15,7 +14,6 @@ class dipendente_view(QMainWindow):
         self.dc = dipendente_controller(dipendente)
         self.elimina_callback = elimina_callback
         self.elimina_dipendente = elimina
-        #self.ldc = lista_dipendenti_controller()
 
         self.icona = QIcon("images\\Logo_definitivo.jpg")
 

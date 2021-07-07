@@ -1,6 +1,7 @@
 import os
 import pickle
 
+
 class lista_tasse_model():
 
     def __init__(self):

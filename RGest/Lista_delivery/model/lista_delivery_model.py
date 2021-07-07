@@ -28,6 +28,7 @@ class lista_delivery_model():
             if delivery.telefono == telefono:
                 return True
             return False
+
         self.lista_delivery.remove(list(filter(flag, self.lista_delivery))[0])
 
     def remove_delivery_cena(self, telefono):
@@ -35,6 +36,7 @@ class lista_delivery_model():
             if delivery.telefono == telefono:
                 return True
             return False
+
         self.lista_delivery_cena.remove(list(filter(flag, self.lista_delivery_cena))[0])
 
     def get_delivery(self, i):

@@ -1,5 +1,6 @@
 from Lista_dipendenti.model.lista_dipendenti_model import lista_dipendenti_model
 
+
 class lista_dipendenti_controller:
 
     def __init__(self):
