@@ -37,6 +37,13 @@ class costi_view(QMainWindow):
 
     def schermata(self):
 
+        '''self.lccc.cancel()
+        self.lccc.save_data()
+        self.ltc.cancel()
+        self.ltc.save_data()
+        self.lcMPc.cancel_contoMP()
+        self.lcMPc.save_data()'''
+
         global str2, str1, str3, str4
         if self.lingua == "Inglese":
             str1 = "Employees"
@@ -235,7 +242,7 @@ class costi_view(QMainWindow):
         self.lista_tasse.setHorizontalHeaderLabels([str11, str21, "Gas", "Tv", str31,
                                                     str41])
         self.totale_tasse.setHorizontalHeaderLabels([str51])
-        self.totale_tasse.setVerticalHeaderLabels([str11, str21, "Gas", "Tv", "str3",
+        self.totale_tasse.setVerticalHeaderLabels([str11, str21, "Gas", "Tv", str31,
                                                    str61])
         for row, date in enumerate(self.ltc.get_lista_tasse()):
             a += 1

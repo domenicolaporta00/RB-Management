@@ -307,24 +307,24 @@ class Schermata_principale_view(QMainWindow):
         if self.lingua == "Inglese":
             str10_ = "Empty employee list. Unable to send messages."
             str20_ = "Write your message. (Warning! The procedure can take\na long time and cannot be done" \
-                   "in the background.\nIt is recommended to run outside business hours!\nPress ok to" \
-                   "to continue!) "
+                     "in the background.\nIt is recommended to run outside business hours!\nPress ok to" \
+                     "to continue!) "
             str30 = "Type something!"
             str40 = "The system will open whatsapp web for each employee stored and there will be twenty seconds to" \
-                   "provision to frame the QR code; at the end of twenty seconds the message will be sent" \
-                   "correctly and you will go to the next one. Do not interact with the application while sending the" \
-                   "messages! "
+                    "provision to frame the QR code; at the end of twenty seconds the message will be sent" \
+                    "correctly and you will go to the next one. Do not interact with the application while sending the" \
+                    "messages! "
             str50 = "Sending messages finished."
         if self.lingua == "Italiano":
             str10_ = "Lista dipendenti vuota. Impossibile inviare messaggi."
             str20_ = "Scrivi il messaggio. (Attenzione! La procedura può impiegare\ntanto tempo e non può essere fatta " \
-                   "in background.\nSi consiglia di eseguire fuori dall'orario lavorativo!\nPremere ok per " \
-                   "continuare!) "
+                     "in background.\nSi consiglia di eseguire fuori dall'orario lavorativo!\nPremere ok per " \
+                     "continuare!) "
             str30 = "Digitare qualcosa!"
             str40 = "Il sistema aprirà whatsapp web per ogni dipendente memorizzato e ci saranno venti secondi a " \
-                   "disposizione per inquadrare il QR code; al termine dei venti secondi il messaggio verrà inviato " \
-                   "correttamente e si passerà al successivo. Non interagire con l'applicazione durante l'invio dei " \
-                   "messaggi! "
+                    "disposizione per inquadrare il QR code; al termine dei venti secondi il messaggio verrà inviato " \
+                    "correttamente e si passerà al successivo. Non interagire con l'applicazione durante l'invio dei " \
+                    "messaggi! "
             str50 = "Invio messaggi terminato."
 
         self.ldc = lista_dipendenti_controller()
@@ -409,6 +409,8 @@ class Schermata_principale_view(QMainWindow):
             str2__ = "Statistiche piatti più venduti"
 
         self.lpiattic = lista_piatti_controller()
+        '''self.lpiattic.cancel_stats()
+        self.lpiattic.save_data_stats()'''
         valori = []
         nomi = []
         if not self.lpiattic.get_lista_stats():
