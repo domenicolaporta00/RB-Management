@@ -83,7 +83,7 @@ class VistaCredenziali(QMainWindow):
         if self.lingua == "Inglese":
             str3 = "Signed in successfully"
             str4 = "What's your name?"
-            str5 = "Type something"
+            str5 = "Type something!"
             str6 = "Fill in all fields"
             str7 = "Incorrect login data"
         elif self.lingua == "Italiano":

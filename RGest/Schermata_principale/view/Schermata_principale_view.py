@@ -67,7 +67,7 @@ class Schermata_principale_view(QMainWindow):
         self.menu_bar = self.menuBar()
         self.menu_bar.setStyleSheet("background-color: rgb(240, 240, 240)")
         self.config_menubar("File", QIcon("images\\exit.png"), "Exit", 'Ctrl+Q').triggered.connect(self.close)
-        self.config_menubar("Info", QIcon("images\\pint.jpg"), "Tutorial", 'Ctrl+W').triggered.connect(self.tutorial)
+        self.config_menubar("Audio", QIcon("images\\pint.jpg"), "Musica", 'Ctrl+W').triggered.connect(self.musica)
         self.config_menubar(str21, QIcon("images\\telefono.png"), str31, "Ctrl+E").triggered.connect(self.contatti)
         self.config_menubar(str41, QIcon("images\\orologio.jpg"), str51, 'Ctrl+R').triggered.connect(self.data_ora)
 
@@ -280,8 +280,31 @@ class Schermata_principale_view(QMainWindow):
         self.menu_def.addAction(action)
         return action
 
-    def tutorial(self):
-        print("Tutorial da fare")
+    def musica(self):
+
+        global titolo
+        if self.lingua == "Inglese":
+            titolo = "Enter the title of the song to listen to"
+            warning = "Type something!"
+        elif self.lingua == "Italiano":
+            titolo = "Inserire il titolo della canzone da ascoltare"
+            warning = "Digitare qualcosa!"
+
+        a = 0
+        while a == 0:
+            text, select = QInputDialog.getText(None, "RGest", titolo)
+            if not select:
+                a = 1
+            else:
+                if not text or text.isspace():
+                    QMessageBox.warning(None, "RGest", warning)
+                else:
+                    ricerca = text
+                    a = 1
+                    url = "https://www.youtube.com/results?search_query=" + ricerca
+                    url = url.replace(" ", "+")
+                    webbrowser.open(url)
+
 
     def data_ora(self):
 
