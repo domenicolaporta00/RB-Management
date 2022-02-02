@@ -369,7 +369,7 @@ class Schermata_principale_view(QMainWindow):
                             minuto = 0
                             ora += 1
                         else:
-                            mex = "Car* " + dipendente.nome + ", " + text
+                            mex = "Buona giornata " + dipendente.nome + ", " + text
                             # print("Invio " + mex + " a " + dipendente.nome + " numero " + dipendente.telefono)
                             pywhatkit.sendwhatmsg("+39" + dipendente.telefono, mex, ora, minuto)
                     QMessageBox.information(None, "RGest", str50)

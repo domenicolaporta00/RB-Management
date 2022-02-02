@@ -1,6 +1,7 @@
 import pywhatkit
+from PyQt5 import QtGui
 from PyQt5.QtCore import QTime
-from PyQt5.QtGui import QIcon, QFont
+from PyQt5.QtGui import QIcon, QFont, QPalette
 from PyQt5.QtWidgets import QMainWindow, QPushButton, QLabel, QInputDialog, QMessageBox, QTableWidget, QTableWidgetItem
 
 from Lista_clienti.controller.lista_clienti_controller import lista_clienti_controller
@@ -47,6 +48,7 @@ class lista_clienti_view(QMainWindow):
         self.genera_lista()
         self.lista.move(129, 100)
         self.lista.setFixedSize(492, 400)
+        self.lista.setStyleSheet("background-color: white")
 
         self.config_label(self.label, str1, 225, 40, 300, 40, font)
 
@@ -66,14 +68,18 @@ class lista_clienti_view(QMainWindow):
             str31 = "Prima prenotazione"
 
         self.lista.setColumnCount(3)
-        self.lista.setColumnWidth(0, 150)
-        self.lista.setColumnWidth(1, 150)
-        self.lista.setColumnWidth(2, 150)
+        if self.lclientic.get_lista_clienti_noDoppi():
+            x = 158
+        else:
+            x = 163
+        self.lista.setColumnWidth(0, x)
+        self.lista.setColumnWidth(1, x)
+        self.lista.setColumnWidth(2, x+1)
         self.lista.setHorizontalHeaderLabels([str11, str21, str31])
         a = 0
-        '''self.lclientic.cancel()
+        self.lclientic.cancel()
         self.lclientic.cancel_noDoppi()
-        self.lclientic.save_data()'''
+        self.lclientic.save_data()
         for row, date in enumerate(self.lclientic.get_lista_clienti_noDoppi()):
             a += 1
             self.lista.setRowCount(a)
@@ -143,6 +149,6 @@ class lista_clienti_view(QMainWindow):
                             minuto = 0
                             ora += 1
                         else:
-                            mex = "Car* " + cliente.nome + ", " + text
+                            mex = "Buona giornata " + cliente.nome + ", " + text
                             pywhatkit.sendwhatmsg("+39" + cliente.telefono, mex, ora, minuto)
                     QMessageBox.information(None, "RGest", str52)

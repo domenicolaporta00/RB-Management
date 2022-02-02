@@ -169,3 +169,23 @@ Time: 18:40
 Phone number: +393511533126
 Message: Car* Marco, buongiorno
 --------------------
+Date: 2:2:2022
+Time: 17:24
+Phone number: +393465973176
+Message: Car* La Porta Domenico, ciao
+--------------------
+Date: 2:2:2022
+Time: 17:29
+Phone number: +393465973176
+Message: Buona giornata La Porta Domenico, ciao
+--------------------
+Date: 2:2:2022
+Time: 17:48
+Phone number: +393511533126
+Message: Buona giornata La Porta Marco, hai visto il video che ti ho inviato su tiktok?
+--------------------
+Date: 2:2:2022
+Time: 17:50
+Phone number: +393511533126
+Message: Buona giornata La Porta Marco, hai visto il video che ti ho inviato su tiktok?
+--------------------

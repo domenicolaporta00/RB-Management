@@ -1,10 +1,12 @@
 import time
+import tkinter.tix
 
 from PyQt5.QtGui import QIcon, QPixmap, QFont
 from PyQt5.QtWidgets import QMainWindow, QProgressBar, QLabel, QPushButton, QComboBox
 
 from Credenziali.view.VistaCredenziali.VistaCredenziali import VistaCredenziali
 
+from tkinter import *
 
 class progress_bar_view(QMainWindow):
     def __init__(self):
@@ -12,7 +14,7 @@ class progress_bar_view(QMainWindow):
 
         self.icona = QIcon("images\\Logo_definitivo.jpg")
 
-        self.setGeometry(300, 50, 750, 500)
+        self.setGeometry(300, 50, 750, 650)
         self.setWindowTitle("RGest")
         self.setFixedSize(750, 650)
         self.setWindowIcon(self.icona)
