@@ -1,4 +1,5 @@
 import os
+import pathlib
 import webbrowser
 
 import matplotlib.pyplot as p
@@ -70,6 +71,7 @@ class Schermata_principale_view(QMainWindow):
         self.config_menubar("Audio", QIcon("images\\pint.jpg"), "Musica", 'Ctrl+W').triggered.connect(self.musica)
         self.config_menubar(str21, QIcon("images\\telefono.png"), str31, "Ctrl+E").triggered.connect(self.contatti)
         self.config_menubar(str41, QIcon("images\\orologio.jpg"), str51, 'Ctrl+R').triggered.connect(self.data_ora)
+        self.config_menubar("Tutorial", QIcon("images\\tutorial.png"), "Visualizza tutorial", 'Ctrl+T').triggered.connect(self.tutorial)
 
         self.serviziButton = QPushButton(self)
         self.magazzinoButton = QPushButton(self)
@@ -305,7 +307,6 @@ class Schermata_principale_view(QMainWindow):
                     url = url.replace(" ", "+")
                     webbrowser.open(url)
 
-
     def data_ora(self):
 
         global language, str1_
@@ -323,6 +324,12 @@ class Schermata_principale_view(QMainWindow):
         sp.save(audio)
         playsound(audio)
         os.remove(audio)
+
+    def tutorial(self):
+
+        p = pathlib.Path().absolute()
+        p = str(p) + "\\images\\tutorial.html"
+        webbrowser.open(p)
 
     def contatti(self):
 
