@@ -77,9 +77,9 @@ class lista_clienti_view(QMainWindow):
         self.lista.setColumnWidth(2, x+1)
         self.lista.setHorizontalHeaderLabels([str11, str21, str31])
         a = 0
-        self.lclientic.cancel()
-        self.lclientic.cancel_noDoppi()
-        self.lclientic.save_data()
+        # self.lclientic.cancel()
+        # self.lclientic.cancel_noDoppi()
+        # self.lclientic.save_data()
         for row, date in enumerate(self.lclientic.get_lista_clienti_noDoppi()):
             a += 1
             self.lista.setRowCount(a)

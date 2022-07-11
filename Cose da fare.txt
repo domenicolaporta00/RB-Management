@@ -1,0 +1,1 @@
+Manca il diagramma dei sistemi e da controllare tutti i casi d'uso (caso per caso da quello che c'è nell'altra cartella)
