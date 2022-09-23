@@ -1,4 +1,4 @@
-import pywhatkit
+# import pywhatkit
 from PyQt5 import QtGui
 from PyQt5.QtCore import QTime
 from PyQt5.QtGui import QIcon, QFont, QPalette
@@ -106,49 +106,63 @@ class lista_clienti_view(QMainWindow):
 
     def invia_mex(self):
 
-        global str52, str42, str32, str22, str12
-        if self.lingua == "Inglese":
-            str12 = "Empty customer list. Unable to send messages."
-            str22 = "Write your message. (Warning! The procedure can take\na long time and cannot be done" \
-                    "in the background.\nIt is recommended to run outside business hours!\nPress ok to" \
-                    "to continue!) "
-            str32 = "Type something!"
-            str42 = "The system will open whatsapp web for each custom stored and there will be twenty seconds to" \
-                    "provision to frame the QR code; at the end of twenty seconds the message will be sent" \
-                    "correctly and you will go to the next one. Do not interact with the application while sending the" \
-                    "messages! "
-            str52 = "Sending messages finished."
-        if self.lingua == "Italiano":
-            str12 = "Lista clienti vuota. Impossibile inviare messaggi."
-            str22 = "Scrivi il messaggio. (Attenzione! La procedura può impiegare\ntanto tempo e non può essere fatta " \
-                    "in background.\nSi consiglia di eseguire fuori dall'orario lavorativo!\nPremere ok per " \
-                    "continuare!) "
-            str32 = "Digitare qualcosa!"
-            str42 = "Il sistema aprirà whatsapp web per ogni cliente memorizzato e ci saranno venti secondi a " \
-                    "disposizione per inquadrare il QR code; al termine dei venti secondi il messaggio verrà inviato " \
-                    "correttamente e si passerà al successivo. Non interagire con l'applicazione durante l'invio dei " \
-                    "messaggi! "
-            str52 = "Invio messaggi terminato."
+        try:
+            import pywhatkit
 
-        if not self.lclientic.get_lista_clienti():
-            QMessageBox.warning(None, "RGest", str12)
-        else:
-            text, select = QInputDialog.getText(None, "RGest", str22)
-            if not select:
-                pass
+            global str52, str42, str32, str22, str12
+            if self.lingua == "Inglese":
+                str12 = "Empty customer list. Unable to send messages."
+                str22 = "Write your message. (Warning! The procedure can take\na long time and cannot be done" \
+                        "in the background.\nIt is recommended to run outside business hours!\nPress ok to" \
+                        "to continue!) "
+                str32 = "Type something!"
+                str42 = "The system will open whatsapp web for each custom stored and there will be twenty seconds to" \
+                        "provision to frame the QR code; at the end of twenty seconds the message will be sent" \
+                        "correctly and you will go to the next one. Do not interact with the application while sending the" \
+                        "messages! "
+                str52 = "Sending messages finished."
+            if self.lingua == "Italiano":
+                str12 = "Lista clienti vuota. Impossibile inviare messaggi."
+                str22 = "Scrivi il messaggio. (Attenzione! La procedura può impiegare\ntanto tempo e non può essere fatta " \
+                        "in background.\nSi consiglia di eseguire fuori dall'orario lavorativo!\nPremere ok per " \
+                        "continuare!) "
+                str32 = "Digitare qualcosa!"
+                str42 = "Il sistema aprirà whatsapp web per ogni cliente memorizzato e ci saranno venti secondi a " \
+                        "disposizione per inquadrare il QR code; al termine dei venti secondi il messaggio verrà inviato " \
+                        "correttamente e si passerà al successivo. Non interagire con l'applicazione durante l'invio dei " \
+                        "messaggi! "
+                str52 = "Invio messaggi terminato."
+
+            if not self.lclientic.get_lista_clienti():
+                QMessageBox.warning(None, "RGest", str12)
             else:
-                if not text:
-                    QMessageBox.warning(None, "RGest", str32)
+                text, select = QInputDialog.getText(None, "RGest", str22)
+                if not select:
+                    pass
                 else:
-                    QMessageBox.warning(None, "RGest", str42)
-                    self.close()
-                    for cliente in self.lclientic.get_lista_clienti():
-                        ora = QTime.currentTime().hour()
-                        minuto = QTime.currentTime().minute() + 1
-                        if minuto == 60:
-                            minuto = 0
-                            ora += 1
-                        else:
-                            mex = "Buona giornata " + cliente.nome + ", " + text
-                            pywhatkit.sendwhatmsg("+39" + cliente.telefono, mex, ora, minuto)
-                    QMessageBox.information(None, "RGest", str52)
+                    if not text:
+                        QMessageBox.warning(None, "RGest", str32)
+                    else:
+                        QMessageBox.warning(None, "RGest", str42)
+                        self.close()
+                        for cliente in self.lclientic.get_lista_clienti():
+                            ora = QTime.currentTime().hour()
+                            minuto = QTime.currentTime().minute() + 1
+                            if minuto == 60:
+                                minuto = 0
+                                ora += 1
+                            else:
+                                mex = "Buona giornata " + cliente.nome + ", " + text
+                                pywhatkit.sendwhatmsg("+39" + cliente.telefono, mex, ora, minuto)
+                        QMessageBox.information(None, "RGest", str52)
+
+        except BaseException:
+
+            global strErrConn
+            if self.lingua == "Inglese":
+                strErrConn = "Unstable connection"
+
+            if self.lingua == "Italiano":
+                strErrConn = "Connessione instabile"
+
+            QMessageBox.critical(None, "RGest", strErrConn)

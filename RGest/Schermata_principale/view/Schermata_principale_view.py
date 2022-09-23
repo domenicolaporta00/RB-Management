@@ -1,10 +1,11 @@
 import os
 import pathlib
+import sys
 import webbrowser
 
 import matplotlib.pyplot as p
 import numpy as np
-import pywhatkit
+# import pywhatkit
 from PyQt5.QtCore import QTime, QDate
 from PyQt5.QtGui import QIcon, QPixmap, QFont
 from PyQt5.QtWidgets import QMainWindow, QLabel, QPushButton, QMenu, QAction, QMessageBox, QInputDialog
@@ -71,7 +72,8 @@ class Schermata_principale_view(QMainWindow):
         self.config_menubar("Audio", QIcon("images\\pint.jpg"), "Musica", 'Ctrl+W').triggered.connect(self.musica)
         self.config_menubar(str21, QIcon("images\\telefono.png"), str31, "Ctrl+E").triggered.connect(self.contatti)
         self.config_menubar(str41, QIcon("images\\orologio.jpg"), str51, 'Ctrl+R').triggered.connect(self.data_ora)
-        self.config_menubar("Tutorial", QIcon("images\\tutorial.png"), "Visualizza tutorial", 'Ctrl+T').triggered.connect(self.tutorial)
+        self.config_menubar("Tutorial", QIcon("images\\tutorial.png"), "Visualizza tutorial",
+                            'Ctrl+T').triggered.connect(self.tutorial)
 
         self.serviziButton = QPushButton(self)
         self.magazzinoButton = QPushButton(self)
@@ -284,7 +286,7 @@ class Schermata_principale_view(QMainWindow):
 
     def musica(self):
 
-        global titolo
+        global titolo, warning
         if self.lingua == "Inglese":
             titolo = "Enter the title of the song to listen to"
             warning = "Type something!"
@@ -333,53 +335,67 @@ class Schermata_principale_view(QMainWindow):
 
     def contatti(self):
 
-        global str50, str40, str30, str20_, str10_
-        if self.lingua == "Inglese":
-            str10_ = "Empty employee list. Unable to send messages."
-            str20_ = "Write your message. (Warning! The procedure can take\na long time and cannot be done" \
-                     "in the background.\nIt is recommended to run outside business hours!\nPress ok to" \
-                     "to continue!) "
-            str30 = "Type something!"
-            str40 = "The system will open whatsapp web for each employee stored and there will be twenty seconds to" \
-                    "provision to frame the QR code; at the end of twenty seconds the message will be sent" \
-                    "correctly and you will go to the next one. Do not interact with the application while sending the" \
-                    "messages! "
-            str50 = "Sending messages finished."
-        if self.lingua == "Italiano":
-            str10_ = "Lista dipendenti vuota. Impossibile inviare messaggi."
-            str20_ = "Scrivi il messaggio. (Attenzione! La procedura può impiegare\ntanto tempo e non può essere fatta " \
-                     "in background.\nSi consiglia di eseguire fuori dall'orario lavorativo!\nPremere ok per " \
-                     "continuare!) "
-            str30 = "Digitare qualcosa!"
-            str40 = "Il sistema aprirà whatsapp web per ogni dipendente memorizzato e ci saranno venti secondi a " \
-                    "disposizione per inquadrare il QR code; al termine dei venti secondi il messaggio verrà inviato " \
-                    "correttamente e si passerà al successivo. Non interagire con l'applicazione durante l'invio dei " \
-                    "messaggi! "
-            str50 = "Invio messaggi terminato."
+        try:
+            import pywhatkit
 
-        self.ldc = lista_dipendenti_controller()
-        if not self.ldc.get_lista_dipendenti():
-            QMessageBox.warning(None, "RGest", str10_)
-        else:
-            text, select = QInputDialog.getText(None, "RGest", str20_)
-            if not select:
-                pass
+            global str50, str40, str30, str20_, str10_
+            if self.lingua == "Inglese":
+                str10_ = "Empty employee list. Unable to send messages."
+                str20_ = "Write your message. (Warning! The procedure can take\na long time and cannot be done" \
+                         "in the background.\nIt is recommended to run outside business hours!\nPress ok to" \
+                         "to continue!) "
+                str30 = "Type something!"
+                str40 = "The system will open whatsapp web for each employee stored and there will be twenty seconds to" \
+                        "provision to frame the QR code; at the end of twenty seconds the message will be sent" \
+                        "correctly and you will go to the next one. Do not interact with the application while sending the" \
+                        "messages! "
+                str50 = "Sending messages finished."
+            if self.lingua == "Italiano":
+                str10_ = "Lista dipendenti vuota. Impossibile inviare messaggi."
+                str20_ = "Scrivi il messaggio. (Attenzione! La procedura può impiegare\ntanto tempo e non può essere fatta " \
+                         "in background.\nSi consiglia di eseguire fuori dall'orario lavorativo!\nPremere ok per " \
+                         "continuare!) "
+                str30 = "Digitare qualcosa!"
+                str40 = "Il sistema aprirà whatsapp web per ogni dipendente memorizzato e ci saranno venti secondi a " \
+                        "disposizione per inquadrare il QR code; al termine dei venti secondi il messaggio verrà inviato " \
+                        "correttamente e si passerà al successivo. Non interagire con l'applicazione durante l'invio dei " \
+                        "messaggi! "
+                str50 = "Invio messaggi terminato."
+
+            self.ldc = lista_dipendenti_controller()
+            if not self.ldc.get_lista_dipendenti():
+                QMessageBox.warning(None, "RGest", str10_)
             else:
-                if not text:
-                    QMessageBox.warning(None, "RGest", str30)
+                text, select = QInputDialog.getText(None, "RGest", str20_)
+                if not select:
+                    pass
                 else:
-                    QMessageBox.warning(None, "RGest", str40)
-                    for dipendente in self.ldc.get_lista_dipendenti():
-                        ora = QTime.currentTime().hour()
-                        minuto = QTime.currentTime().minute() + 1
-                        if minuto == 60:
-                            minuto = 0
-                            ora += 1
-                        else:
-                            mex = "Buona giornata " + dipendente.nome + ", " + text
-                            # print("Invio " + mex + " a " + dipendente.nome + " numero " + dipendente.telefono)
-                            pywhatkit.sendwhatmsg("+39" + dipendente.telefono, mex, ora, minuto)
-                    QMessageBox.information(None, "RGest", str50)
+                    if not text:
+                        QMessageBox.warning(None, "RGest", str30)
+                    else:
+                        QMessageBox.warning(None, "RGest", str40)
+                        for dipendente in self.ldc.get_lista_dipendenti():
+                            ora = QTime.currentTime().hour()
+                            minuto = QTime.currentTime().minute() + 1
+                            if minuto == 60:
+                                minuto = 0
+                                ora += 1
+                            else:
+                                mex = "Buona giornata " + dipendente.nome + ", " + text
+                                # print("Invio " + mex + " a " + dipendente.nome + " numero " + dipendente.telefono)
+                                pywhatkit.sendwhatmsg("+39" + dipendente.telefono, mex, ora, minuto)
+                        QMessageBox.information(None, "RGest", str50)
+
+        except BaseException:
+
+            global strErrConn
+            if self.lingua == "Inglese":
+                strErrConn = "Unstable connection"
+
+            if self.lingua == "Italiano":
+                strErrConn = "Connessione instabile"
+
+            QMessageBox.critical(None, "RGest", strErrConn)
 
     def prenotazioni(self):
         self.lpv.show()

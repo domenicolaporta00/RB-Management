@@ -189,3 +189,18 @@ Time: 17:50
 Phone number: +393511533126
 Message: Buona giornata La Porta Marco, hai visto il video che ti ho inviato su tiktok?
 --------------------
+Date: 23:9:2022
+Time: 12:27
+Phone number: +393894215865
+Message: Buona giornata Michele, Buongiorno
+--------------------
+Date: 23:9:2022
+Time: 12:28
+Phone number: +393394806909
+Message: Buona giornata Caterina, Buongiorno
+--------------------
+Date: 23:9:2022
+Time: 12:29
+Phone number: +393511533126
+Message: Buona giornata Marco, Buongiorno
+--------------------

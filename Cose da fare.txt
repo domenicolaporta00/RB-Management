@@ -1,1 +1,1 @@
-Diagramma dell'architettura 
+Diagrammi delle sequenze :(

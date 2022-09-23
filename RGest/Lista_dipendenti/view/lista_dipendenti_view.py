@@ -102,6 +102,7 @@ class lista_dipendenti_view(QMainWindow):
         else:
             selected = self.lista.selectedIndexes()[0].row()
             dipendente_selezionato = self.ldc.get_dipendente(selected)
+            print(type(dipendente_selezionato))
             self.dv = dipendente_view(dipendente_selezionato, self.ldc.remove_dipendente, self.genera_lista, self.lingua)
             self.dv.show()
 
