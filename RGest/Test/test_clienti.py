@@ -25,9 +25,11 @@ class TestClienti(unittest.TestCase):
 
     def test_aggiorna_cliente(self):
         quantita_prima = self.quanti_clienti((self.cliente.nome, self.cliente.telefono))
-        self.lclientic.aggiungi_cliente(self.cliente)
+        da_aggiungere = 4
+        for i in range(da_aggiungere):
+            self.lclientic.aggiungi_cliente(self.cliente)
         quantita_dopo = self.quanti_clienti((self.cliente.nome, self.cliente.telefono))
-        self.assertEqual(quantita_dopo, quantita_prima + 1)
+        self.assertEqual(quantita_dopo, quantita_prima + da_aggiungere)
 
 
 if __name__ == '__main__':
