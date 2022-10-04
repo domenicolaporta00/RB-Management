@@ -265,22 +265,28 @@ class inserisci_comanda_view(QMainWindow):
                     a += 1
             return a
 
+        if nome == "10kg di sale" and quanti(self.lmatprimec.get_mp(25)) == 0:
+            return False
+
+        if nome == "1l d'olio" and quanti(self.lmatprimec.get_mp(26)) == 0:
+            return False
+
         if nome == "crudo di mare" and quanti(self.lmatprimec.get_mp(0)) == 0:
             return False
-        if nome == "antipasto di terra" and quanti(self.lmatprimec.get_mp(1)) == 0 and quanti(
-                self.lmatprimec.get_mp(1)) == 0:
+        if nome == "antipasto di terra" and (quanti(self.lmatprimec.get_mp(1)) == 0 or quanti(
+                self.lmatprimec.get_mp(2)) == 0):
             return False
-        if nome == "orecchiette e cipe di rapa" and quanti(self.lmatprimec.get_mp(3)) == 0 and quanti(
-                self.lmatprimec.get_mp(4)) == 0:
+        if nome == "orecchiette e cipe di rapa" and (quanti(self.lmatprimec.get_mp(3)) == 0 or quanti(
+                self.lmatprimec.get_mp(4)) == 0):
             return False
-        if nome == "spaghetti allo scoglio" and quanti(self.lmatprimec.get_mp(3)) == 0 and quanti(
-                self.lmatprimec.get_mp(0)) == 0:
+        if nome == "spaghetti allo scoglio" and (quanti(self.lmatprimec.get_mp(3)) == 0 or quanti(
+                self.lmatprimec.get_mp(0)) == 0):
             return False
-        if nome == "penne al pomodoro" and quanti(self.lmatprimec.get_mp(3)) == 0 and quanti(
-                self.lmatprimec.get_mp(5)) == 0:
+        if nome == "penne al pomodoro" and (quanti(self.lmatprimec.get_mp(3)) == 0 or quanti(
+                self.lmatprimec.get_mp(5)) == 0):
             return False
-        if nome == "ravioli al nero di seppia" and quanti(self.lmatprimec.get_mp(3)) == 0 and quanti(
-                self.lmatprimec.get_mp(6)) == 0:
+        if nome == "ravioli al nero di seppia" and (quanti(self.lmatprimec.get_mp(3)) == 0 or quanti(
+                self.lmatprimec.get_mp(6)) == 0):
             return False
         if nome == "orata al cartoccio" and quanti(self.lmatprimec.get_mp(7)) == 0:
             return False
@@ -288,7 +294,7 @@ class inserisci_comanda_view(QMainWindow):
             return False
         if nome == "arrosto" and quanti(self.lmatprimec.get_mp(9)) == 0:
             return False
-        if nome == "insalata" and quanti(self.lmatprimec.get_mp(10)) == 0 and quanti(self.lmatprimec.get_mp(11)) == 0:
+        if nome == "insalata" and (quanti(self.lmatprimec.get_mp(10)) == 0 or quanti(self.lmatprimec.get_mp(11)) == 0):
             return False
         if nome == "patate al forno" and quanti(self.lmatprimec.get_mp(12)) == 0:
             return False
@@ -324,71 +330,77 @@ class inserisci_comanda_view(QMainWindow):
 
     def agg(self):
 
-        global s
+        global s, olio_sale
         if self.lingua == "Inglese":
             s = "Raw material out of stock! Impossible to add this course!"
+            olio_sale = "Oil and/or salt not in warehouse! Impossible to order!"
         if self.lingua == "Italiano":
             s = "Materia prima esaurita! Impossibile aggiungere questo piatto!"
+            olio_sale = "Olio e/o sale non presenti in magazzino! Impossibile ordinare!"
 
         a = self.tab_widget.currentIndex()
 
         f, d = 1250, 500
 
-        if a == 1 and self.controllo(self.nome(self.cba.currentText())):
-            self.piatti_ordine.append((self.nome(self.cba.currentText()), self.prezzo(self.cba.currentText())))
-            winsound.Beep(f, d)
-        elif a == 1 and not self.controllo(self.nome(self.cba.currentText())):
-            QMessageBox.warning(None, "RGest", s)
+        if not self.controllo("10kg di sale") or not self.controllo("1l d'olio"):
+            QMessageBox.warning(None, "RGest", olio_sale)
 
-        elif a == 2 and self.controllo(self.nome(self.cbp.currentText())):
-            self.piatti_ordine.append((self.nome(self.cbp.currentText()), self.prezzo(self.cbp.currentText())))
-            winsound.Beep(f, d)
-        elif a == 2 and not self.controllo(self.nome(self.cbp.currentText())):
-            QMessageBox.warning(None, "RGest", s)
+        else:
+            if a == 1 and self.controllo(self.nome(self.cba.currentText())):
+                self.piatti_ordine.append((self.nome(self.cba.currentText()), self.prezzo(self.cba.currentText())))
+                winsound.Beep(f, d)
+            elif a == 1 and not self.controllo(self.nome(self.cba.currentText())):
+                QMessageBox.warning(None, "RGest", s)
 
-        elif a == 3 and self.controllo(self.nome(self.cbs.currentText())):
-            self.piatti_ordine.append((self.nome(self.cbs.currentText()), self.prezzo(self.cbs.currentText())))
-            winsound.Beep(f, d)
-        elif a == 3 and not self.controllo(self.nome(self.cbs.currentText())):
-            QMessageBox.warning(None, "RGest", s)
+            elif a == 2 and self.controllo(self.nome(self.cbp.currentText())):
+                self.piatti_ordine.append((self.nome(self.cbp.currentText()), self.prezzo(self.cbp.currentText())))
+                winsound.Beep(f, d)
+            elif a == 2 and not self.controllo(self.nome(self.cbp.currentText())):
+                QMessageBox.warning(None, "RGest", s)
 
-        elif a == 4 and self.controllo(self.nome(self.cbc.currentText())):
-            self.piatti_ordine.append((self.nome(self.cbc.currentText()), self.prezzo(self.cbc.currentText())))
-            winsound.Beep(f, d)
-        elif a == 4 and not self.controllo(self.nome(self.cbc.currentText())):
-            QMessageBox.warning(None, "RGest", s)
+            elif a == 3 and self.controllo(self.nome(self.cbs.currentText())):
+                self.piatti_ordine.append((self.nome(self.cbs.currentText()), self.prezzo(self.cbs.currentText())))
+                winsound.Beep(f, d)
+            elif a == 3 and not self.controllo(self.nome(self.cbs.currentText())):
+                QMessageBox.warning(None, "RGest", s)
 
-        elif a == 5 and self.controllo(self.nome(self.cbdo.currentText())):
-            self.piatti_ordine.append((self.nome(self.cbdo.currentText()), self.prezzo(self.cbdo.currentText())))
-            winsound.Beep(f, d)
-        elif a == 5 and not self.controllo(self.nome(self.cbdo.currentText())):
-            QMessageBox.warning(None, "RGest", s)
+            elif a == 4 and self.controllo(self.nome(self.cbc.currentText())):
+                self.piatti_ordine.append((self.nome(self.cbc.currentText()), self.prezzo(self.cbc.currentText())))
+                winsound.Beep(f, d)
+            elif a == 4 and not self.controllo(self.nome(self.cbc.currentText())):
+                QMessageBox.warning(None, "RGest", s)
 
-        elif a == 6 and self.controllo(self.nome(self.cbf.currentText())):
-            self.piatti_ordine.append((self.nome(self.cbf.currentText()), self.prezzo(self.cbf.currentText())))
-            winsound.Beep(f, d)
-        elif a == 6 and not self.controllo(self.nome(self.cbf.currentText())):
-            QMessageBox.warning(None, "RGest", s)
+            elif a == 5 and self.controllo(self.nome(self.cbdo.currentText())):
+                self.piatti_ordine.append((self.nome(self.cbdo.currentText()), self.prezzo(self.cbdo.currentText())))
+                winsound.Beep(f, d)
+            elif a == 5 and not self.controllo(self.nome(self.cbdo.currentText())):
+                QMessageBox.warning(None, "RGest", s)
 
-        elif a == 7 and self.controllo(self.nome(self.cbdi.currentText())):
-            self.piatti_ordine.append((self.nome(self.cbdi.currentText()), self.prezzo(self.cbdi.currentText())))
-            winsound.Beep(f, d)
-        elif a == 7 and not self.controllo(self.nome(self.cbdi.currentText())):
-            QMessageBox.warning(None, "RGest", s)
+            elif a == 6 and self.controllo(self.nome(self.cbf.currentText())):
+                self.piatti_ordine.append((self.nome(self.cbf.currentText()), self.prezzo(self.cbf.currentText())))
+                winsound.Beep(f, d)
+            elif a == 6 and not self.controllo(self.nome(self.cbf.currentText())):
+                QMessageBox.warning(None, "RGest", s)
 
-        elif a == 8 and self.controllo(self.nome(self.cbb.currentText())):
-            self.piatti_ordine.append((self.nome(self.cbb.currentText()), self.prezzo(self.cbb.currentText())))
-            winsound.Beep(f, d)
-        elif a == 8 and not self.controllo(self.nome(self.cbb.currentText())):
-            QMessageBox.warning(None, "RGest", s)
+            elif a == 7 and self.controllo(self.nome(self.cbdi.currentText())):
+                self.piatti_ordine.append((self.nome(self.cbdi.currentText()), self.prezzo(self.cbdi.currentText())))
+                winsound.Beep(f, d)
+            elif a == 7 and not self.controllo(self.nome(self.cbdi.currentText())):
+                QMessageBox.warning(None, "RGest", s)
 
-        elif a == 9 and self.controllo(self.nome(self.cbms.currentText())):
-            self.piatti_ordine.append((self.nome(self.cbms.currentText()), self.prezzo(self.cbms.currentText())))
-            winsound.Beep(f, d)
-        elif a == 9 and not self.controllo(self.nome(self.cbms.currentText())):
-            QMessageBox.warning(None, "RGest", s)
+            elif a == 8 and self.controllo(self.nome(self.cbb.currentText())):
+                self.piatti_ordine.append((self.nome(self.cbb.currentText()), self.prezzo(self.cbb.currentText())))
+                winsound.Beep(f, d)
+            elif a == 8 and not self.controllo(self.nome(self.cbb.currentText())):
+                QMessageBox.warning(None, "RGest", s)
 
-        self.genera_lista()
+            elif a == 9 and self.controllo(self.nome(self.cbms.currentText())):
+                self.piatti_ordine.append((self.nome(self.cbms.currentText()), self.prezzo(self.cbms.currentText())))
+                winsound.Beep(f, d)
+            elif a == 9 and not self.controllo(self.nome(self.cbms.currentText())):
+                QMessageBox.warning(None, "RGest", s)
+
+            self.genera_lista()
 
     def genera_lista(self):
 
