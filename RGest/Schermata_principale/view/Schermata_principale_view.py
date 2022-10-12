@@ -169,8 +169,8 @@ class Schermata_principale_view(QMainWindow):
         menu3.addAction(str9, self.guadagni)
 
         menuS = QMenu()
-        menuS.addAction("Ciccolini Joshua", self.cj)
-        menuS.addAction("Colleluori Davide", self.cd)
+        # menuS.addAction("Ciccolini Joshua", self.cj)
+        # menuS.addAction("Colleluori Davide", self.cd)
         menuS.addAction("La Porta Domenico", self.dlp)
 
         menuDati = QMenu()
@@ -244,13 +244,13 @@ class Schermata_principale_view(QMainWindow):
         url = "https://www.instagram.com/dominik_laporta00/"
         webbrowser.open(url)
 
-    def cj(self):
-        url = "https://www.instagram.com/joshuaciccolini/"
-        webbrowser.open(url)
-
-    def cd(self):
-        url = "https://www.instagram.com/davidecolleluori/"
-        webbrowser.open(url)
+    # def cj(self):
+    #     url = "https://www.instagram.com/joshuaciccolini/"
+    #     webbrowser.open(url)
+    #
+    # def cd(self):
+    #     url = "https://www.instagram.com/davidecolleluori/"
+    #     webbrowser.open(url)
 
     def governo(self):
         url = "http://www.salute.gov.it/portale/nuovocoronavirus/homeNuovoCoronavirus.jsp"

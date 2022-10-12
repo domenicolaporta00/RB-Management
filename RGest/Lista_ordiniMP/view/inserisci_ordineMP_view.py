@@ -215,10 +215,10 @@ class inserisci_ordineMP_view(QMainWindow):
 
         global str28, str29
         if self.lingua == "Inglese":
-            str28 = "Order paid! Costs and statistics on purchased raw materials stored correctly!"
+            str28 = "Order paid! Costs on raw materials and inventory updated correctly!"
             str29 = "Empty order!"
         if self.lingua == "Italiano":
-            str28 = "Ordine pagato! Costi e statistiche sulle materie prime acquistate memorizzati correttamente!"
+            str28 = "Ordine pagato! Costi sulle materie prime e magazzino aggiornati correttamente!"
             str29 = "Ordine vuoto!"
 
         if not self.matprime_ordine:
