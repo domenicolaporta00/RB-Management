@@ -121,7 +121,7 @@ class Schermata_principale_view(QMainWindow):
             str21 = "Service MGMT"
             str22 = "Warehouse MGMT"
             str23 = "Backoffice MGMT"
-            str24 = "Data"
+            str24 = "Data and stats"
             str25 = "Delivery MGMT"
             str26 = "Developer info"
         elif self.lingua == "Italiano":
@@ -144,11 +144,11 @@ class Schermata_principale_view(QMainWindow):
             str17 = "Ordine prodotti"
             str18 = "Chiamate"
             str19 = "Ordini"
-            str20 = "                 Benvenuto in RGest. \nPrego selezionare un opzione dal menù:"
+            str20 = "                 Benvenuto in RGest. \nPrego selezionare un'opzione dal menù:"
             str21 = "Gestione servizi"
             str22 = "Gestione magazzino"
             str23 = "Gestione backoffice"
-            str24 = "Dati"
+            str24 = "Dati e stats"
             str25 = "Gestione delivery"
             str26 = "Info sviluppatori"
 
@@ -241,7 +241,7 @@ class Schermata_principale_view(QMainWindow):
         layout.setFixedSize(a, b)
 
     def dlp(self):
-        url = "https://www.instagram.com/dominik_laporta00/"
+        url = "https://github.com/domenicolaporta00"
         webbrowser.open(url)
 
     # def cj(self):

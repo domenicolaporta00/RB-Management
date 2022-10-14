@@ -94,15 +94,20 @@ class inserisci_prenotazione_view(QMainWindow):
 
     def Config_lineEdit(self, tipo, a, b, text, flag, validatore):
 
-        global str8
+        global str8, phTable
         if self.lingua == "Inglese":
             str8 = "Enter data..."
+            phTable = "Automatically assigned"
         if self.lingua == "Italiano":
             str8 = "Inserire i dati..."
+            phTable = "Assegnato automaticamente"
 
         lineEdit = QLineEdit(self)
         lineEdit.setValidator(validatore)
-        lineEdit.setPlaceholderText(str8)
+        if tipo == 'Numero tavolo':
+            lineEdit.setPlaceholderText(phTable)
+        else:
+            lineEdit.setPlaceholderText(str8)
         lineEdit.setText(text)
         lineEdit.setReadOnly(flag)
         lineEdit.move(a, b)

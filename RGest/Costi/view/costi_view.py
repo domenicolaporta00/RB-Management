@@ -144,7 +144,7 @@ class costi_view(QMainWindow):
         for row, date in enumerate(self.ldc.get_lista_dipendenti()):
             a += 1
             self.lista.setRowCount(a)
-            item = QTableWidgetItem(date.nome)
+            item = QTableWidgetItem(date.nome + " " + date.cognome)
             item2 = QTableWidgetItem(date.ruolo)
             item3 = QTableWidgetItem("€" + str(date.stipendio))
             item4 = QTableWidgetItem(date.data_inizio)
@@ -295,7 +295,7 @@ class costi_view(QMainWindow):
         self.lista_costiMP.setColumnWidth(0, 75)
         self.totale_costiMP.setEnabled(False)
         self.lista_costiMP.setHorizontalHeaderLabels([str12, str22, str32])
-        self.totale_costiMP.setHorizontalHeaderLabels([str52, str62])
+        self.totale_costiMP.setHorizontalHeaderLabels([str62, str52])
         a = 0
         tot = 0
         for row, date in enumerate(self.lcMPc.get_lista_contoMP()):
