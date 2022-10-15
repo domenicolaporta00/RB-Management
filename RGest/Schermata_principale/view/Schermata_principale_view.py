@@ -5,7 +5,6 @@ import webbrowser
 
 import matplotlib.pyplot as p
 import numpy as np
-# import pywhatkit
 from PyQt5.QtCore import QTime, QDate
 from PyQt5.QtGui import QIcon, QPixmap, QFont
 from PyQt5.QtWidgets import QMainWindow, QLabel, QPushButton, QMenu, QAction, QMessageBox, QInputDialog
@@ -169,8 +168,6 @@ class Schermata_principale_view(QMainWindow):
         menu3.addAction(str9, self.guadagni)
 
         menuS = QMenu()
-        # menuS.addAction("Ciccolini Joshua", self.cj)
-        # menuS.addAction("Colleluori Davide", self.cd)
         menuS.addAction("La Porta Domenico", self.dlp)
 
         menuDati = QMenu()
@@ -243,14 +240,6 @@ class Schermata_principale_view(QMainWindow):
     def dlp(self):
         url = "https://github.com/domenicolaporta00"
         webbrowser.open(url)
-
-    # def cj(self):
-    #     url = "https://www.instagram.com/joshuaciccolini/"
-    #     webbrowser.open(url)
-    #
-    # def cd(self):
-    #     url = "https://www.instagram.com/davidecolleluori/"
-    #     webbrowser.open(url)
 
     def governo(self):
         url = "http://www.salute.gov.it/portale/nuovocoronavirus/homeNuovoCoronavirus.jsp"
@@ -347,18 +336,22 @@ class Schermata_principale_view(QMainWindow):
                 str30 = "Type something!"
                 str40 = "The system will open whatsapp web for each employee stored and there will be twenty seconds to" \
                         "provision to frame the QR code; at the end of twenty seconds the message will be sent" \
-                        "correctly and you will go to the next one. Do not interact with the application while sending the" \
+                        "correctly and you will go to the next one. Do not interact with the application while " \
+                        "sending the" \
                         "messages! "
                 str50 = "Sending messages finished."
             if self.lingua == "Italiano":
                 str10_ = "Lista dipendenti vuota. Impossibile inviare messaggi."
-                str20_ = "Scrivi il messaggio. (Attenzione! La procedura può impiegare\ntanto tempo e non può essere fatta " \
+                str20_ = "Scrivi il messaggio. (Attenzione! La procedura può impiegare\ntanto tempo e non può essere " \
+                         "fatta " \
                          "in background.\nSi consiglia di eseguire fuori dall'orario lavorativo!\nPremere ok per " \
                          "continuare!) "
                 str30 = "Digitare qualcosa!"
                 str40 = "Il sistema aprirà whatsapp web per ogni dipendente memorizzato e ci saranno venti secondi a " \
-                        "disposizione per inquadrare il QR code; al termine dei venti secondi il messaggio verrà inviato " \
-                        "correttamente e si passerà al successivo. Non interagire con l'applicazione durante l'invio dei " \
+                        "disposizione per inquadrare il QR code; al termine dei venti secondi il messaggio verrà " \
+                        "inviato " \
+                        "correttamente e si passerà al successivo. Non interagire con l'applicazione durante l'invio " \
+                        "dei " \
                         "messaggi! "
                 str50 = "Invio messaggi terminato."
 
@@ -382,7 +375,6 @@ class Schermata_principale_view(QMainWindow):
                                 ora += 1
                             else:
                                 mex = "Buona giornata " + dipendente.nome + ", " + text
-                                # print("Invio " + mex + " a " + dipendente.nome + " numero " + dipendente.telefono)
                                 pywhatkit.sendwhatmsg("+39" + dipendente.telefono, mex, ora, minuto)
                         QMessageBox.information(None, "RGest", str50)
 
@@ -455,8 +447,6 @@ class Schermata_principale_view(QMainWindow):
             str2__ = "Statistiche piatti più venduti"
 
         self.lpiattic = lista_piatti_controller()
-        '''self.lpiattic.cancel_stats()
-        self.lpiattic.save_data_stats()'''
         valori = []
         nomi = []
         if not self.lpiattic.get_lista_stats():

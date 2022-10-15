@@ -156,7 +156,6 @@ class inserisci_prenotazione_view(QMainWindow):
                 num_tavoli = len(self.lpc.get_lista_prenotazioni_cena()) + 1
             self.controller.aggiungi_prenotazione(
                 prenotazioni_model(cognome, posti, ora, info, telefono, num_tavoli), orario)
-            # self.lcomandec.save_data()
             self.callback()
             self.cb_cena()
             QMessageBox.information(None, "RGest", str10)

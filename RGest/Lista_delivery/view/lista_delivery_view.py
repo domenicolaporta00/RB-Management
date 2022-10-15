@@ -168,7 +168,8 @@ class lista_delivery_view(QMainWindow):
         else:
             selected = self.lista.selectedIndexes()[0].row()
             delivery_selezionato = self.ldc.get_delivery(selected)
-            self.dv = delivery_view(delivery_selezionato, self.ldc.remove_delivery, self.genera_lista, self.genera_lista_cena, "pranzo", self.lingua)
+            self.dv = delivery_view(delivery_selezionato, self.ldc.remove_delivery, self.genera_lista,
+                                    self.genera_lista_cena, "pranzo", self.lingua)
             self.dv.show()
 
     def mostra_delivery_cena(self):
@@ -184,7 +185,8 @@ class lista_delivery_view(QMainWindow):
         else:
             selected_ = self.lista_cena.selectedIndexes()[0].row()
             delivery_selezionato_ = self.ldc.get_delivery_cena(selected_)
-            self.dv = delivery_view(delivery_selezionato_, self.ldc.remove_delivery_cena, self.genera_lista, self.genera_lista_cena, "cena", self.lingua)
+            self.dv = delivery_view(delivery_selezionato_, self.ldc.remove_delivery_cena, self.genera_lista,
+                                    self.genera_lista_cena, "cena", self.lingua)
             self.dv.show()
 
     def cancel(self):

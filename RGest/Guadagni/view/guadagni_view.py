@@ -41,13 +41,6 @@ class guadagni_view(QMainWindow):
             str2 = "Ordini"
             str3 = "Consegne delivery"
 
-        '''self.lcc.cancel()
-        self.lcc.cancel_conto()
-        self.lcc.cancel_consegne()
-        self.lcc.save_data()
-        self.lcc.save_data_delivery()
-        self.lcc.save_data_conto()'''
-
         font = QFont("Times Roman", 11)
 
         self.tab_widget.setFixedSize(750, 600)
