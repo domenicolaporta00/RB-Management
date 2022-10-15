@@ -1,4 +1,0 @@
-Quando voglio modificare un ordine materie prime, se tolgo/aggiungo una materia prima cliccando sul tasto modifica, 
-il numero di materie prime nella lista ordini si aggiorna correttamente. 
-Se invece effettuo la modifica senza cliccare sul tasto modifica e chiudo la schermata, front-end il numero di materie
-prime nella lista ordini non si aggiorna, mentre back-end sì.
