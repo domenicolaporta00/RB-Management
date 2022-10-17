@@ -327,7 +327,7 @@ class Schermata_principale_view(QMainWindow):
         try:
             import pywhatkit
 
-            global str50, str40, str30, str20_, str10_
+            global str50, str40, str30, str20_, str10_, strErrWA
             if self.lingua == "Inglese":
                 str10_ = "Empty employee list. Unable to send messages."
                 str20_ = "Write your message. (Warning! The procedure can take\na long time and cannot be done" \
@@ -340,6 +340,7 @@ class Schermata_principale_view(QMainWindow):
                         "sending the" \
                         "messages! "
                 str50 = "Sending messages finished."
+                strErrWA = "Message to the following recipient not sent correctly:\n"
             if self.lingua == "Italiano":
                 str10_ = "Lista dipendenti vuota. Impossibile inviare messaggi."
                 str20_ = "Scrivi il messaggio. (Attenzione! La procedura può impiegare\ntanto tempo e non può essere " \
@@ -354,6 +355,7 @@ class Schermata_principale_view(QMainWindow):
                         "dei " \
                         "messaggi! "
                 str50 = "Invio messaggi terminato."
+                strErrWA = "Messaggio al seguente destinatario non inviato correttamente:\n"
 
             self.ldc = lista_dipendenti_controller()
             if not self.ldc.get_lista_dipendenti():
@@ -368,14 +370,15 @@ class Schermata_principale_view(QMainWindow):
                     else:
                         QMessageBox.warning(None, "RGest", str40)
                         for dipendente in self.ldc.get_lista_dipendenti():
-                            ora = QTime.currentTime().hour()
-                            minuto = QTime.currentTime().minute() + 1
-                            if minuto == 60:
-                                minuto = 0
-                                ora += 1
-                            else:
+                            try:
+                                ora = QTime.currentTime().hour()
+                                minuto = QTime.currentTime().minute() + 1
                                 mex = "Buona giornata " + dipendente.nome + ", " + text
                                 pywhatkit.sendwhatmsg("+39" + dipendente.telefono, mex, ora, minuto)
+                            except BaseException:
+                                QMessageBox.critical(None, "RGest", strErrWA + dipendente.nome + " "
+                                                     + dipendente.cognome)
+
                         QMessageBox.information(None, "RGest", str50)
 
         except BaseException:

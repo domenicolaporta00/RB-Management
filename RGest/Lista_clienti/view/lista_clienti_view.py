@@ -104,7 +104,7 @@ class lista_clienti_view(QMainWindow):
         try:
             import pywhatkit
 
-            global str52, str42, str32, str22, str12
+            global str52, str42, str32, str22, str12, strErrWA
             if self.lingua == "Inglese":
                 str12 = "Empty customer list. Unable to send messages."
                 str22 = "Write your message. (Warning! The procedure can take\na long time and cannot be done" \
@@ -117,6 +117,7 @@ class lista_clienti_view(QMainWindow):
                         "sending the" \
                         "messages! "
                 str52 = "Sending messages finished."
+                strErrWA = "Message to the following recipient not sent correctly:\n"
             if self.lingua == "Italiano":
                 str12 = "Lista clienti vuota. Impossibile inviare messaggi."
                 str22 = "Scrivi il messaggio. (Attenzione! La procedura può impiegare\ntanto tempo e non può essere " \
@@ -131,6 +132,7 @@ class lista_clienti_view(QMainWindow):
                         "dei " \
                         "messaggi! "
                 str52 = "Invio messaggi terminato."
+                strErrWA = "Messaggio al seguente destinatario non inviato correttamente:\n"
 
             if not self.lclientic.get_lista_clienti():
                 QMessageBox.warning(None, "RGest", str12)
@@ -145,14 +147,14 @@ class lista_clienti_view(QMainWindow):
                         QMessageBox.warning(None, "RGest", str42)
                         self.close()
                         for cliente in self.lclientic.get_lista_clienti():
-                            ora = QTime.currentTime().hour()
-                            minuto = QTime.currentTime().minute() + 1
-                            if minuto == 60:
-                                minuto = 0
-                                ora += 1
-                            else:
+                            try:
+                                ora = QTime.currentTime().hour()
+                                minuto = QTime.currentTime().minute() + 1
                                 mex = "Buona giornata " + cliente.nome + ", " + text
                                 pywhatkit.sendwhatmsg("+39" + cliente.telefono, mex, ora, minuto)
+                            except BaseException:
+                                QMessageBox.critical(None, "RGest", strErrWA + cliente.nome + " "
+                                                     + cliente.cognome)
                         QMessageBox.information(None, "RGest", str52)
 
         except BaseException:
